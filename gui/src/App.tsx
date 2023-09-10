@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { _ } from './util/csshelper/cssHelper.ts';
 // import viteLogo from '/vite.svg'
 // import './App.css';
 
@@ -7,14 +8,15 @@ function App() {
 
   return (
     <>
-      <div>hello world!</div>
-      <div
+      <div css={[_.color('blue'), _.p(2)]}>hello world!</div>
+      <button
         onClick={() => {
           setCount(count + 1);
         }}
       >
-        {count}
-      </div>
+        hello
+      </button>
+      <div>{count}</div>
     </>
   );
 }
