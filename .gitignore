@@ -1,6 +1,7 @@
 dev.db
 dev.db-journal
 migrations
+conf.json
 
 # compiled output
 /dist

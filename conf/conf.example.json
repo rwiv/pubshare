@@ -1,0 +1,8 @@
+{
+  "aws": {
+    "accessKey": "",
+    "secretKey": "",
+    "region": "",
+    "bucketName": ""
+  }
+}
