@@ -2,7 +2,6 @@ import { Controller, Get, Logger } from '@nestjs/common';
 
 @Controller('dev')
 export class DevController {
-
   private readonly logger = new Logger(DevController.name);
 
   @Get('hello')
