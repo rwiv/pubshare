@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { _ } from './util/csshelper/cssHelper.ts';
+import { Button } from '@mantine/core';
 // import viteLogo from '/vite.svg'
 // import './App.css';
 
@@ -9,13 +10,14 @@ function App() {
   return (
     <>
       <div css={[_.color('blue'), _.p(2)]}>hello world!</div>
-      <button
+      <Button
+        css={_.m(2)}
         onClick={() => {
           setCount(count + 1);
         }}
       >
         hello
-      </button>
+      </Button>
       <div>{count}</div>
     </>
   );
