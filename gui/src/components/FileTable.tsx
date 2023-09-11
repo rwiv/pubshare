@@ -1,42 +1,16 @@
-import {Table} from "@mantine/core";
+import {Table} from '@mantine/core';
+import {useState} from "react";
+import {FileTableProps} from "./types";
+import {TableHeader} from "./TableHeader.tsx";
+import {TableRows} from "./TableRows.tsx";
 
-const elements = [
-  { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
-  { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
-  { position: 39, mass: 88.906, symbol: 'Y', name: 'Yttrium' },
-  { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },
-  { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
-];
-
-function TableHeader() {
-  return (
-    <thead>
-    <tr>
-      <th>CHECK</th>
-      <th>TYPE</th>
-      <th>NAME</th>
-      <th>OWNER</th>
-      <th>MODIFIED</th>
-      <th>SIZE</th>
-    </tr>
-    </thead>
-  )
-}
-
-export function FileTable() {
-  const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.position}</td>
-      <td>{element.name}</td>
-      <td>{element.symbol}</td>
-      <td>{element.mass}</td>
-    </tr>
-  ));
+export function FileTable({ files }: FileTableProps) {
+  const [selection, setSelection] = useState(['1']);
 
   return (
-    <Table highlightOnHover withBorder>
-      <TableHeader />
-      <tbody>{rows}</tbody>
+    <Table highlightOnHover withBorder miw={800} verticalSpacing="sm">
+      <TableHeader files={files} selection={selection} setSelection={setSelection} />
+      <TableRows files={files} selection={selection} setSelection={setSelection} />
     </Table>
   );
 }
