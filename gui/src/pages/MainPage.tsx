@@ -12,7 +12,7 @@ const files: FileResponse[] = [
   { type: "file", name: "hello3", modified: "2000-01-01", size: 100 },
 ]
 
-function App() {
+function MainPage() {
   const [count, setCount] = useState(0);
 
   return (
@@ -32,4 +32,4 @@ function App() {
   );
 }
 
-export default App;
+export default MainPage;
