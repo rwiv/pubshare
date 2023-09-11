@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { _ } from './util/csshelper/cssHelper.ts';
 import { Button } from '@mantine/core';
+import {FileTable} from "./components/FileTable.tsx";
 // import viteLogo from '/vite.svg'
 // import './App.css';
 
@@ -19,6 +20,7 @@ function App() {
         hello
       </Button>
       <div>{count}</div>
+      <FileTable />
     </>
   );
 }
