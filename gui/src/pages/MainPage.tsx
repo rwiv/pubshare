@@ -4,6 +4,7 @@ import { Button, Menu } from '@mantine/core';
 import { FileTable } from '../components/table/FileTable.tsx';
 import { FileResponse } from '../components/table/types';
 import { CtxMenuBoundary } from '../components/ctxmenu/CtxMenuBoundary.tsx';
+import { Ground } from '../components/dnd/Ground.tsx';
 // import viteLogo from '/vite.svg'
 // import './App.css';
 
@@ -31,6 +32,8 @@ export function MainPage() {
       <CtxMenuBoundary menuContent={<MenuContent />}>
         <FileTable files={files} />
       </CtxMenuBoundary>
+
+      <Ground />
     </>
   );
 }
