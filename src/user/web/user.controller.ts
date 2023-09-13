@@ -1,14 +1,15 @@
 import {
   Controller,
-  Get,
-  Post,
   Body,
   Param,
-  Delete,
+  Get,
+  Post,
+  Put,
   Patch,
+  Delete,
 } from '@nestjs/common';
 import { UserService } from '../domain/user.service';
-import { CreateUser, UpdateUser } from './forms';
+import { UserCreation, UserUpdate } from './forms';
 import { UserModel } from '../persistence/prisma';
 
 @Controller('api/users')
@@ -16,7 +17,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUser: CreateUser): Promise<UserModel> {
+  create(@Body() createUser: UserCreation): Promise<UserModel> {
     return this.userService.create(createUser);
   }
 
@@ -30,13 +31,18 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUser: UpdateUser) {
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateUser: UserUpdate) {
     return this.userService.update(+id, updateUser);
   }
 
+  @Patch('certificate/:id')
+  certificate(@Param('id') id: string) {
+    return this.userService.certificate(+id);
+  }
+
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  delete(@Param('id') id: string) {
+    return this.userService.delete(+id);
   }
 }

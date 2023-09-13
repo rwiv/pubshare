@@ -6,9 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "pnpm reset && nest start --watch",
+    "dev": "nest start --watch",
+    "dev:reset": "pnpm reset && nest start --watch",
+    "reset": "npx prisma migrate reset --force && pnpm migrate",
     "migrate": "npx prisma migrate dev --name init",
-    "reset": "npx prisma migrate reset --force && npx prisma migrate",
     "studio": "npx prisma studio",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

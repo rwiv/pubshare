@@ -1,9 +1,11 @@
-export interface CreateUser {
+export interface UserCreation {
   email: string;
   password: string;
+  certified: boolean;
 }
 
-export interface UpdateUser {
+export interface UserUpdate {
   email: string;
   password: string;
+  certified: boolean;
 }
