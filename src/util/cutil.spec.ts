@@ -1,4 +1,4 @@
-import { cutil } from './config.util';
+import { cutil } from './cutil';
 
 it('test', async () => {
   const conf = await cutil.getConf();

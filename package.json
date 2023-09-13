@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "nest start --watch",
+    "dev": "pnpm reset && nest start --watch",
     "migrate": "npx prisma migrate dev --name init",
     "reset": "npx prisma migrate reset --force && npx prisma migrate",
     "studio": "npx prisma studio",

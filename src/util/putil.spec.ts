@@ -1,7 +1,7 @@
-import { putil } from './path.util';
+import { putil } from './putil';
 
 it('test', () => {
   const dirname = putil.getDirname();
   console.log(dirname);
-  console.log(putil.abs());
+  console.log(putil.absRoot());
 });

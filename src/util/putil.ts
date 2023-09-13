@@ -7,7 +7,7 @@ class PathUtil {
     return path.resolve();
   }
 
-  abs() {
+  absRoot() {
     const dirname = this.getDirname();
     return dirname.split(PROJECT_NAME)[0] + PROJECT_NAME;
   }
