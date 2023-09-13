@@ -11,12 +11,16 @@ import {
 } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import { FileInfo } from './FileInfo';
+import { appConstants } from '../../config/appConstants';
 
 export class S3Client {
   private aws = cutil.getConfSync().aws;
   private s3 = this.getClient();
 
-  async list(prefix: string, limit: number = 10000): Promise<FileInfo[]> {
+  async list(
+    prefix: string,
+    limit: number = appConstants.listLimit,
+  ): Promise<FileInfo[]> {
     const command = new ListObjectsCommand({
       Bucket: this.aws.bucketName,
       Prefix: prefix,
