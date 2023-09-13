@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../misc/prisma.service';
-import { CreateUser, UpdateUser } from '../web/form';
+import { CreateUser, UpdateUser } from '../web/forms';
 import { UserModel } from '../persistence/prisma';
 
 @Injectable()

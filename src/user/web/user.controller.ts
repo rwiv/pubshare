@@ -8,10 +8,10 @@ import {
   Patch,
 } from '@nestjs/common';
 import { UserService } from '../domain/user.service';
-import { CreateUser, UpdateUser } from './form';
+import { CreateUser, UpdateUser } from './forms';
 import { UserModel } from '../persistence/prisma';
 
-@Controller('users')
+@Controller('api/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

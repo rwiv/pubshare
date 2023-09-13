@@ -1,0 +1,17 @@
+PUT http://localhost:3000/api/access/upload
+Content-Type: multipart/form-data; boundary=--------------------------681700359545918292406187
+
+----------------------------681700359545918292406187
+Content-Disposition: form-data; name="name"
+
+hello1
+----------------------------681700359545918292406187
+Content-Disposition: form-data; name="name2"
+
+hello2
+----------------------------681700359545918292406187
+Content-Disposition: form-data; name="file"; filename="hello.txt"
+Content-Type: text/plain
+
+< ./asset/multipart.txt
+----------------------------681700359545918292406187--
