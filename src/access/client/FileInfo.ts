@@ -1,4 +1,4 @@
-export class FileResponse {
+export class FileInfo {
   constructor(
     readonly key: string,
     readonly isDirectory: boolean,

@@ -1,4 +1,4 @@
-import { cutil } from '../util/cutil';
+import { cutil } from '../../util/cutil';
 import {
   DeleteObjectCommand,
   DeleteObjectCommandOutput,
@@ -6,51 +6,49 @@ import {
   GetObjectCommandOutput,
   HeadObjectCommand,
   ListObjectsCommand,
-  ListObjectsCommandOutput,
   PutObjectCommand,
-  PutObjectCommandOutput,
   S3Client as Client,
 } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
-import { FileResponse } from './FileResponse';
+import { FileInfo } from './FileInfo';
 
 export class S3Client {
   private aws = cutil.getConfSync().aws;
   private s3 = this.getClient();
 
-  async list(
-    prefix: string,
-    limit: number = 10000,
-  ): Promise<ListObjectsCommandOutput> {
+  async list(prefix: string, limit: number = 10000): Promise<FileInfo[]> {
     const command = new ListObjectsCommand({
       Bucket: this.aws.bucketName,
       Prefix: prefix,
       Delimiter: '/',
       MaxKeys: limit,
     });
-    // const res = await this.s3.send(command);
-    // const contents = res.Contents;
-    // const prefixes = res.CommonPrefixes;
 
-    return this.s3.send(command);
+    const res = await this.s3.send(command);
+    const files = res.Contents.map((obj) => {
+      return new FileInfo(obj.Key, true, obj.LastModified, obj.Size);
+    });
+
+    const prefixes = res.CommonPrefixes;
+    for (const prefix of prefixes) {
+      const info = await this.head(prefix.Prefix);
+      files.push(info);
+    }
+    return files;
   }
 
-  async head(key: string) {
+  async head(key: string): Promise<FileInfo> {
     const command = new HeadObjectCommand({
       Bucket: this.aws.bucketName,
       Key: key,
     });
     const res = await this.s3.send(command);
-    return new FileResponse(
+    return new FileInfo(
       key,
       this.isDirectory(key),
       res.LastModified,
       res.ContentLength,
     );
-  }
-
-  private isDirectory(key: string) {
-    return key.charAt(key.length - 1) == '/';
   }
 
   async download(key: string): Promise<GetObjectCommandOutput> {
@@ -59,7 +57,7 @@ export class S3Client {
     return this.s3.send(command);
   }
 
-  async upload(key: string, rs: Readable): Promise<PutObjectCommandOutput> {
+  async upload(key: string, rs: Readable) {
     const { Bucket, Key } = this.getBucketAndKey(key);
     const command = new PutObjectCommand({ Bucket, Key, Body: rs });
     return this.s3.send(command);
@@ -79,6 +77,10 @@ export class S3Client {
     const { Bucket, Key } = this.getBucketAndKey(key);
     const command = new DeleteObjectCommand({ Bucket, Key });
     return this.s3.send(command);
+  }
+
+  private isDirectory(key: string): boolean {
+    return key.charAt(key.length - 1) == '/';
   }
 
   private getBucketAndKey(key: string) {

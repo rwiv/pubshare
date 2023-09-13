@@ -1,20 +1,18 @@
 import { S3Client } from './s3.client';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { putil } from '../util/putil';
+import { putil } from '../../util/putil';
 
 const client = new S3Client();
 
 it('list', async () => {
-  const res = await client.list('');
-  console.log(res);
-  console.log(res.CommonPrefixes);
-  console.log(res.Contents);
+  const infos = await client.list('');
+  console.log(infos);
 });
 
 it('head', async () => {
-  const head = await client.head('test123.txt');
-  console.log(head);
+  const info = await client.head('test123.txt');
+  console.log(info);
 });
 
 it('mkdir', async () => {
@@ -50,7 +48,7 @@ it('upload', async () => {
 });
 
 it('delete', async () => {
-  const res = await client.delete('testdir/');
+  const res = await client.delete('test123.txt');
   // const res = await client.delete('test123.txt');
   console.log(res);
 });

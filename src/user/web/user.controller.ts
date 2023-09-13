@@ -7,9 +7,9 @@ import {
   Delete,
   Patch,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUser, UpdateUser } from './types/form';
-import { UserModel } from './types/prisma';
+import { UserService } from '../domain/user.service';
+import { CreateUser, UpdateUser } from './form';
+import { UserModel } from '../persistence/prisma';
 
 @Controller('users')
 export class UserController {
