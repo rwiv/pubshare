@@ -1,4 +1,5 @@
 export interface AppConfig {
+  env: string,
   aws: AwsSecret;
 }
 

@@ -1,18 +1,24 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import {_, HStack} from '../util/csshelper/cssHelper.ts';
 import { Button } from '@/components/ui/button.tsx';
 import { FileTable } from '../components/table/FileTable.tsx';
-import { FileResponse } from '@/components/table/types';
 import {ContextMenuBoundary} from "@/components/ctxmenu/ContextMenuBoundary.tsx";
 import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.tsx";
 import {AppHeader} from "@/components/header/AppHeader.tsx";
+import {AccessClient, FileInfo} from "@/client/AccessClient.ts";
+import {UserClient} from "@/client/UserClient.ts";
+import {UserResponse} from "../../../src/user/web/types";
+import {FileResponse} from "@/components/table/types";
 // import viteLogo from '/vite.svg'
 
-const files: FileResponse[] = [
-  { type: 'file', name: 'hello1', modified: '2000-01-01', size: 100 },
-  { type: 'file', name: 'hello2', modified: '2000-01-01', size: 100 },
-  { type: 'file', name: 'hello3', modified: '2000-01-01', size: 100 },
-];
+function convertFile(info: FileInfo): FileResponse {
+  return {
+    type: info.isDirectory ? "directory" : "file",
+    name: info.key,
+    modified: info.lastModified,
+    size: info.size,
+  }
+}
 
 export function MainPage() {
 
@@ -22,12 +28,37 @@ export function MainPage() {
 
   const [count, setCount] = useState(0);
 
+  const [files, setFiles] = useState<FileInfo[]>([]);
+  const [users, setUsers] = useState<UserResponse[]>([]);
+
+  useEffect(() => {
+    const userClient = new UserClient();
+    userClient.createUser({
+      email: `hello${Date.now().toString()}@gmail.com`,
+      password: "1234",
+      certified: false,
+    });
+  }, []);
+
+  useEffect(() => {
+    const accessClient = new AccessClient();
+    accessClient.list().then(infos => {
+      setFiles(infos);
+    });
+
+    const userClient = new UserClient();
+    userClient.getUsersAll().then(users => {
+      setUsers(users)
+    })
+  }, []);
+
   return (
     <>
       <AppHeader />
       <HStack>
         <div css={left}/>
         <div css={center}>
+          {users.map(user => <div key={user.id}>{user.email}</div>)}
           <Button
             css={_.m(2)}
             onClick={() => {
@@ -38,7 +69,7 @@ export function MainPage() {
           </Button>
           <span>{count}</span>
           <ContextMenuBoundary menuContent={<MenuContent />}>
-            <FileTable files={files} />
+            <FileTable files={files.map(file => convertFile(file))} />
           </ContextMenuBoundary>
         </div>
         <div css={right}/>

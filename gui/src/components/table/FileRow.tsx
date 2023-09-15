@@ -74,7 +74,7 @@ export function FileRow({ item, selection, setSelection, setDFiles }: FileRowPro
 
   return (
     <>
-      <div style={{display: "none"}} ref={noneRef} />
+      <tr style={{display: "none"}} ref={noneRef} />
       <TableRow ref={node => drag(drop(node))} css={style}>
         <TableCell>
           <Checkbox

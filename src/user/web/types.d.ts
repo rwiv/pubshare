@@ -1,3 +1,9 @@
+interface UserResponse {
+  id: number;
+  email: string;
+  certified: boolean;
+}
+
 export interface UserCreation {
   email: string;
   password: string;
