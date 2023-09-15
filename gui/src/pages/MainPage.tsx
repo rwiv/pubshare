@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import {_, HStack} from '../util/csshelper/cssHelper.ts';
-import { Menu } from '@mantine/core';
 import { Button } from '@/components/ui/button.tsx';
 import { FileTable } from '../components/table/FileTable.tsx';
 import { FileResponse } from '@/components/table/types';
-import { CtxMenuBoundary } from '../components/ctxmenu/CtxMenuBoundary.tsx';
 import { Ground } from '../components/dnd/Ground.tsx';
+import {ContextMenuBoundary} from "@/components/ctxmenu/ContextMenuBoundary.tsx";
+import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.tsx";
 // import viteLogo from '/vite.svg'
 
 const files: FileResponse[] = [
@@ -36,9 +36,9 @@ export function MainPage() {
             hello
           </Button>
           <div>{count}</div>
-          <CtxMenuBoundary menuContent={<MenuContent />}>
+          <ContextMenuBoundary menuContent={<MenuContent2 />}>
             <FileTable files={files} />
-          </CtxMenuBoundary>
+          </ContextMenuBoundary>
 
           <Ground />
         </div>
@@ -47,22 +47,13 @@ export function MainPage() {
   );
 }
 
-function MenuContent() {
+function MenuContent2() {
   return (
-    <Menu opened={true}>
-      <Menu.Dropdown>
-        <Menu.Label>Application</Menu.Label>
-        <Menu.Item>Settings</Menu.Item>
-        <Menu.Item>Messages</Menu.Item>
-        <Menu.Item>Gallery</Menu.Item>
-        <Menu.Item>Search</Menu.Item>
-
-        <Menu.Divider />
-
-        <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item>Transfer my data</Menu.Item>
-        <Menu.Item color="red">Delete my account</Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
+    <ContextMenuContent>
+      <ContextMenuItem>Profile</ContextMenuItem>
+      <ContextMenuItem>Billing</ContextMenuItem>
+      <ContextMenuItem>Team</ContextMenuItem>
+      <ContextMenuItem>Subscription</ContextMenuItem>
+    </ContextMenuContent>
   );
 }
