@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { _ } from '../util/csshelper/cssHelper.ts';
-import { Button, Menu } from '@mantine/core';
+import { Menu } from '@mantine/core';
+import { Button } from '@/components/ui/button.tsx';
 import { FileTable } from '../components/table/FileTable.tsx';
-import { FileResponse } from '../components/table/types';
+import { FileResponse } from '@/components/table/types';
 import { CtxMenuBoundary } from '../components/ctxmenu/CtxMenuBoundary.tsx';
 import { Ground } from '../components/dnd/Ground.tsx';
 // import viteLogo from '/vite.svg'
-// import './App.css';
 
 const files: FileResponse[] = [
   { type: 'file', name: 'hello1', modified: '2000-01-01', size: 100 },
