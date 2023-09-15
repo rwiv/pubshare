@@ -1,4 +1,4 @@
-import { UserAuthForm } from "@/pages/user-auth-form"
+import { UserAuthForm } from "@/components/auth/UserAuthForm.tsx"
 
 function Form() {
   return (

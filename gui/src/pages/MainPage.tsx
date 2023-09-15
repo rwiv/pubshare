@@ -6,6 +6,7 @@ import { FileResponse } from '@/components/table/types';
 import { Ground } from '../components/dnd/Ground.tsx';
 import {ContextMenuBoundary} from "@/components/ctxmenu/ContextMenuBoundary.tsx";
 import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.tsx";
+import {AppHeader} from "@/components/header/AppHeader.tsx";
 // import viteLogo from '/vite.svg'
 
 const files: FileResponse[] = [
@@ -23,6 +24,8 @@ export function MainPage() {
   const [count, setCount] = useState(0);
 
   return (
+    <>
+      <AppHeader />
       <HStack>
         <div css={left}/>
         <div css={center}>
@@ -44,6 +47,7 @@ export function MainPage() {
         </div>
         <div css={right}/>
       </HStack>
+    </>
   );
 }
 
