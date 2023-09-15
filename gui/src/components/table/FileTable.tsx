@@ -1,8 +1,8 @@
-import { Table } from '@mantine/core';
 import { useState } from 'react';
 import { FileResponse } from './types';
-import { TableHeader } from './TableHeader.tsx';
-import { TableRows } from './TableRows.tsx';
+import { FileTableHeader } from './FileTableHeader.tsx';
+import { FileTableBody } from './FileTableBody.tsx';
+import {Table} from "@/components/ui/table.tsx";
 
 interface FileTableProps {
   files: FileResponse[];
@@ -12,17 +12,19 @@ export function FileTable({ files }: FileTableProps) {
   const [selection, setSelection] = useState(['1']);
 
   return (
-    <Table highlightOnHover withBorder miw={800} verticalSpacing="sm">
-      <TableHeader
-        files={files}
-        selection={selection}
-        setSelection={setSelection}
-      />
-      <TableRows
-        files={files}
-        selection={selection}
-        setSelection={setSelection}
-      />
-    </Table>
+    <div className="rounded-md border">
+      <Table>
+        <FileTableHeader
+          files={files}
+          selection={selection}
+          setSelection={setSelection}
+        />
+        <FileTableBody
+          files={files}
+          selection={selection}
+          setSelection={setSelection}
+        />
+      </Table>
+    </div>
   );
 }

@@ -25,6 +25,17 @@ export default class MediaQueryHelper {
     }
   }
 
+  public m_all = (df: number | null, sm: number | null, md: number | null, lg: number | null, xl: number | null, xxl: number | null) => {
+    const result = [];
+    if (df != null) result.push(this.df(df));
+    if (sm != null) result.push(this.sm(sm));
+    if (md != null) result.push(this.md(md));
+    if (lg != null) result.push(this.lg(lg));
+    if (xl != null) result.push(this.xl(xl));
+    if (xxl != null) result.push(this.xxl(xxl));
+    return result;
+  }
+
   private ratioToPercent(ratio: number) {
     switch (ratio) {
       case 0: return 0

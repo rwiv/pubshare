@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { _ } from '../util/csshelper/cssHelper.ts';
+import {_, HStack} from '../util/csshelper/cssHelper.ts';
 import { Menu } from '@mantine/core';
 import { Button } from '@/components/ui/button.tsx';
 import { FileTable } from '../components/table/FileTable.tsx';
@@ -15,26 +15,35 @@ const files: FileResponse[] = [
 ];
 
 export function MainPage() {
+
+  const left = _.m_all(1,1,2,2,3,3);
+  const center = _.m_all(10,10,8, 8,6,6);
+  const right = _.m_all(1,1,2,2,3,3);
+
   const [count, setCount] = useState(0);
 
   return (
-    <>
-      <div css={[_.color('blue'), _.p(2)]}>hello world!</div>
-      <Button
-        css={_.m(2)}
-        onClick={() => {
-          setCount(count + 1);
-        }}
-      >
-        hello
-      </Button>
-      <div>{count}</div>
-      <CtxMenuBoundary menuContent={<MenuContent />}>
-        <FileTable files={files} />
-      </CtxMenuBoundary>
+      <HStack>
+        <div css={left}/>
+        <div css={center}>
+          <div css={[_.color('blue'), _.p(2)]}>hello world!</div>
+          <Button
+            css={_.m(2)}
+            onClick={() => {
+              setCount(count + 1);
+            }}
+          >
+            hello
+          </Button>
+          <div>{count}</div>
+          <CtxMenuBoundary menuContent={<MenuContent />}>
+            <FileTable files={files} />
+          </CtxMenuBoundary>
 
-      <Ground />
-    </>
+          <Ground />
+        </div>
+        <div css={right}/>
+      </HStack>
   );
 }
 
