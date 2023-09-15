@@ -3,7 +3,6 @@ import {_, HStack} from '../util/csshelper/cssHelper.ts';
 import { Button } from '@/components/ui/button.tsx';
 import { FileTable } from '../components/table/FileTable.tsx';
 import { FileResponse } from '@/components/table/types';
-import { Ground } from '../components/dnd/Ground.tsx';
 import {ContextMenuBoundary} from "@/components/ctxmenu/ContextMenuBoundary.tsx";
 import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.tsx";
 import {AppHeader} from "@/components/header/AppHeader.tsx";
@@ -29,7 +28,6 @@ export function MainPage() {
       <HStack>
         <div css={left}/>
         <div css={center}>
-          <div css={[_.color('blue'), _.p(2)]}>hello world!</div>
           <Button
             css={_.m(2)}
             onClick={() => {
@@ -38,12 +36,10 @@ export function MainPage() {
           >
             hello
           </Button>
-          <div>{count}</div>
-          <ContextMenuBoundary menuContent={<MenuContent2 />}>
+          <span>{count}</span>
+          <ContextMenuBoundary menuContent={<MenuContent />}>
             <FileTable files={files} />
           </ContextMenuBoundary>
-
-          <Ground />
         </div>
         <div css={right}/>
       </HStack>
@@ -51,7 +47,7 @@ export function MainPage() {
   );
 }
 
-function MenuContent2() {
+function MenuContent() {
   return (
     <ContextMenuContent>
       <ContextMenuItem>Profile</ContextMenuItem>

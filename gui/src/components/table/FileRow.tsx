@@ -8,11 +8,12 @@ import {css} from "@emotion/react";
 interface FileRowProps {
   item: FileResponse;
   files: FileResponse[];
-  selection: string[];
-  setSelection: Dispatch<SetStateAction<string[]>>;
+  selection: FileResponse[];
+  setSelection: Dispatch<SetStateAction<FileResponse[]>>;
+  setDFiles: Dispatch<SetStateAction<FileResponse[]>>;
 }
 
-export function FileRow({ item, selection, setSelection }: FileRowProps) {
+export function FileRow({ item, selection, setSelection, setDFiles }: FileRowProps) {
 
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: 'FILE',
@@ -36,17 +37,21 @@ export function FileRow({ item, selection, setSelection }: FileRowProps) {
     }),
   }));
 
-  const toggleRow = (id: string) => {
+  const include = () => {
+    return selection.map(file => file.name).includes(item.name);
+  }
+
+  const toggleRow = (file: FileResponse) => {
     return setSelection((selection) =>
-      selection.includes(id)
-        ? selection.filter((item) => item !== id)
-        : [...selection, id],
+      selection.includes(file)
+        ? selection.filter((item) => item.name !== file.name)
+        : [...selection, file],
     );
   };
 
   const style = css`
     opacity: ${isDragging ? 0.5 : 1};
-    background: ${isOver ? "gray" : "white"};
+    background: ${isOver && !include() ? "gray" : "white"};
   `
 
   const noneRef = useRef(null);
@@ -55,24 +60,26 @@ export function FileRow({ item, selection, setSelection }: FileRowProps) {
     dragPreview(noneRef);
   });
 
+  useEffect(() => {
+    if (isDragging) {
+      if (selection.length > 0) {
+        setDFiles(selection);
+      } else {
+        setDFiles([item]);
+      }
+    } else {
+      setDFiles([]);
+    }
+  }, [isDragging, item, selection, setDFiles]);
+
   return (
     <>
-      {/*<div*/}
-      {/*  style={{*/}
-      {/*    position: "relative",*/}
-      {/*    top: isDragging ? x + "px" : "0px",*/}
-      {/*    left: isDragging ? y + "px" : "0px",*/}
-      {/*    zIndex: isDragging ? 100000 : 0,*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  hello*/}
-      {/*</div>*/}
       <div style={{display: "none"}} ref={noneRef} />
       <TableRow ref={node => drag(drop(node))} css={style}>
         <TableCell>
           <Checkbox
-            onClick={() => toggleRow(item.name)}
-            checked={selection.includes(item.name)}
+            onClick={() => toggleRow(item)}
+            checked={selection.includes(item)}
           />
         </TableCell>
         <TableCell>{item.type}</TableCell>
