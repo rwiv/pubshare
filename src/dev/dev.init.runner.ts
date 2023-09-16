@@ -1,4 +1,4 @@
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import {Injectable, OnApplicationBootstrap} from '@nestjs/common';
 import {UserService} from "../user/domain/user.service";
 
 @Injectable()
@@ -11,7 +11,15 @@ export class DevInitRunner implements OnApplicationBootstrap {
       await this.userService.create({
         email: 'test1@gmail.com',
         password: '1234',
+        certified: true,
+        role: 'ADMIN',
+      });
+
+      await this.userService.create({
+        email: 'test2@gmail.com',
+        password: '1234',
         certified: false,
+        role: 'MEMBER',
       });
     }
 

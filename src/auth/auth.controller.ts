@@ -11,8 +11,10 @@ import {
 import { AuthService } from './authentication/auth.service';
 import { AuthGuard } from './authorization/auth.guard';
 import { LoginRequest } from './authentication/types';
+import { Roles } from './authorization/roles';
+import { RolesGuard } from './authorization/role.guard';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
@@ -21,12 +23,13 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() req: LoginRequest) {
+  login(@Body() req: LoginRequest) {
     return this.authService.login(req);
   }
 
-  @UseGuards(AuthGuard)
   @Get('profile')
+  @Roles('ADMIN')
+  @UseGuards(AuthGuard, RolesGuard)
   getProfile(@Request() req) {
     return req.user;
   }

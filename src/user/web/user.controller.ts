@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../domain/user.service';
 import { UserCreation, UserResponse, UserUpdate } from './types';
+import { Role } from '../domain/user.role';
 
 @Controller('api/users')
 export class UserController {
@@ -17,8 +18,10 @@ export class UserController {
 
   @Post()
   async create(@Body() createUser: UserCreation): Promise<UserResponse> {
-    const { id, email, certified } = await this.userService.create(createUser);
-    return { id, email, certified };
+    const { id, email, certified, role } =
+      await this.userService.create(createUser);
+    const r = role as Role;
+    return { id, email, certified, role: r };
   }
 
   @Get()
