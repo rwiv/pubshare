@@ -5,14 +5,14 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './authentication/auth.service';
 import { AuthGuard } from './authorization/auth.guard';
-import { LoginRequest } from './authentication/types';
+import { LoginRequest, SecurityContext } from './authentication/types';
 import { Roles } from './authorization/roles';
 import { RolesGuard } from './authorization/role.guard';
+import { Auth } from './auth.decorator';
 
 @Controller('api/auth')
 export class AuthController {
@@ -30,7 +30,7 @@ export class AuthController {
   @Get('profile')
   @Roles('ADMIN')
   @UseGuards(AuthGuard, RolesGuard)
-  getProfile(@Request() req) {
-    return req.user;
+  getProfile(@Auth() auth: SecurityContext) {
+    return auth;
   }
 }
