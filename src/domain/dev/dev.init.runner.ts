@@ -1,9 +1,9 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { UserService } from '@/domain/user/domain/user.service';
+import { AccountService } from '@/domain/account/domain/account.service';
 
 @Injectable()
 export class DevInitRunner implements OnApplicationBootstrap {
-  constructor(private userService: UserService) {}
+  constructor(private userService: AccountService) {}
 
   async onApplicationBootstrap(): Promise<void> {
     const users = await this.userService.findAll();

@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { cutil } from '@/util/cutil';
+import { getConf } from '@/util/cutil';
 import { AppModule } from '@/app.module';
 
 async function bootstrap() {
@@ -8,7 +8,7 @@ async function bootstrap() {
   //   logger: ['log', 'debug', 'error', 'warn'],
   // });
 
-  const conf = await cutil.getConf();
+  const conf = await getConf();
   if (conf.env === 'dev') {
     app.enableCors();
   }

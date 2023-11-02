@@ -1,7 +1,7 @@
 import { S3Client } from '@/domain/access/client/s3.client';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { putil } from '@/util/putil';
+import { absRoot } from '@/util/putil';
 
 const client = new S3Client();
 
@@ -34,14 +34,14 @@ function waitForEnd(ws: fs.WriteStream): Promise<string> {
 it('download', async () => {
   const res = await client.download('test123.txt');
   console.log(res);
-  const p = path.resolve(putil.absRoot(), 'test', 'asset', 'download.txt');
+  const p = path.resolve(absRoot(), 'test', 'asset', 'download.txt');
   const rs = fs.createWriteStream(p);
   (res.Body as any).pipe(rs);
   await waitForEnd(rs);
 });
 
 it('upload', async () => {
-  const p = path.resolve(putil.absRoot(), 'test', 'asset', 'test.txt');
+  const p = path.resolve(absRoot(), 'test', 'asset', 'test.txt');
   const rs = fs.createReadStream(p);
   const res = await client.upload('test123.txt', rs);
   console.log(res);

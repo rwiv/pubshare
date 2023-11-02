@@ -2,15 +2,11 @@ import * as path from 'path';
 
 const PROJECT_NAME = 'pubshare';
 
-class PathUtil {
-  getDirname() {
-    return path.resolve();
-  }
-
-  absRoot() {
-    const dirname = this.getDirname();
-    return dirname.split(PROJECT_NAME)[0] + PROJECT_NAME;
-  }
+export function getDirname() {
+  return path.resolve();
 }
 
-export const putil = new PathUtil();
+export function absRoot() {
+  const dirname = getDirname();
+  return dirname.split(PROJECT_NAME)[0] + PROJECT_NAME;
+}

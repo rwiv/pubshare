@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 it('test', async () => {
-  const res = await axios.post('http://localhost:3000/api/auth/login', {
+  const res = await axios.post('http://localhost:3000/api/accounts/login', {
     email: 'test1@gmail.com',
     password: '1234',
   });
@@ -10,7 +10,7 @@ it('test', async () => {
 
   const res2 = await axios({
     method: 'GET',
-    url: 'http://localhost:3000/api/auth/profile',
+    url: 'http://localhost:3000/dev/profile',
     headers: {
       Authorization: `Bearer ${token}`,
     },

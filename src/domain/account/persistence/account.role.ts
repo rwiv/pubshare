@@ -3,9 +3,9 @@ export const RoleType = {
   ADMIN: 'ADMIN',
 };
 
-export type UserRole = 'MEMBER' | 'ADMIN';
+export type AccountRole = 'MEMBER' | 'ADMIN';
 
-export function getRoles(role: UserRole) {
+export function getRoles(role: AccountRole) {
   switch (role) {
     case RoleType.ADMIN:
       return [RoleType.ADMIN, RoleType.MEMBER];

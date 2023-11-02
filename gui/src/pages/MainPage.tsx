@@ -6,8 +6,8 @@ import {ContextMenuBoundary} from "@/components/ctxmenu/ContextMenuBoundary.tsx"
 import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.tsx";
 import {AppHeader} from "@/components/header/AppHeader.tsx";
 import {AccessClient, FileInfo} from "@/client/AccessClient.ts";
-import {UserClient} from "@/client/UserClient.ts";
-import {UserResponse} from "../../../src/domain/user/web/types";
+import {AccountClient} from "@/client/AccountClient.ts";
+import {AccountResponse} from "../../../src/domain/account/domain/types";
 import {FileResponse} from "@/components/table/types";
 // import viteLogo from '/vite.svg'
 
@@ -29,11 +29,11 @@ export function MainPage() {
   const [count, setCount] = useState(0);
 
   const [files, setFiles] = useState<FileInfo[]>([]);
-  const [users, setUsers] = useState<UserResponse[]>([]);
+  const [users, setUsers] = useState<AccountResponse[]>([]);
 
   useEffect(() => {
-    const userClient = new UserClient();
-    userClient.createUser({
+    const userClient = new AccountClient();
+    userClient.create({
       email: `hello${Date.now().toString()}@gmail.com`,
       password: "1234",
       certified: false,
@@ -46,8 +46,8 @@ export function MainPage() {
       setFiles(infos);
     });
 
-    const userClient = new UserClient();
-    userClient.getUsersAll().then(users => {
+    const userClient = new AccountClient();
+    userClient.findByAll().then(users => {
       setUsers(users)
     })
   }, []);

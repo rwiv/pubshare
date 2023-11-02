@@ -1,17 +1,15 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from '@/domain/user/user.module';
+import { AccountModule } from '@/domain/account/account.module';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthController } from '@/auth/auth.controller';
-import { AuthService } from '@/auth/authentication/auth.service';
+import { AuthenticationService } from '@/auth/authentication/authentication.service';
 import { AuthGuard } from '@/auth/authorization/auth.guard';
 import { RolesGuard } from '@/auth/authorization/role.guard';
 import { jwtConstants } from '@/auth/authentication/jwt.constants';
 
 @Module({
-  controllers: [AuthController],
-  providers: [AuthService, AuthGuard, RolesGuard],
+  providers: [AuthenticationService, AuthGuard, RolesGuard],
   imports: [
-    UserModule,
+    AccountModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,

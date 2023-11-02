@@ -1,4 +1,4 @@
-import { cutil } from '@/util/cutil';
+import { getConfSync } from '@/util/cutil';
 import {
   DeleteObjectCommand,
   DeleteObjectCommandOutput,
@@ -14,7 +14,7 @@ import { accessConfig } from '@/domain/access/config/accessConfig';
 import { FileInfo } from '@/domain/access/client/FileInfo';
 
 export class S3Client {
-  private aws = cutil.getConfSync().aws;
+  private aws = getConfSync().aws;
   private s3 = this.getClient();
 
   async list(
