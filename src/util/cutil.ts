@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { putil } from './putil';
-import { AppConfig } from './config';
+import { putil } from '@/util/putil';
+import { AppConfig } from '@/util/config';
 
 class ConfigUtil {
   async getConf(): Promise<AppConfig> {

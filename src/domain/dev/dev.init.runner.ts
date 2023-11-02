@@ -1,5 +1,5 @@
-import {Injectable, OnApplicationBootstrap} from '@nestjs/common';
-import {UserService} from "../user/domain/user.service";
+import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { UserService } from '@/domain/user/domain/user.service';
 
 @Injectable()
 export class DevInitRunner implements OnApplicationBootstrap {

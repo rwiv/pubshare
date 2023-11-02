@@ -9,11 +9,15 @@ import {
   Delete,
   ParseIntPipe,
 } from '@nestjs/common';
-import { UserService } from '../domain/user.service';
-import { UserCreation, UserResponse, UserUpdate } from './types';
-import { Role } from '../domain/user.role';
-import { UserModel } from '../persistence/prisma';
-import { UserModule } from '../user.module';
+import { UserService } from '@/domain/user/domain/user.service';
+import {
+  UserCreation,
+  UserResponse,
+  UserUpdate,
+} from '@/domain/user/web/types';
+import { UserModel } from '@/domain/user/persistence/prisma';
+import { UserRole } from '@/domain/user/domain/user.role';
+import { UserModule } from '@/domain/user/user.module';
 
 @Controller('api/users')
 export class UserController {
@@ -21,7 +25,7 @@ export class UserController {
 
   private convert(user: UserModel): UserResponse {
     const { id, email, certified, role } = user;
-    const r = role as Role;
+    const r = role as UserRole;
     return { id, email, certified, role: r };
   }
 
@@ -44,7 +48,10 @@ export class UserController {
   }
 
   @Put(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() updateUser: UserUpdate) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUser: UserUpdate,
+  ) {
     const user: UserModel = await this.userService.update(id, updateUser);
     return this.convert(user);
   }

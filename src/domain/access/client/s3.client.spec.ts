@@ -1,7 +1,7 @@
-import { S3Client } from './s3.client';
+import { S3Client } from '@/domain/access/client/s3.client';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { putil } from '../../util/putil';
+import { putil } from '@/util/putil';
 
 const client = new S3Client();
 

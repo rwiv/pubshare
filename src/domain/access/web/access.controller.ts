@@ -9,11 +9,11 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { AccessService } from '../domain/access.service';
 import { Response } from 'express';
-import { S3Client } from '../client/s3.client';
-import { AccessFileRequest } from './forms';
+import { S3Client } from '@/domain/access/client/s3.client';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AccessService } from '@/domain/access/domain/access.service';
+import { AccessFileRequest } from '@/domain/access/web/forms';
 
 @Controller('api/access')
 export class AccessController {

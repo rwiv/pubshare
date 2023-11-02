@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AccessController } from './web/access.controller';
-import { AccessService } from './domain/access.service';
+import { AccessController } from '@/domain/access/web/access.controller';
+import { AccessService } from '@/domain/access/domain/access.service';
 
 @Module({
   controllers: [AccessController],

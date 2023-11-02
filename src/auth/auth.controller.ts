@@ -7,12 +7,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { AuthService } from './authentication/auth.service';
-import { AuthGuard } from './authorization/auth.guard';
-import { LoginRequest, SecurityContext } from './authentication/types';
-import { Roles } from './authorization/roles';
-import { RolesGuard } from './authorization/role.guard';
-import { Auth } from './auth.decorator';
+import { AuthService } from '@/auth/authentication/auth.service';
+import { AuthGuard } from '@/auth/authorization/auth.guard';
+import { LoginRequest, SecurityContext } from '@/auth/authentication/types';
+import { RolesGuard } from '@/auth/authorization/role.guard';
+import { Auth } from '@/auth/auth.decorator';
+import { Roles } from '@/auth/authorization/roles';
 
 @Controller('api/auth')
 export class AuthController {

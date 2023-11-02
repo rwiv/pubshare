@@ -7,7 +7,7 @@ import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.
 import {AppHeader} from "@/components/header/AppHeader.tsx";
 import {AccessClient, FileInfo} from "@/client/AccessClient.ts";
 import {UserClient} from "@/client/UserClient.ts";
-import {UserResponse} from "../../../src/user/web/types";
+import {UserResponse} from "../../../src/domain/user/web/types";
 import {FileResponse} from "@/components/table/types";
 // import viteLogo from '/vite.svg'
 

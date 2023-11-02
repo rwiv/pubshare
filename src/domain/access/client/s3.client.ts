@@ -1,4 +1,4 @@
-import { cutil } from '../../util/cutil';
+import { cutil } from '@/util/cutil';
 import {
   DeleteObjectCommand,
   DeleteObjectCommandOutput,
@@ -10,8 +10,8 @@ import {
   S3Client as Client,
 } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
-import { FileInfo } from './FileInfo';
-import { appConstants } from '../../config/appConstants';
+import { accessConfig } from '@/domain/access/config/accessConfig';
+import { FileInfo } from '@/domain/access/client/FileInfo';
 
 export class S3Client {
   private aws = cutil.getConfSync().aws;
@@ -19,7 +19,7 @@ export class S3Client {
 
   async list(
     prefix: string,
-    limit: number = appConstants.listLimit,
+    limit: number = accessConfig.listLimit,
   ): Promise<FileInfo[]> {
     const command = new ListObjectsCommand({
       Bucket: this.aws.bucketName,

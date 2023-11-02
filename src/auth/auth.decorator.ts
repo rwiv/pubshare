@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { SecurityContext } from './authentication/types';
+import { SecurityContext } from '@/auth/authentication/types';
 
 export const Auth = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
