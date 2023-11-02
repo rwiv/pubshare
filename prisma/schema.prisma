@@ -17,13 +17,19 @@ model Account {
 }
 
 model File {
-  id   Int    @id @default(autoincrement())
-  path String @unique
+  id       Int           @id @default(autoincrement())
+  path     String        @unique
+  comments FileComment[]
 }
 
 model FileComment {
-  id          Int     @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
+  fileId      Int
+  file        File          @relation(fields: [fileId], references: [id], onDelete: Cascade)
   createdById Int
-  createdBy   Account @relation(fields: [createdById], references: [id])
+  createdBy   Account       @relation(fields: [createdById], references: [id])
+  parentId    Int?
+  parent      FileComment?  @relation("ParentChildren", fields: [parentId], references: [id])
+  children    FileComment[] @relation("ParentChildren")
   content     String
 }

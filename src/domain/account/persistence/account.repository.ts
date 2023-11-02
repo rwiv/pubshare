@@ -30,7 +30,7 @@ export class AccountRepository {
     });
   }
 
-  async certificate(id: number) {
+  certificate(id: number) {
     return this.prisma.account.update({
       where: { id },
       data: { certified: true },

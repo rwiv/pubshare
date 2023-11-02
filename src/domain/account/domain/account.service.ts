@@ -27,7 +27,7 @@ export class AccountService {
     return this.accountRepository.update(id, update);
   }
 
-  async certificate(id: number) {
+  certificate(id: number) {
     return this.accountRepository.certificate(id);
   }
 
