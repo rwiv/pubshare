@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { AccountCreation, AccountUpdate } from '@/domain/account/domain/types';
-import { AccountModel } from '@/domain/account/persistence/prisma';
 import { PrismaService } from '@/misc/prisma.service';
 
 @Injectable()
 export class AccountRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(creation: AccountCreation): Promise<AccountModel> {
+  create(creation: AccountCreation) {
     return this.prisma.account.create({ data: creation });
   }
 
-  findAll(): Promise<AccountModel[]> {
+  findAll() {
     return this.prisma.account.findMany();
   }
 
