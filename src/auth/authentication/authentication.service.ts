@@ -11,12 +11,12 @@ export class AuthenticationService {
   ) {}
 
   async login(req: LoginRequest) {
-    const user = await this.accountService.findByUsername(req.email);
-    if (user?.password !== req.password) {
+    const account = await this.accountService.findByUsername(req.email);
+    if (account?.password !== req.password) {
       throw new UnauthorizedException();
     }
 
-    const { id, email, role, certified } = user;
+    const { id, email, role, certified } = account;
     const payload: SecurityContext = { id, email, role, certified };
     return {
       access_token: await this.jwtService.signAsync(payload),
