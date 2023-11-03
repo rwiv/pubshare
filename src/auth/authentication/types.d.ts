@@ -7,5 +7,5 @@ export interface SecurityContext {
   id: number;
   email: string;
   certified: boolean;
-  role: string;
+  type: string;
 }

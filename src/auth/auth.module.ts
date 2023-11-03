@@ -3,11 +3,11 @@ import { AccountModule } from '@/domain/account/account.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthenticationService } from '@/auth/authentication/authentication.service';
 import { AuthGuard } from '@/auth/authorization/auth.guard';
-import { RolesGuard } from '@/auth/authorization/role.guard';
+import { TypeGuard } from '@/auth/authorization/type.guard';
 import { jwtConstants } from '@/auth/authentication/jwt.constants';
 
 @Module({
-  providers: [AuthenticationService, AuthGuard, RolesGuard],
+  providers: [AuthenticationService, AuthGuard, TypeGuard],
   imports: [
     AccountModule,
     JwtModule.register({

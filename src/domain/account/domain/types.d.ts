@@ -1,10 +1,10 @@
-import { AccountRole } from '@/domain/account/persistence/account.role';
+import { AccountType } from '@/domain/account/persistence/accountType';
 
 interface AccountResponse {
   id: number;
   email: string;
   certified: boolean;
-  role: AccountRole;
+  type: AccountType;
 }
 
 export interface Account {
@@ -12,19 +12,19 @@ export interface Account {
   email: string;
   password: string;
   certified: boolean;
-  role: string;
+  type: string;
 }
 
 export interface AccountCreation {
   email: string;
   password: string;
   certified: boolean;
-  role: AccountRole;
+  type: AccountType;
 }
 
 export interface AccountUpdate {
   email: string;
   password: string;
   certified: boolean;
-  role: AccountRole;
+  type: AccountType;
 }

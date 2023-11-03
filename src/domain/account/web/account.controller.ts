@@ -18,7 +18,7 @@ import {
   AccountResponse,
   AccountUpdate,
 } from '@/domain/account/domain/types';
-import { AccountRole } from '@/domain/account/persistence/account.role';
+import { AccountType } from '@/domain/account/persistence/accountType';
 import { AuthenticationService } from '@/auth/authentication/authentication.service';
 import { LoginRequest } from '@/auth/authentication/types';
 
@@ -30,9 +30,9 @@ export class AccountController {
   ) {}
 
   private convert(account: Account): AccountResponse {
-    const { id, email, certified, role } = account;
-    const r = role as AccountRole;
-    return { id, email, certified, role: r };
+    const { id, email, certified, type } = account;
+    const r = type as AccountType;
+    return { id, email, certified, type: r };
   }
 
   @HttpCode(HttpStatus.OK)

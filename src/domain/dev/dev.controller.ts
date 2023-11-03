@@ -1,7 +1,7 @@
 import { Controller, Get, Logger, UseGuards } from '@nestjs/common';
-import { Roles } from '@/auth/authorization/roles';
+import { Types } from '@/auth/authorization/types';
 import { AuthGuard } from '@/auth/authorization/auth.guard';
-import { RolesGuard } from '@/auth/authorization/role.guard';
+import { TypeGuard } from '@/auth/authorization/type.guard';
 import { Auth } from '@/auth/auth.decorator';
 import { SecurityContext } from '@/auth/authentication/types';
 
@@ -17,8 +17,8 @@ export class DevController {
   }
 
   @Get('profile')
-  @Roles('ADMIN')
-  @UseGuards(AuthGuard, RolesGuard)
+  @Types('ADMIN')
+  @UseGuards(AuthGuard, TypeGuard)
   getProfile(@Auth() auth: SecurityContext) {
     return auth;
   }

@@ -16,8 +16,8 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const { id, email, role, certified } = account;
-    const payload: SecurityContext = { id, email, role, certified };
+    const { id, email, type, certified } = account;
+    const payload: SecurityContext = { id, email, type, certified };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

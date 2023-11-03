@@ -12,14 +12,14 @@ export class DevInitRunner implements OnApplicationBootstrap {
         email: 'test1@gmail.com',
         password: '1234',
         certified: true,
-        role: 'ADMIN',
+        type: 'ADMIN',
       });
 
       await this.accountService.create({
         email: 'test2@gmail.com',
         password: '1234',
         certified: false,
-        role: 'MEMBER',
+        type: 'MEMBER',
       });
     }
 

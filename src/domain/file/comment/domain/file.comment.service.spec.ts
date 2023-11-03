@@ -30,7 +30,7 @@ describe('FileCommentService', () => {
       email: 'a',
       password: 'a',
       certified: false,
-      role: 'MEMBER',
+      type: 'MEMBER',
     });
 
     const f1 = await fileService.create({ path: 'f1' });

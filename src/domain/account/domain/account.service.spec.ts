@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountService } from '@/domain/account/domain/account.service';
 import { dbInit } from '@/util/db.init';
-import {AccountModule} from "@/domain/account/account.module";
-import {AuthModule} from "@/auth/auth.module";
+import { AccountModule } from '@/domain/account/account.module';
+import { AuthModule } from '@/auth/auth.module';
 
 describe('AccountService', () => {
   let accountService: AccountService;
@@ -22,7 +22,7 @@ describe('AccountService', () => {
       email: 'a',
       password: 'a',
       certified: false,
-      role: 'MEMBER',
+      type: 'MEMBER',
     });
     const result = await accountService.findById(a1.id);
     console.log(result);
