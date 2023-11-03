@@ -20,9 +20,9 @@ describe('FileCommentService', () => {
       imports: [FileCommentModule, FileModule, AccountModule, AuthModule],
     }).compile();
 
-    fileCommentService = module.get<FileCommentService>(FileCommentService);
-    fileService = module.get<FileService>(FileService);
-    accountService = module.get<AccountService>(AccountService);
+    fileCommentService = module.get(FileCommentService);
+    fileService = module.get(FileService);
+    accountService = module.get(AccountService);
   });
 
   it('test', async () => {

@@ -7,8 +7,8 @@ import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.
 import {AppHeader} from "@/components/header/AppHeader.tsx";
 import {AccessClient, FileInfo} from "@/client/AccessClient.ts";
 import {AccountClient} from "@/client/AccountClient.ts";
-import {AccountResponse} from "../../../src/domain/account/domain/types";
 import {FileResponse} from "@/components/table/types";
+import {AccountResponse} from "../../../src/domain/account/web/types";
 // import viteLogo from '/vite.svg'
 
 function convertFile(info: FileInfo): FileResponse {

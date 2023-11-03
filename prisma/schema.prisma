@@ -20,6 +20,7 @@ model File {
   id       Int           @id @default(autoincrement())
   path     String        @unique
   comments FileComment[]
+  fileTags FileTag[]
 }
 
 model FileComment {
@@ -32,4 +33,18 @@ model FileComment {
   parent      FileComment?  @relation("ParentChildren", fields: [parentId], references: [id])
   children    FileComment[] @relation("ParentChildren")
   content     String
+}
+
+model Tag {
+  id       Int       @id @default(autoincrement())
+  name     String
+  fileTags FileTag[]
+}
+
+model FileTag {
+  id     Int  @id @default(autoincrement())
+  fileId Int
+  file   File @relation(fields: [fileId], references: [id])
+  tagId  Int
+  tag    Tag  @relation(fields: [tagId], references: [id])
 }

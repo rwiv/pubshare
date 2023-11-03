@@ -1,6 +1,6 @@
 import { FileCommentRepository } from '@/domain/file/comment/persistence/FileCommentRepository';
 import { Injectable } from '@nestjs/common';
-import { FileCommentCreation } from '@/domain/file/comment/domain/types';
+import { FileCommentCreation } from '@/domain/file/comment/persistence/types';
 
 @Injectable()
 export class FileCommentService {

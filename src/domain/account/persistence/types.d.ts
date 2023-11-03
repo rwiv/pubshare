@@ -1,12 +1,5 @@
 import { AccountType } from '@/domain/account/persistence/accountType';
 
-interface AccountResponse {
-  id: number;
-  email: string;
-  certified: boolean;
-  type: AccountType;
-}
-
 export interface Account {
   id: number;
   email: string;

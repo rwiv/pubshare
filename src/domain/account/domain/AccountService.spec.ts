@@ -14,7 +14,7 @@ describe('AccountService', () => {
       imports: [AccountModule, AuthModule],
     }).compile();
 
-    accountService = module.get<AccountService>(AccountService);
+    accountService = module.get(AccountService);
   });
 
   it('test', async () => {

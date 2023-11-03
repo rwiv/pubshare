@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { AccountCreation, AccountUpdate } from '@/domain/account/domain/types';
+import {
+  AccountCreation,
+  AccountUpdate,
+} from '@/domain/account/persistence/types';
 import { PrismaService } from '@/misc/PrismaService';
 
 @Injectable()

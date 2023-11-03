@@ -13,7 +13,7 @@ describe('FileService', () => {
       imports: [FileModule],
     }).compile();
 
-    fileService = module.get<FileService>(FileService);
+    fileService = module.get(FileService);
   });
 
   it('test', async () => {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AccountCreation, AccountUpdate } from '@/domain/account/domain/types';
+import { AccountCreation, AccountUpdate } from '@/domain/account/persistence/types';
 import { AccountRepository } from '@/domain/account/persistence/AccountRepository';
 
 @Injectable()

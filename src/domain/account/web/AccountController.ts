@@ -15,12 +15,12 @@ import { AccountService } from '@/domain/account/domain/AccountService';
 import {
   Account,
   AccountCreation,
-  AccountResponse,
   AccountUpdate,
-} from '@/domain/account/domain/types';
+} from '@/domain/account/persistence/types';
 import { AccountType } from '@/domain/account/persistence/accountType';
 import { AuthenticationService } from '@/auth/authentication/AuthenticationService';
 import { LoginRequest } from '@/auth/authentication/types';
+import { AccountResponse } from '@/domain/account/web/types';
 
 @Controller('api/accounts')
 export class AccountController {
