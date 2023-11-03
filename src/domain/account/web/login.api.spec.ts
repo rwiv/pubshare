@@ -12,8 +12,14 @@ it('test', async () => {
     email: 'test2@gmail.com',
     password: '1234',
   });
-  const res2 = await profile(token2);
-  console.log(res2.data);
+
+  let err;
+  try {
+    await profile(token2);
+  } catch (e) {
+    err = e;
+  }
+  expect(err).toBeTruthy();
 });
 
 async function login(data: { email: string; password: string }) {

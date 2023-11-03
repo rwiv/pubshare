@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AccountCreation, AccountUpdate } from '@/domain/account/domain/types';
-import { AccountRepository } from '@/domain/account/persistence/account.repository';
+import { AccountRepository } from '@/domain/account/persistence/AccountRepository';
 
 @Injectable()
 export class AccountService {

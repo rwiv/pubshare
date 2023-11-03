@@ -1,8 +1,8 @@
 import { Controller, Get, Logger, UseGuards } from '@nestjs/common';
 import { Types } from '@/auth/authorization/types';
-import { AuthGuard } from '@/auth/authorization/auth.guard';
-import { TypeGuard } from '@/auth/authorization/type.guard';
-import { Auth } from '@/auth/auth.decorator';
+import { AuthGuard } from '@/auth/authorization/AuthGuard';
+import { TypeGuard } from '@/auth/authorization/TypeGuard';
+import { AuthDecorator } from '@/auth/Auth.decorator';
 import { SecurityContext } from '@/auth/authentication/types';
 
 @Controller('dev')
@@ -19,7 +19,7 @@ export class DevController {
   @Get('profile')
   @Types('ADMIN')
   @UseGuards(AuthGuard, TypeGuard)
-  getProfile(@Auth() auth: SecurityContext) {
+  getProfile(@AuthDecorator() auth: SecurityContext) {
     return auth;
   }
 }

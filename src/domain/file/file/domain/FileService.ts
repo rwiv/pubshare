@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FileRepository } from '@/domain/file/file/persistence/file.repository';
+import { FileRepository } from '@/domain/file/file/persistence/FileRepository';
 
 @Injectable()
 export class FileService {

@@ -1,4 +1,4 @@
-import { dbInit } from '@/util/db.init';
+import { dbInit } from '@/util/dbInit';
 
 it('test', async () => {
   const result = dbInit();

@@ -1,7 +1,7 @@
-import { dbInit } from '@/util/db.init';
+import { dbInit } from '@/util/dbInit';
 import { Test, TestingModule } from '@nestjs/testing';
-import { FileService } from '@/domain/file/file/domain/file.service';
-import { FileModule } from '@/domain/file/file/file.module';
+import { FileService } from '@/domain/file/file/domain/FileService';
+import { FileModule } from '@/domain/file/file/FileModule';
 
 describe('FileService', () => {
   let fileService: FileService;

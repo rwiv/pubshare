@@ -1,5 +1,5 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { AccountService } from '@/domain/account/domain/account.service';
+import { AccountService } from '@/domain/account/domain/AccountService';
 
 @Injectable()
 export class DevInitRunner implements OnApplicationBootstrap {

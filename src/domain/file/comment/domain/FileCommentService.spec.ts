@@ -1,12 +1,12 @@
-import { dbInit } from '@/util/db.init';
+import { dbInit } from '@/util/dbInit';
 import { Test, TestingModule } from '@nestjs/testing';
-import { FileCommentService } from '@/domain/file/comment/domain/file.comment.service';
-import { FileService } from '@/domain/file/file/domain/file.service';
-import { FileModule } from '@/domain/file/file/file.module';
-import { FileCommentModule } from '@/domain/file/comment/file.comment.module';
-import { AccountModule } from '@/domain/account/account.module';
-import { AccountService } from '@/domain/account/domain/account.service';
-import { AuthModule } from '@/auth/auth.module';
+import { FileCommentService } from '@/domain/file/comment/domain/FileCommentService';
+import { FileService } from '@/domain/file/file/domain/FileService';
+import { FileModule } from '@/domain/file/file/FileModule';
+import { FileCommentModule } from '@/domain/file/comment/FileCommentModule';
+import { AccountModule } from '@/domain/account/AccountModule';
+import { AccountService } from '@/domain/account/domain/AccountService';
+import { AuthModule } from '@/auth/AuthModule';
 
 describe('FileCommentService', () => {
   let fileCommentService: FileCommentService;

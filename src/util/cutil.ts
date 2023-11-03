@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { absRoot } from '@/util/putil';
-import { AppConfig } from '@/util/config';
+import { AppConfig } from '@/util/config.types';
 
 export async function getConf(): Promise<AppConfig> {
   const p = path.resolve(absRoot(), 'conf', 'conf.json');

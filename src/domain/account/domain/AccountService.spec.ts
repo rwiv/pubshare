@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AccountService } from '@/domain/account/domain/account.service';
-import { dbInit } from '@/util/db.init';
-import { AccountModule } from '@/domain/account/account.module';
-import { AuthModule } from '@/auth/auth.module';
+import { AccountService } from '@/domain/account/domain/AccountService';
+import { dbInit } from '@/util/dbInit';
+import { AccountModule } from '@/domain/account/AccountModule';
+import { AuthModule } from '@/auth/AuthModule';
 
 describe('AccountService', () => {
   let accountService: AccountService;

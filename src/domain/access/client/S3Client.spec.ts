@@ -1,4 +1,4 @@
-import { S3Client } from '@/domain/access/client/s3.client';
+import { S3Client } from '@/domain/access/client/S3Client';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { absRoot } from '@/util/putil';

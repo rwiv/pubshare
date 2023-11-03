@@ -11,7 +11,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { AccountService } from '@/domain/account/domain/account.service';
+import { AccountService } from '@/domain/account/domain/AccountService';
 import {
   Account,
   AccountCreation,
@@ -19,7 +19,7 @@ import {
   AccountUpdate,
 } from '@/domain/account/domain/types';
 import { AccountType } from '@/domain/account/persistence/accountType';
-import { AuthenticationService } from '@/auth/authentication/authentication.service';
+import { AuthenticationService } from '@/auth/authentication/AuthenticationService';
 import { LoginRequest } from '@/auth/authentication/types';
 
 @Controller('api/accounts')
