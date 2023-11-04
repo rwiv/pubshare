@@ -10,8 +10,8 @@ import {
   PermissionType,
   permissionTypeValues,
 } from '@/domain/permission/common/types';
-import { find } from '@/util/iter';
-import { FileService } from '@/domain/file/file/domain/FileService';
+import { filterMap, find } from '@/util/iter';
+import { File } from '@/domain/file/file/persistence/types';
 
 @Injectable()
 export class PermissionVerifier {
@@ -19,12 +19,9 @@ export class PermissionVerifier {
     private readonly filePolicyService: FilePolicyService,
     private readonly fileAuthorityService: FileAuthorityService,
     private readonly roleService: RoleService,
-    private readonly fileService: FileService,
   ) {}
 
-  async verify(auth: SecurityContext | null, fileId: number) {
-    const file = await this.fileService.findById(fileId);
-
+  async verify(auth: SecurityContext | null, file: File) {
     // account is guest
     if (auth === null) {
       return file.guestDefaultPerm;
@@ -36,12 +33,12 @@ export class PermissionVerifier {
 
     let perm: PermissionType = null;
 
-    perm = await this.checkPolicy(auth, fileId);
+    perm = await this.checkPolicy(auth, file.id);
     if (perm !== null) {
       return perm;
     }
 
-    perm = await this.checkAuthority(auth, fileId);
+    perm = await this.checkAuthority(auth, file.id);
     if (perm !== null) {
       return perm;
     }
@@ -56,15 +53,17 @@ export class PermissionVerifier {
     const roles = await this.roleService.findByAccountId(auth.id);
 
     const filePolicies = await this.filePolicyService.findByFileId(fileId);
-    const fpMap = new Map<number, string>();
+    const filePolicyMap = new Map<number, string>();
     filePolicies.forEach((fp) => {
-      fpMap.set(fp.id, fp.permission);
+      filePolicyMap.set(fp.id, fp.permission);
     });
 
-    const matches = roles
-      .filter((role) => fpMap.get(role.policyId) !== undefined)
-      .map((role) => fpMap.get(role.policyId))
-      .map((permissionType) => permToPriority(permissionType));
+    const matches = filterMap(roles, (role) => {
+      const rolePerm = filePolicyMap.get(role.policyId);
+      const ok = rolePerm !== null;
+      const res = permToPriority(rolePerm);
+      return { ok, res };
+    });
 
     return priorityToPerm(Math.max(...matches));
   }

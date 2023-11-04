@@ -3,10 +3,9 @@ import { PermissionVerifier } from '@/domain/permission/verifier/PermissionVerif
 import { FilePolicyModule } from '@/domain/permission/filepolicy/FilePolicyModule';
 import { FileAuthorityModule } from '@/domain/permission/fileauthority/FileAuthorityModule';
 import { RoleModule } from '@/domain/permission/role/RoleModule';
-import { FileModule } from '@/domain/file/file/FileModule';
 
 @Module({
   providers: [PermissionVerifier],
-  imports: [FilePolicyModule, FileAuthorityModule, RoleModule, FileModule],
+  imports: [FilePolicyModule, FileAuthorityModule, RoleModule],
 })
 export class PermissionVerifierModule {}
