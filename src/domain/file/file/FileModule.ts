@@ -5,5 +5,6 @@ import { PrismaService } from '@/misc/PrismaService';
 
 @Module({
   providers: [PrismaService, FileRepository, FileService],
+  exports: [FileService],
 })
 export class FileModule {}

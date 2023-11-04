@@ -6,6 +6,10 @@ import { FileCommentCreation } from '@/domain/file/comment/persistence/types';
 export class FileCommentRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  create(creation: FileCommentCreation) {
+    return this.prisma.fileComment.create({ data: creation });
+  }
+
   findById(id: number) {
     return this.prisma.fileComment.findUnique({ where: { id } });
   }
@@ -22,7 +26,9 @@ export class FileCommentRepository {
     });
   }
 
-  create(creation: FileCommentCreation) {
-    return this.prisma.fileComment.create({ data: creation });
+  findByFileId(fileId: number) {
+    return this.prisma.fileComment.findMany({
+      where: { fileId },
+    });
   }
 }

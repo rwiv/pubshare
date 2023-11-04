@@ -35,16 +35,16 @@ export class AccountController {
     return { id, email, certified, type: r };
   }
 
-  @HttpCode(HttpStatus.OK)
-  @Post('login')
-  login(@Body() req: LoginRequest) {
-    return this.authService.login(req);
-  }
-
   @Post()
   async create(@Body() creation: AccountCreation): Promise<AccountResponse> {
     const account = await this.accountService.create(creation);
     return this.convert(account);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('login')
+  login(@Body() req: LoginRequest) {
+    return this.authService.login(req);
   }
 
   @Get()

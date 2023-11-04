@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { FileCommentService } from '@/domain/file/comment/domain/FileCommentService';
 import { FileCommentCreation } from '@/domain/file/comment/persistence/types';
 
@@ -6,9 +13,13 @@ import { FileCommentCreation } from '@/domain/file/comment/persistence/types';
 export class FileCommentController {
   constructor(private readonly fileCommentService: FileCommentService) {}
 
-  @Get()
-  findAll() {}
-
   @Post()
-  async create(@Body() creation: FileCommentCreation) {}
+  create(@Body() creation: FileCommentCreation) {
+    return this.fileCommentService.create(creation);
+  }
+
+  @Get(':fileId')
+  findByFileId(@Param('fileId', ParseIntPipe) fileId: number) {
+    return this.fileCommentService.findByFileId(fileId);
+  }
 }

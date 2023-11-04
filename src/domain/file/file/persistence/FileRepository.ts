@@ -5,11 +5,11 @@ import { Injectable } from '@nestjs/common';
 export class FileRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  findById(id: number) {
-    return this.prisma.file.findUnique({ where: { id } });
-  }
-
   create(creation: FileCreation) {
     return this.prisma.file.create({ data: creation });
+  }
+
+  findById(id: number) {
+    return this.prisma.file.findUnique({ where: { id } });
   }
 }

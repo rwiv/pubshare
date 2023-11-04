@@ -6,11 +6,15 @@ import { FileCommentCreation } from '@/domain/file/comment/persistence/types';
 export class FileCommentService {
   constructor(private readonly fileCommentRepository: FileCommentRepository) {}
 
+  create(creation: FileCommentCreation) {
+    return this.fileCommentRepository.create(creation);
+  }
+
   findById(id: number) {
     return this.fileCommentRepository.findById(id);
   }
 
-  create(creation: FileCommentCreation) {
-    return this.fileCommentRepository.create(creation);
+  findByFileId(fileId: number) {
+    return this.fileCommentRepository.findByFileId(fileId);
   }
 }

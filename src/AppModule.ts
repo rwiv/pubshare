@@ -6,6 +6,10 @@ import { AccountModule } from '@/domain/account/AccountModule';
 import { FileModule } from '@/domain/file/file/FileModule';
 import { FileCommentModule } from '@/domain/file/comment/FileCommentModule';
 import { TagModule } from '@/domain/file/tag/TagModule';
+import { PolicyModule } from '@/domain/permission/policy/PolicyModule';
+import { RoleModule } from '@/domain/permission/role/RoleModule';
+import { FilePolicyModule } from '@/domain/permission/filepolicy/FilePolicyModule';
+import { FileAuthorityModule } from '@/domain/permission/fileauthority/FileAuthorityModule';
 
 @Module({
   imports: [
@@ -16,6 +20,10 @@ import { TagModule } from '@/domain/file/tag/TagModule';
     FileModule,
     FileCommentModule,
     TagModule,
+    PolicyModule,
+    FilePolicyModule,
+    FileAuthorityModule,
+    RoleModule,
   ],
 })
 export class AppModule {}

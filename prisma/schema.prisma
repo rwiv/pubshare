@@ -8,43 +8,90 @@ datasource db {
 }
 
 model Account {
-  id          Int           @id @default(autoincrement())
-  email       String        @unique
-  password    String
-  certified   Boolean       @default(false)
-  type        String        @default("MEMBER")
-  FileComment FileComment[]
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  certified Boolean @default(false)
+  type      String  @default("MEMBER")
+
+  FileComment     FileComment[]
+  roles           Role[]
+  fileAuthorities FileAuthority[]
 }
 
 model File {
-  id       Int           @id @default(autoincrement())
-  path     String        @unique
-  comments FileComment[]
-  fileTags FileTag[]
+  id   Int    @id @default(autoincrement())
+  path String @unique
+
+  comments        FileComment[]
+  fileTags        FileTag[]
+  filePolicies    FilePolicy[]
+  fileAuthorities FileAuthority[]
 }
 
 model FileComment {
-  id          Int           @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   fileId      Int
-  file        File          @relation(fields: [fileId], references: [id], onDelete: Cascade)
   createdById Int
-  createdBy   Account       @relation(fields: [createdById], references: [id])
   parentId    Int?
-  parent      FileComment?  @relation("ParentChildren", fields: [parentId], references: [id])
-  children    FileComment[] @relation("ParentChildren")
   content     String
+
+  file      File          @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  createdBy Account       @relation(fields: [createdById], references: [id])
+  parent    FileComment?  @relation("ParentChildren", fields: [parentId], references: [id])
+  children  FileComment[] @relation("ParentChildren")
 }
 
 model Tag {
-  id       Int       @id @default(autoincrement())
-  name     String
+  id   Int    @id @default(autoincrement())
+  name String
+
   fileTags FileTag[]
 }
 
 model FileTag {
-  id     Int  @id @default(autoincrement())
+  id     Int @id @default(autoincrement())
   fileId Int
-  file   File @relation(fields: [fileId], references: [id])
   tagId  Int
-  tag    Tag  @relation(fields: [tagId], references: [id])
+
+  file File @relation(fields: [fileId], references: [id])
+  tag  Tag  @relation(fields: [tagId], references: [id])
+}
+
+model Policy {
+  id       Int    @id @default(autoincrement())
+  name     String
+  priority Int
+
+  roles        Role[]
+  filePolicies FilePolicy[]
+}
+
+model Role {
+  id        Int @id @default(autoincrement())
+  accountId Int
+  policyId  Int
+
+  account Account @relation(fields: [accountId], references: [id])
+  policy  Policy  @relation(fields: [policyId], references: [id])
+}
+
+model FilePolicy {
+  id         Int    @id @default(autoincrement())
+  fileId     Int
+  policyId   Int
+  permission String
+
+  file   File   @relation(fields: [fileId], references: [id])
+  policy Policy @relation(fields: [policyId], references: [id])
+}
+
+model FileAuthority {
+  id         Int    @id @default(autoincrement())
+  fileId     Int
+  accountId  Int
+  permission String
+
+  file    File    @relation(fields: [fileId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
 }
