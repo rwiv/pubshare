@@ -11,6 +11,7 @@ export class DevInitRunner implements OnApplicationBootstrap {
       await this.accountService.create({
         email: 'test1@gmail.com',
         password: '1234',
+        nickname: '1',
         certified: true,
         type: 'ADMIN',
       });
@@ -18,6 +19,7 @@ export class DevInitRunner implements OnApplicationBootstrap {
       await this.accountService.create({
         email: 'test2@gmail.com',
         password: '1234',
+        nickname: '2',
         certified: false,
         type: 'MEMBER',
       });

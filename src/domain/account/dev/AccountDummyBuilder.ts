@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { AccountService } from '@/domain/account/domain/AccountService';
-import {Account, AccountCreation} from '@/domain/account/persistence/types';
+import { Account, AccountCreation } from '@/domain/account/persistence/types';
 import {
   AccountType,
   accountTypeValues,
 } from '@/domain/account/persistence/accountType';
-import {SecurityContext} from "@/auth/authentication/types";
+import { SecurityContext } from '@/auth/authentication/types';
 
 @Injectable()
 export class AccountDummyBuilder {
@@ -32,6 +32,7 @@ export class AccountDummyBuilder {
     return {
       email: `${n}`,
       password: `${n}`,
+      nickname: `${n}`,
       certified,
       type,
     };

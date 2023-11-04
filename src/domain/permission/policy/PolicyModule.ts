@@ -3,8 +3,10 @@ import { PrismaService } from '@/misc/PrismaService';
 import { PolicyRepository } from '@/domain/permission/policy/persistence/PolicyRepository';
 import { PolicyService } from '@/domain/permission/policy/domain/PolicyService';
 import { PolicyDummyBuilder } from '@/domain/permission/policy/dev/PolicyDummyBuilder';
+import { PolicyController } from '@/domain/permission/policy/web/PolicyController';
 
 @Module({
+  controllers: [PolicyController],
   providers: [
     PrismaService,
     PolicyRepository,

@@ -4,6 +4,7 @@ export interface Account {
   id: number;
   email: string;
   password: string;
+  nickname: string;
   certified: boolean;
   type: string;
 }
@@ -11,6 +12,7 @@ export interface Account {
 export interface AccountCreation {
   email: string;
   password: string;
+  nickname: string;
   certified: boolean;
   type: AccountType;
 }
@@ -18,6 +20,7 @@ export interface AccountCreation {
 export interface AccountUpdate {
   email: string;
   password: string;
+  nickname: string;
   certified: boolean;
   type: AccountType;
 }

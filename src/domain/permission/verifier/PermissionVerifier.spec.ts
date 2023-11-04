@@ -70,17 +70,14 @@ describe('PermissionVerifier', () => {
     const ret1 = await pv.verify(ac.sc(ac1), fi1);
     await fp.fp(fi1.id, pl3.id, permissionTypeValues.KNOWN);
     expect(ret1).toBe(permissionTypeValues.FORBIDDEN);
-    console.log(ret1);
 
     await fp.fp(fi1.id, pl1.id, permissionTypeValues.KNOWN);
     await fp.fp(fi1.id, pl2.id, permissionTypeValues.READ);
     const ret2 = await pv.verify(ac.sc(ac1), fi1);
     expect(ret2).toBe(permissionTypeValues.READ);
-    console.log(ret2);
 
     await fa.fa(fi1.id, ac1.id, permissionTypeValues.WRITE);
     const ret3 = await pv.verify(ac.sc(ac1), fi1);
     expect(ret3).toBe(permissionTypeValues.WRITE);
-    console.log(ret3);
   });
 });
