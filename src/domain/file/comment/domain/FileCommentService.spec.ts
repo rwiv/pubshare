@@ -1,18 +1,17 @@
 import { dbInit } from '@/util/dbInit';
 import { Test, TestingModule } from '@nestjs/testing';
 import { FileCommentService } from '@/domain/file/comment/domain/FileCommentService';
-import { FileService } from '@/domain/file/file/domain/FileService';
 import { FileModule } from '@/domain/file/file/FileModule';
 import { FileCommentModule } from '@/domain/file/comment/FileCommentModule';
 import { AccountModule } from '@/domain/account/AccountModule';
 import { AuthModule } from '@/auth/AuthModule';
 import { AccountDummyBuilder } from '@/domain/account/dev/AccountDummyBuilder';
-import { permissionTypeValues } from '@/domain/permission/common/types';
+import { FileDummyBuilder } from '@/domain/file/file/dev/FileDummyBuilder';
 
 describe('FileCommentService', () => {
   let fileCommentService: FileCommentService;
-  let fileService: FileService;
   let ac: AccountDummyBuilder;
+  let fi: FileDummyBuilder;
 
   beforeEach(async () => {
     dbInit();
@@ -22,23 +21,15 @@ describe('FileCommentService', () => {
     }).compile();
 
     fileCommentService = module.get(FileCommentService);
-    fileService = module.get(FileService);
     ac = module.get(AccountDummyBuilder);
+    fi = module.get(FileDummyBuilder);
   });
 
   it('test', async () => {
     const a1 = await ac.ac(1);
 
-    const f1 = await fileService.create({
-      path: 'f1',
-      memberDefaultPerm: permissionTypeValues.WRITE,
-      guestDefaultPerm: permissionTypeValues.WRITE,
-    });
-    const f2 = await fileService.create({
-      path: 'f2',
-      memberDefaultPerm: permissionTypeValues.WRITE,
-      guestDefaultPerm: permissionTypeValues.WRITE,
-    });
+    const f1 = await fi.fi(1);
+    const f2 = await fi.fi(2);
 
     const fc1 = await fileCommentService.create({
       content: 'fc1',

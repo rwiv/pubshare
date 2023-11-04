@@ -6,7 +6,7 @@ interface ValueType {
   GUEST: AccountType;
 }
 
-export const AccountTypeValues: ValueType = {
+export const accountTypeValues: ValueType = {
   MEMBER: 'MEMBER',
   ADMIN: 'ADMIN',
   GUEST: 'GUEST',
@@ -14,10 +14,10 @@ export const AccountTypeValues: ValueType = {
 
 export function getTypes(type: AccountType) {
   switch (type) {
-    case AccountTypeValues.ADMIN:
-      return [AccountTypeValues.ADMIN, AccountTypeValues.MEMBER];
-    case AccountTypeValues.MEMBER:
-      return [AccountTypeValues.MEMBER];
+    case accountTypeValues.ADMIN:
+      return [accountTypeValues.ADMIN, accountTypeValues.MEMBER];
+    case accountTypeValues.MEMBER:
+      return [accountTypeValues.MEMBER];
     default:
       throw Error('not support account type');
   }

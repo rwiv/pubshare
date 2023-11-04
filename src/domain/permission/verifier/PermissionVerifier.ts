@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AccountTypeValues } from '@/domain/account/persistence/accountType';
+import { accountTypeValues } from '@/domain/account/persistence/accountType';
 import { FileAuthorityService } from '@/domain/permission/fileauthority/domain/FileAuthorityService';
 import { FilePolicyService } from '@/domain/permission/filepolicy/domain/FilePolicyService';
 import { RoleService } from '@/domain/permission/role/domain/RoleService';
@@ -27,23 +27,25 @@ export class PermissionVerifier {
       return file.guestDefaultPerm;
     }
 
-    if (auth.type === AccountTypeValues.ADMIN) {
+    if (auth.type === accountTypeValues.ADMIN) {
       return permissionTypeValues.WRITE;
     }
 
-    let perm: PermissionType = null;
-
-    perm = await this.checkPolicy(auth, file.id);
-    if (perm !== null) {
-      return perm;
+    let perm = await this.checkPolicy(auth, file.id);
+    const authorityPerm = await this.checkAuthority(auth, file.id);
+    if (authorityPerm !== null) {
+      if (perm === null) {
+        perm = authorityPerm;
+      } else if (permToPriority(perm) < permToPriority(authorityPerm)) {
+        perm = authorityPerm;
+      }
     }
 
-    perm = await this.checkAuthority(auth, file.id);
     if (perm !== null) {
       return perm;
+    } else {
+      return file.memberDefaultPerm;
     }
-
-    return file.memberDefaultPerm;
   }
 
   private async checkPolicy(
@@ -55,17 +57,21 @@ export class PermissionVerifier {
     const filePolicies = await this.filePolicyService.findByFileId(fileId);
     const filePolicyMap = new Map<number, string>();
     filePolicies.forEach((fp) => {
-      filePolicyMap.set(fp.id, fp.permission);
+      filePolicyMap.set(fp.policyId, fp.permission);
     });
 
     const matches = filterMap(roles, (role) => {
       const rolePerm = filePolicyMap.get(role.policyId);
-      const ok = rolePerm !== null;
+      const ok = rolePerm !== undefined;
       const res = permToPriority(rolePerm);
       return { ok, res };
     });
 
-    return priorityToPerm(Math.max(...matches));
+    if (matches.length === 0) {
+      return null;
+    } else {
+      return priorityToPerm(Math.max(...matches));
+    }
   }
 
   private async checkAuthority(

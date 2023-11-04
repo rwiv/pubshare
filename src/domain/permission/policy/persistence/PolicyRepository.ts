@@ -6,11 +6,15 @@ import { PolicyCreation } from '@/domain/permission/policy/persistence/types';
 export class PolicyRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  findAll() {
+    return this.prisma.policy.findMany();
+  }
+
   findById(id: number) {
-    return this.prisma.tag.findUnique({ where: { id } });
+    return this.prisma.policy.findUnique({ where: { id } });
   }
 
   create(creation: PolicyCreation) {
-    return this.prisma.tag.create({ data: creation });
+    return this.prisma.policy.create({ data: creation });
   }
 }

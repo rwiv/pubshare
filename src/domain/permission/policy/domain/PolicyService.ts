@@ -10,6 +10,10 @@ export class PolicyService {
     return this.policyRepository.create(creation);
   }
 
+  findAll() {
+    return this.policyRepository.findAll();
+  }
+
   findById(id: number) {
     return this.policyRepository.findById(id);
   }
