@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FileRepository } from '@/domain/file/file/persistence/FileRepository';
+import { FileCreation } from '@/domain/file/file/persistence/types';
 
 @Injectable()
 export class FileService {

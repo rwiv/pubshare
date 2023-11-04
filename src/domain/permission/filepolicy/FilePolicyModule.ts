@@ -5,5 +5,6 @@ import { FilePolicyService } from '@/domain/permission/filepolicy/domain/FilePol
 
 @Module({
   providers: [PrismaService, FilePolicyRepository, FilePolicyService],
+  exports: [FilePolicyService],
 })
 export class FilePolicyModule {}

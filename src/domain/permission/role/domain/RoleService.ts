@@ -13,4 +13,8 @@ export class RoleService {
   findById(id: number) {
     return this.roleRepository.findById(id);
   }
+
+  findByAccountId(accountId: number) {
+    return this.roleRepository.findByAccountId(accountId);
+  }
 }

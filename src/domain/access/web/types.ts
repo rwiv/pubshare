@@ -1,3 +1,5 @@
+import { FileCreation } from '@/domain/file/file/persistence/types';
+
 export interface AccessFileRequest {
   key: string;
 }

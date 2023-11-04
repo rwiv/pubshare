@@ -5,13 +5,14 @@ import { FileService } from '@/domain/file/file/domain/FileService';
 import { FileModule } from '@/domain/file/file/FileModule';
 import { FileCommentModule } from '@/domain/file/comment/FileCommentModule';
 import { AccountModule } from '@/domain/account/AccountModule';
-import { AccountService } from '@/domain/account/domain/AccountService';
 import { AuthModule } from '@/auth/AuthModule';
+import { AccountDummyBuilder } from '@/domain/account/dev/AccountDummyBuilder';
+import { permissionTypeValues } from '@/domain/permission/common/types';
 
 describe('FileCommentService', () => {
   let fileCommentService: FileCommentService;
   let fileService: FileService;
-  let accountService: AccountService;
+  let ac: AccountDummyBuilder;
 
   beforeEach(async () => {
     dbInit();
@@ -22,19 +23,22 @@ describe('FileCommentService', () => {
 
     fileCommentService = module.get(FileCommentService);
     fileService = module.get(FileService);
-    accountService = module.get(AccountService);
+    ac = module.get(AccountDummyBuilder);
   });
 
   it('test', async () => {
-    const a1 = await accountService.create({
-      email: 'a',
-      password: 'a',
-      certified: false,
-      type: 'MEMBER',
-    });
+    const a1 = await ac.ac(1);
 
-    const f1 = await fileService.create({ path: 'f1' });
-    const f2 = await fileService.create({ path: 'f2' });
+    const f1 = await fileService.create({
+      path: 'f1',
+      memberDefaultPerm: permissionTypeValues.WRITE,
+      guestDefaultPerm: permissionTypeValues.WRITE,
+    });
+    const f2 = await fileService.create({
+      path: 'f2',
+      memberDefaultPerm: permissionTypeValues.WRITE,
+      guestDefaultPerm: permissionTypeValues.WRITE,
+    });
 
     const fc1 = await fileCommentService.create({
       content: 'fc1',

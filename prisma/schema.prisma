@@ -20,10 +20,12 @@ model Account {
 }
 
 model File {
-  id   Int    @id @default(autoincrement())
-  path String @unique
+  id                Int    @id @default(autoincrement())
+  path              String @unique
+  memberDefaultPerm String
+  guestDefaultPerm  String
 
-  comments        FileComment[]
+  fileComments    FileComment[]
   fileTags        FileTag[]
   filePolicies    FilePolicy[]
   fileAuthorities FileAuthority[]
@@ -44,7 +46,7 @@ model FileComment {
 
 model Tag {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
 
   fileTags FileTag[]
 }
@@ -59,9 +61,8 @@ model FileTag {
 }
 
 model Policy {
-  id       Int    @id @default(autoincrement())
-  name     String
-  priority Int
+  id   Int    @id @default(autoincrement())
+  name String @unique
 
   roles        Role[]
   filePolicies FilePolicy[]

@@ -6,11 +6,15 @@ import { FilePolicyCreation } from '@/domain/permission/filepolicy/persistence/t
 export class FilePolicyRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  create(creation: FilePolicyCreation) {
+    return this.prisma.filePolicy.create({ data: creation });
+  }
+
   findById(id: number) {
     return this.prisma.filePolicy.findUnique({ where: { id } });
   }
 
-  create(creation: FilePolicyCreation) {
-    return this.prisma.filePolicy.create({ data: creation });
+  findByFileId(fileId: number) {
+    return this.prisma.filePolicy.findMany({ where: { fileId } });
   }
 }

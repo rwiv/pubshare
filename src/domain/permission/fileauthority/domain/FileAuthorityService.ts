@@ -9,10 +9,16 @@ export class FileAuthorityService {
   ) {}
 
   create(creation: FileAuthorityCreation) {
+    // TODO: 같은 account 중복 금지 로직 추가
+
     return this.fileAuthorityRepository.create(creation);
   }
 
   findById(id: number) {
     return this.fileAuthorityRepository.findById(id);
+  }
+
+  findByFileId(fileId: number) {
+    return this.fileAuthorityRepository.findByFileId(fileId);
   }
 }

@@ -13,4 +13,8 @@ export class FileAuthorityRepository {
   findById(id: number) {
     return this.prisma.fileAuthority.findUnique({ where: { id } });
   }
+
+  findByFileId(fileId: number) {
+    return this.prisma.fileAuthority.findMany({ where: { fileId } });
+  }
 }

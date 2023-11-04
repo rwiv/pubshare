@@ -5,5 +5,6 @@ import { FileAuthorityService } from '@/domain/permission/fileauthority/domain/F
 
 @Module({
   providers: [PrismaService, FileAuthorityRepository, FileAuthorityService],
+  exports: [FileAuthorityService],
 })
 export class FileAuthorityModule {}

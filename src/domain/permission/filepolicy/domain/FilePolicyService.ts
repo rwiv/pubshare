@@ -13,4 +13,8 @@ export class FilePolicyService {
   findById(id: number) {
     return this.filePolicyRepository.findById(id);
   }
+
+  findByFileId(fileId: number) {
+    return this.filePolicyRepository.findByFileId(fileId);
+  }
 }

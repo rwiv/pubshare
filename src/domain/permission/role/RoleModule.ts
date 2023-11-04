@@ -5,5 +5,6 @@ import { RoleService } from '@/domain/permission/role/domain/RoleService';
 
 @Module({
   providers: [PrismaService, RoleRepository, RoleService],
+  exports: [RoleService],
 })
 export class RoleModule {}
