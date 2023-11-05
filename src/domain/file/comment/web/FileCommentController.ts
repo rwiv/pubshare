@@ -12,16 +12,16 @@ import {
   FileCommentCreation,
 } from '@/domain/file/comment/persistence/types';
 
-@Controller('api/file/comments')
+@Controller('api/file-comments')
 export class FileCommentController {
   constructor(private readonly fileCommentService: FileCommentService) {}
 
   @Post()
-  create(@Body() creation: FileCommentCreation) {
+  create(@Body() creation: FileCommentCreation): Promise<FileComment> {
     return this.fileCommentService.create(creation);
   }
 
-  @Get(':fileId')
+  @Get('file-id/:fileId')
   findByFileId(
     @Param('fileId', ParseIntPipe) fileId: number,
   ): Promise<FileComment[]> {

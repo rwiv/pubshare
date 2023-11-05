@@ -54,7 +54,7 @@ export class AccountController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
+  async findById(@Param('id', ParseIntPipe) id: number) {
     const account = await this.accountService.findById(id);
     return this.convert(account);
   }
