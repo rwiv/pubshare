@@ -11,7 +11,8 @@ import {
 } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import { accessConfig } from '@/domain/access/common/accessConfig';
-import { FileInfo } from '@/domain/access/client/FileInfo';
+import { S3File } from '@/domain/access/client/types';
+import {AccessException} from "@/domain/access/common/AccessException";
 
 export class S3Client {
   private aws = getConfSync().aws;
@@ -20,7 +21,7 @@ export class S3Client {
   async list(
     prefix: string,
     limit: number = accessConfig.listLimit,
-  ): Promise<FileInfo[]> {
+  ): Promise<S3File[]> {
     const command = new ListObjectsCommand({
       Bucket: this.aws.bucketName,
       Prefix: prefix,
@@ -29,30 +30,46 @@ export class S3Client {
     });
 
     const res = await this.s3.send(command);
-    const files = res.Contents.map((obj) => {
-      return new FileInfo(obj.Key, true, obj.LastModified, obj.Size);
+    const contents = res.Contents;
+    if (contents === undefined) {
+      throw new AccessException(`list access failure, prefix: "${prefix}"`);
+    }
+
+    // add regular files
+    const filtered = contents.filter((obj) => obj.Key !== prefix);
+    const files = filtered.map((obj) => {
+      return {
+        key: obj.Key,
+        isDirectory: false,
+        lastModified: obj.LastModified,
+        size: obj.Size,
+      };
     });
 
+    // add directories
     const prefixes = res.CommonPrefixes;
+    if (prefixes === undefined) {
+      return files;
+    }
     for (const prefix of prefixes) {
-      const info = await this.head(prefix.Prefix);
-      files.push(info);
+      const s3File = await this.head(prefix.Prefix);
+      files.push(s3File);
     }
     return files;
   }
 
-  async head(key: string): Promise<FileInfo> {
+  async head(key: string): Promise<S3File> {
     const command = new HeadObjectCommand({
       Bucket: this.aws.bucketName,
       Key: key,
     });
     const res = await this.s3.send(command);
-    return new FileInfo(
+    return {
       key,
-      this.isDirectory(key),
-      res.LastModified,
-      res.ContentLength,
-    );
+      isDirectory: this.isDirectory(key),
+      lastModified: res.LastModified,
+      size: res.ContentLength,
+    };
   }
 
   async download(key: string): Promise<GetObjectCommandOutput> {
@@ -84,7 +101,7 @@ export class S3Client {
   }
 
   private isDirectory(key: string): boolean {
-    return key.charAt(key.length - 1) == '/';
+    return key.charAt(key.length - 1) === '/';
   }
 
   private getBucketAndKey(key: string) {

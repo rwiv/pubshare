@@ -7,6 +7,7 @@ import {
   Query,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { Response } from 'express';
@@ -16,47 +17,61 @@ import {
   AccessFileRequest,
   FileUploadRequest,
 } from '@/domain/access/web/types';
+import { AuthGuard } from '@/auth/authorization/AuthGuard';
+import { Auth } from '@/auth/Auth';
+import { SecurityContext } from '@/auth/authentication/types';
 
 @Controller('api/access')
 export class AccessController {
   constructor(private readonly accessService: AccessService) {}
 
   @Get('head')
-  async head(@Query('key') key: string) {
-    return this.accessService.head(key);
+  @UseGuards(AuthGuard)
+  async head(@Auth() auth: SecurityContext, @Query('key') key: string) {
+    return this.accessService.head(auth, key);
   }
 
   @Get('list')
-  async list(@Query('key') key: string) {
-    return this.accessService.list(key);
+  @UseGuards(AuthGuard)
+  async list(@Auth() auth: SecurityContext, @Query('key') key: string) {
+    return this.accessService.list(auth, key);
   }
 
   @Get('download')
-  async download(@Res() res: Response, @Query('key') key: string) {
-    const getObj = await this.accessService.download(key);
+  @UseGuards(AuthGuard)
+  async download(
+    @Auth() auth: SecurityContext,
+    @Res() res: Response,
+    @Query('key') key: string,
+  ) {
+    const getObj = await this.accessService.download(auth, key);
     res.header('Content-Disposition', 'attachment; filename=download.txt');
     (getObj.Body as any).pipe(res);
   }
 
   @Put('mkdir')
-  async mkdir(@Body() req: AccessFileRequest) {
-    await this.accessService.mkdir(req);
+  @UseGuards(AuthGuard)
+  async mkdir(@Auth() auth: SecurityContext, @Body() req: AccessFileRequest) {
+    await this.accessService.mkdir(auth, req);
     return 'upload complete';
   }
 
   @Put('upload')
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   async upload(
+    @Auth() auth: SecurityContext,
     @Body() req: FileUploadRequest,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    await this.accessService.upload(req, file);
+    await this.accessService.upload(auth, req, file);
     return 'upload complete';
   }
 
   @Delete('delete')
-  async delete(@Body() req: AccessFileRequest) {
-    await this.accessService.delete(req);
+  @UseGuards(AuthGuard)
+  async delete(@Auth() auth: SecurityContext, @Body() req: AccessFileRequest) {
+    await this.accessService.delete(auth, req);
     return 'delete complete';
   }
 }

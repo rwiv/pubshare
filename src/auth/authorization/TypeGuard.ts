@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import {
-  getTypes,
+  getHierarchicalTypes,
   AccountType,
 } from '@/domain/account/persistence/accountType';
 import { ACCOUNT_TYPE_KEY } from '@/auth/authorization/types';
@@ -19,8 +19,11 @@ export class TypeGuard implements CanActivate {
       return true;
     }
     const { account } = context.switchToHttp().getRequest();
-    const types = getTypes(account.type);
+    if (account === undefined) {
+      return false;
+    }
 
+    const types = getHierarchicalTypes(account.type);
     return requiredTypes.some((type) => types.includes(type));
   }
 }

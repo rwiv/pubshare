@@ -13,4 +13,8 @@ export class FileRepository {
   findById(id: number) {
     return this.prisma.file.findUnique({ where: { id } });
   }
+
+  findByPath(path: string) {
+    return this.prisma.file.findUnique({ where: { path } });
+  }
 }

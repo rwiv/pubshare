@@ -14,7 +14,7 @@ export const accountTypeValues: ValueType = {
   GUEST: 'GUEST',
 };
 
-export function getTypes(type: AccountType) {
+export function getHierarchicalTypes(type: AccountType) {
   switch (type) {
     case accountTypeValues.ADMIN:
       return [accountTypeValues.ADMIN, accountTypeValues.MEMBER];

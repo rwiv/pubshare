@@ -13,4 +13,8 @@ export class FileService {
   findById(id: number) {
     return this.fileRepository.findById(id);
   }
+
+  findByPath(path: string) {
+    return this.fileRepository.findByPath(path);
+  }
 }

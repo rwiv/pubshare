@@ -7,5 +7,6 @@ import { RoleModule } from '@/domain/permission/role/RoleModule';
 @Module({
   providers: [PermissionVerifier],
   imports: [FilePolicyModule, FileAuthorityModule, RoleModule],
+  exports: [PermissionVerifier],
 })
 export class PermissionVerifierModule {}
