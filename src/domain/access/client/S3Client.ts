@@ -10,7 +10,7 @@ import {
   S3Client as Client,
 } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
-import { accessConfig } from '@/domain/access/config/accessConfig';
+import { accessConfig } from '@/domain/access/common/accessConfig';
 import { FileInfo } from '@/domain/access/client/FileInfo';
 
 export class S3Client {

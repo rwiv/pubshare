@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/misc/PrismaService';
+import { PrismaService } from '@/misc/prisma/PrismaService';
 import { FileCommentCreation } from '@/domain/file/comment/persistence/types';
 
 @Injectable()

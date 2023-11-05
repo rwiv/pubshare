@@ -1,4 +1,4 @@
-import { PrismaConnect } from '@/misc/prisma.types';
+import { PrismaConnect } from '@/misc/prisma/prisma.types';
 
 interface FileCommentCreation {
   content: string;

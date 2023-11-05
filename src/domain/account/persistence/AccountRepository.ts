@@ -3,7 +3,7 @@ import {
   AccountCreation,
   AccountUpdate,
 } from '@/domain/account/persistence/types';
-import { PrismaService } from '@/misc/PrismaService';
+import { PrismaService } from '@/misc/prisma/PrismaService';
 
 @Injectable()
 export class AccountRepository {

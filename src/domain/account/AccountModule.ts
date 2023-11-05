@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from '@/misc/PrismaService';
+import { PrismaService } from '@/misc/prisma/PrismaService';
 import { AccountController } from '@/domain/account/web/AccountController';
 import { AccountService } from '@/domain/account/domain/AccountService';
 import { AccountRepository } from '@/domain/account/persistence/AccountRepository';

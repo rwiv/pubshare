@@ -1,3 +1,5 @@
+import { NotSupportedException } from '@/misc/error/exception/NotSupportedException';
+
 export type AccountType = 'MEMBER' | 'ADMIN' | 'GUEST';
 
 interface ValueType {
@@ -19,6 +21,6 @@ export function getTypes(type: AccountType) {
     case accountTypeValues.MEMBER:
       return [accountTypeValues.MEMBER];
     default:
-      throw Error('not support account type');
+      throw new NotSupportedException('not supported account type');
   }
 }

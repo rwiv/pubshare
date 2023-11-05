@@ -1,4 +1,4 @@
-import { PrismaConnect } from '@/misc/prisma.types';
+import { PrismaConnect } from '@/misc/prisma/prisma.types';
 
 export interface RoleCreation {
   account: PrismaConnect;

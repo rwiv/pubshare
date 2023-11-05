@@ -1,4 +1,4 @@
-import { PrismaService } from '@/misc/PrismaService';
+import { PrismaService } from '@/misc/prisma/PrismaService';
 import { Injectable } from '@nestjs/common';
 import { FileAuthorityCreation } from '@/domain/permission/fileauthority/persistence/types';
 

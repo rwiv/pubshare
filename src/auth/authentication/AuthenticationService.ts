@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AccountService } from '@/domain/account/domain/AccountService';
 import { JwtService } from '@nestjs/jwt';
 import { LoginRequest, SecurityContext } from './types';
+import {AuthenticationException} from "@/auth/authentication/AuthenticationException";
 
 @Injectable()
 export class AuthenticationService {
@@ -13,7 +14,7 @@ export class AuthenticationService {
   async login(req: LoginRequest) {
     const account = await this.accountService.findByUsername(req.email);
     if (account?.password !== req.password) {
-      throw new UnauthorizedException();
+      throw new AuthenticationException('login failure');
     }
 
     const { id, email, type, certified } = account;

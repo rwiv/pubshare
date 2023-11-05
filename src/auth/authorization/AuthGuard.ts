@@ -9,6 +9,7 @@ import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '@/auth/authorization/public';
 import { jwtConstants } from '@/auth/authentication/jwtConstants';
+import {AuthorizationException} from "@/auth/authorization/AuthorizationException";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -30,14 +31,14 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      throw new UnauthorizedException();
+      throw new AuthorizationException('token not found');
     }
     try {
       request['account'] = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
     } catch {
-      throw new UnauthorizedException();
+      throw new AuthorizationException('jwt verify failure');
     }
     return true;
   }
