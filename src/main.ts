@@ -3,7 +3,7 @@ import { getConf } from '@/util/cutil';
 import { AppModule } from '@/AppModule';
 import { WebExceptionFilter } from '@/misc/error/filter/WebExceptionFilter';
 import { ConvertJsExceptionFilter } from '@/misc/error/filter/ConvertJsExceptionFilter';
-import {ConvertNestExceptionFilter} from "@/misc/error/filter/ConvertNestExceptionFilter";
+import { ConvertNestExceptionFilter } from '@/misc/error/filter/ConvertNestExceptionFilter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

@@ -12,4 +12,12 @@ export class FileTagRepository {
   findById(id: number) {
     return this.prisma.fileTag.findUnique({ where: { id } });
   }
+
+  findByFileId(fileId: number) {
+    return this.prisma.fileTag.findMany({ where: { fileId } });
+  }
+
+  findByTagId(tagId: number) {
+    return this.prisma.fileTag.findMany({ where: { tagId } });
+  }
 }

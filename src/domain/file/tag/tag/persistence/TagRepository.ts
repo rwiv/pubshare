@@ -12,4 +12,8 @@ export class TagRepository {
   findById(id: number) {
     return this.prisma.tag.findUnique({ where: { id } });
   }
+
+  fundByName(name: string) {
+    return this.prisma.tag.findUnique({ where: { name } });
+  }
 }
