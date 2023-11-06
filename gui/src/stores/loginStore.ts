@@ -1,13 +1,20 @@
-import { create } from 'zustand';
+import {create} from 'zustand';
+import {createJSONStorage, persist} from "zustand/middleware";
 
-interface MyData {
-  username: string;
+export interface TokenState {
+  token: string | null;
+  setToken: (token: string | null) => void;
 }
-interface MyDataState {
-  myData: MyData | null;
-  setMyData: (my: MyData) => void;
-}
-export const useMyDataStore = create<MyDataState>((set) => ({
-  myData: null,
-  setMyData: (my) => set((state) => ({ myData: my })),
-}));
+
+export const useTokenStore = create<TokenState, [["zustand/persist", unknown]]>(
+  persist(
+    (set) => ({
+      token: null,
+      setToken: token => set(() => ({ token })),
+    }),
+    {
+      name: "token",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);

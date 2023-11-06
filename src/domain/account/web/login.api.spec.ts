@@ -27,7 +27,7 @@ async function login(data: { email: string; password: string }) {
     'http://localhost:3000/api/accounts/login',
     data,
   );
-  return res.data['access_token'];
+  return res.data['accessToken'];
 }
 
 function profile(token: string) {

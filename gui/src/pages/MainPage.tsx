@@ -1,14 +1,15 @@
 import {useEffect, useState} from 'react';
-import {_, HStack} from '../util/csshelper/cssHelper.ts';
-import { Button } from '@/components/ui/button.tsx';
-import { FileTable } from '../components/table/FileTable.tsx';
+import { FileTable } from '../components/table/filev1/FileTable.tsx';
 import {ContextMenuBoundary} from "@/components/ctxmenu/ContextMenuBoundary.tsx";
 import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.tsx";
-import {AppHeader} from "@/components/header/AppHeader.tsx";
-import {AccessClient, FileInfo} from "@/client/AccessClient.ts";
-import {AccountClient} from "@/client/AccountClient.ts";
-import {FileResponse} from "@/components/table/types";
-import {AccountResponse} from "../../../src/domain/account/web/types";
+import {AccessClient, FileInfo} from "@/client/access/AccessClient.ts";
+import {FileResponse} from "@/components/table/filev1/types";
+import {MainTemplate} from "@/pages/MainTemplate.tsx";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {accountQueryKeys, getMyData, login} from "@/client/account/accountClient.ts";
+import {AccountResponse} from "@/client/account/types.ts";
+import {HttpError} from "@/client/common/HttpError.ts";
+import {useTokenStore} from "@/stores/loginStore.ts";
 // import viteLogo from '/vite.svg'
 
 function convertFile(info: FileInfo): FileResponse {
@@ -21,24 +22,14 @@ function convertFile(info: FileInfo): FileResponse {
 }
 
 export function MainPage() {
-
-  const left = _.m_all(1,1,2,2,3,3);
-  const center = _.m_all(10,10,8, 8,6,6);
-  const right = _.m_all(1,1,2,2,3,3);
-
-  const [count, setCount] = useState(0);
+  const {data: me, error} = useQuery<unknown, HttpError, AccountResponse>({
+    queryKey: [accountQueryKeys.me], queryFn: getMyData, retry: 0,
+  });
 
   const [files, setFiles] = useState<FileInfo[]>([]);
-  const [users, setUsers] = useState<AccountResponse[]>([]);
 
-  useEffect(() => {
-    const userClient = new AccountClient();
-    userClient.create({
-      email: `hello${Date.now().toString()}@gmail.com`,
-      password: "1234",
-      certified: false,
-    });
-  }, []);
+  const queryClient = useQueryClient();
+  const {setToken} = useTokenStore();
 
   useEffect(() => {
     const accessClient = new AccessClient();
@@ -46,35 +37,25 @@ export function MainPage() {
       setFiles(infos);
     });
 
-    const userClient = new AccountClient();
-    userClient.findByAll().then(users => {
-      setUsers(users)
-    })
-  }, []);
+    login({
+      email: "admin",
+      password: "admin",
+    }).then(res=> {
+      setToken(res.accessToken);
+      queryClient.invalidateQueries({
+        queryKey: [accountQueryKeys.me]
+      });
+    });
+  }, [queryClient, setToken]);
 
   return (
-    <>
-      <AppHeader />
-      <HStack>
-        <div css={left}/>
-        <div css={center}>
-          {users.map(user => <div key={user.id}>{user.email}</div>)}
-          <Button
-            css={_.m(2)}
-            onClick={() => {
-              setCount(count + 1);
-            }}
-          >
-            hello
-          </Button>
-          <span>{count}</span>
-          <ContextMenuBoundary menuContent={<MenuContent />}>
-            <FileTable files={files.map(file => convertFile(file))} />
-          </ContextMenuBoundary>
-        </div>
-        <div css={right}/>
-      </HStack>
-    </>
+    <MainTemplate>
+      {me && me.email}
+      {error&& error.message}
+      <ContextMenuBoundary menuContent={<MenuContent />}>
+        <FileTable files={files.map(file => convertFile(file))} />
+      </ContextMenuBoundary>
+    </MainTemplate>
   );
 }
 

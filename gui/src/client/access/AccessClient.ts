@@ -1,5 +1,5 @@
 import axios from "axios";
-import {appConstants} from "@/config/appConstants.ts";
+import {appConstants} from "@/common/appConstants.ts";
 
 export interface FileInfo {
   key: string,

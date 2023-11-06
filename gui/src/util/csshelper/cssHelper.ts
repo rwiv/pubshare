@@ -4,7 +4,7 @@ import DesignHelper from './helpers/DesignHelper.ts';
 import LayoutHelper from './helpers/LayoutHelper.ts';
 import MediaQueryHelper from './helpers/MediaQueryHelper.ts';
 import MiscStyleHelper from './helpers/MiscStyleHelper.ts';
-import { Box, Flex, VStack, HStack, Center } from "@/util/csshelper/base_components.ts";
+import { Box, Flex, VStack, HStack, Center } from "@/util/csshelper/layoutComponents.ts";
 
 const animationHelper = new AnimationHelper();
 const defaultStyleHelper = new DefaultStyleHelper();

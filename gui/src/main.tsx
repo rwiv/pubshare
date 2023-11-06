@@ -2,21 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { LoginPage } from './pages/LoginPage.tsx';
-import { MainPage } from './pages/MainPage.tsx';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import './globals.css'
+import {MainPage} from "@/pages/MainPage.tsx";
+import {LoginPage} from "@/pages/account/LoginPage.tsx";
+import {AccountListPage} from "@/pages/account/AccountListPage.tsx";
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <MainPage />,
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
-  },
+  { path: '/', element: <MainPage /> },
+  { path: '/login', element: <LoginPage /> },
+  { path: '/accounts', element: <AccountListPage /> },
 ]);
 
 const queryClient = new QueryClient();

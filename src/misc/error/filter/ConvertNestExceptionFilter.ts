@@ -3,6 +3,7 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ErrorResponse } from '@/misc/error/types';
@@ -16,7 +17,11 @@ export class ConvertNestExceptionFilter
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const status = exception.getStatus();
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    try {
+      status = exception.getStatus();
+    } catch (e) {}
+
     const responseBody: ErrorResponse = {
       status,
       message: exception.message,

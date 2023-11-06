@@ -34,13 +34,12 @@ export class AccountController {
   ) {}
 
   private convert(account: Account): AccountResponse {
-    const { id, email, certified, type } = account;
-    const r = type as AccountType;
-    return { id, email, certified, type: r };
+    const { id, email, nickname, certified, type } = account;
+    return { id, email, certified, nickname, type: type as AccountType };
   }
 
-  @Post()
-  async create(@Body() creation: AccountCreation): Promise<AccountResponse> {
+  @Post('signup')
+  async signup(@Body() creation: AccountCreation): Promise<AccountResponse> {
     const account = await this.accountService.create(creation);
     return this.convert(account);
   }
@@ -53,8 +52,9 @@ export class AccountController {
 
   @Get('me')
   @UseGuards(AuthGuard)
-  getProfile(@Auth() auth: AuthToken) {
-    return auth;
+  async getProfile(@Auth() auth: AuthToken) {
+    const account = await this.accountService.findById(auth.id);
+    return this.convert(account);
   }
 
   @Get()

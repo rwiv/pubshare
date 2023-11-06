@@ -1,7 +1,7 @@
 import {TableCell, TableRow} from "@/components/ui/table.tsx";
 import {Checkbox} from "@/components/ui/checkbox.tsx";
 import {useDrag, useDrop} from "react-dnd";
-import {FileResponse} from "@/components/table/types";
+import {FileResponse} from "@/components/table/filev1/types";
 import {Dispatch, SetStateAction, useEffect, useRef} from "react";
 import {css} from "@emotion/react";
 
