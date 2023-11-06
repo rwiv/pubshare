@@ -16,10 +16,20 @@ export function runCatching<T>(fn: () => T) {
 }
 
 export function getHeaderConfig() {
+  return { headers: getHeaders() };
+}
+
+export function getHeaders() {
   const token = JSON.parse(sessionStorage["token"])["state"]["token"];
   return {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
+    Authorization: `Bearer ${token}`,
   };
+}
+
+export function getFilenameByKey(key: string) {
+  if (key.charAt(key.length - 1) === '/') {
+    key = key.substring(0, key.length - 1);
+  }
+  const chunks = key.split("/");
+  return chunks[chunks.length - 1];
 }

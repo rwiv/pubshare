@@ -14,6 +14,8 @@ export class ConvertJsExceptionFilter implements ExceptionFilter<Error> {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
+    console.log(exception);
+
     const status = HttpStatus.INTERNAL_SERVER_ERROR;
     const responseBody: ErrorResponse = {
       status,

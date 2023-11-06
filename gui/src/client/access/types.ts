@@ -8,3 +8,18 @@ export interface FileResponse {
   size: number;
   myPerm: PermissionType;
 }
+
+interface FileCreation {
+  path: string;
+  memberDefaultPerm: PermissionType;
+  guestDefaultPerm: PermissionType;
+}
+
+export interface AccessFileRequest {
+  key: string;
+}
+
+export interface FileUploadRequest {
+  key: string;
+  fileCreation: FileCreation;
+}

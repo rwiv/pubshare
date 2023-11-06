@@ -4,7 +4,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon} from "@radix-ui/react-icons";
 import {DataTable} from "@/components/table/DataTable.tsx";
 import {AccountResponse} from "@/client/account/types.ts";
-import {accountQueryKeys, findAll, remove} from "@/client/account/accountClient.ts";
+import {accountQueryKeys, findAllAccounts, deleteAccount} from "@/client/account/accountClient.ts";
 
 const columns: ColumnDef<AccountResponse>[] = [
   {
@@ -25,7 +25,7 @@ const columns: ColumnDef<AccountResponse>[] = [
       const queryClient = useQueryClient();
 
       const onClick = async () => {
-        await remove(row.getValue("id"));
+        await deleteAccount(row.getValue("id"));
         await queryClient.invalidateQueries({ queryKey: [accountQueryKeys.findAll] });
       };
 
@@ -43,7 +43,7 @@ const columns: ColumnDef<AccountResponse>[] = [
 export function AccountTable() {
   const { data: authors } = useQuery({
     queryKey: [accountQueryKeys.findAll],
-    queryFn: findAll,
+    queryFn: findAllAccounts,
     initialData: [],
   });
 

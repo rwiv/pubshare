@@ -31,17 +31,17 @@ export async function login(req: LoginRequest) {
   return res.data;
 }
 
-export async function findAll() {
+export async function findAllAccounts() {
   const res = await axios.get(`${baseUrl}`, getHeaderConfig());
   return res.data;
 }
 
-export async function findById(id: number) {
+export async function findAccountById(id: number) {
   const res = await axios.get(`${baseUrl}/${id}`, getHeaderConfig());
   return res.data;
 }
 
-export async function remove(id: number) {
+export async function deleteAccount(id: number) {
   const res = await axios.delete<LoginResponse>(`${baseUrl}/${id}`, getHeaderConfig());
   return res.data;
 }

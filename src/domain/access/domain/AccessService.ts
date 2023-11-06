@@ -24,6 +24,9 @@ export class AccessService {
   ) {}
 
   async head(auth: AuthToken, key: string): Promise<FileResponse | null> {
+    if (key === '') {
+      return this.getRootFileResponse(auth);
+    }
     const s3File = await this.client.head(key);
     const fileResponse = await this.getFileResponse(auth, s3File);
     if (fileResponse.myPerm === permissionTypeValues.FORBIDDEN) {
@@ -68,9 +71,30 @@ export class AccessService {
     };
   }
 
+  private async getRootFileResponse(auth: AuthToken): Promise<FileResponse> {
+    let fileDao = await this.fileService.findByPath('');
+    if (fileDao === null) {
+      fileDao = await this.fileService.create({
+        path: '',
+        memberDefaultPerm: accessConfig.memberDefaultPerm,
+        guestDefaultPerm: accessConfig.guestDefaultPerm,
+      });
+    }
+
+    const myPerm = await this.permissionVerifier.verify(auth, fileDao as File);
+    return {
+      id: fileDao.id,
+      path: '',
+      isDirectory: true,
+      lastModified: null,
+      size: null,
+      myPerm,
+    };
+  }
+
   async download(auth: AuthToken, key: string) {
     const fileResponse = await this.head(auth, key);
-    if (fileResponse === null || this.isReadable(fileResponse)) {
+    if (fileResponse === null || !this.isReadable(fileResponse)) {
       throw new AuthorizationException('not have permission');
     }
     return this.client.download(key);
@@ -95,8 +119,8 @@ export class AccessService {
     req: FileUploadRequest,
     file: Express.Multer.File,
   ) {
-    const fileResponse = await this.head(auth, this.getParentKey(req.key));
-    if (fileResponse === null || this.isWritable(fileResponse)) {
+    const directory = await this.head(auth, this.getParentKey(req.key));
+    if (directory === null || !this.isWritable(directory)) {
       throw new AuthorizationException('not have permission');
     }
     await this.client.upload(req.key, file.stream);
