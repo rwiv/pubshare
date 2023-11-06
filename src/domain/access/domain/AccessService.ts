@@ -7,7 +7,7 @@ import {
 import { FileService } from '@/domain/file/file/domain/FileService';
 import { FileResponse } from '@/domain/access/domain/types';
 import { PermissionVerifier } from '@/domain/permission/verifier/PermissionVerifier';
-import { SecurityContext } from '@/auth/authentication/types';
+import { AuthToken } from '@/auth/authentication/types';
 import { File } from '@/domain/file/file/persistence/types';
 import { S3File } from '@/domain/access/client/types';
 import { accessConfig } from '@/domain/access/common/accessConfig';
@@ -23,7 +23,7 @@ export class AccessService {
     private readonly permissionVerifier: PermissionVerifier,
   ) {}
 
-  async head(auth: SecurityContext, key: string): Promise<FileResponse | null> {
+  async head(auth: AuthToken, key: string): Promise<FileResponse | null> {
     const s3File = await this.client.head(key);
     const fileResponse = await this.getFileResponse(auth, s3File);
     if (fileResponse.myPerm === permissionTypeValues.FORBIDDEN) {
@@ -32,7 +32,7 @@ export class AccessService {
     return fileResponse;
   }
 
-  async list(auth: SecurityContext, key: string): Promise<FileResponse[]> {
+  async list(auth: AuthToken, key: string): Promise<FileResponse[]> {
     const s3Files = await this.client.list(key);
     const result: FileResponse[] = [];
     for (const s3File of s3Files) {
@@ -45,7 +45,7 @@ export class AccessService {
   }
 
   private async getFileResponse(
-    auth: SecurityContext,
+    auth: AuthToken,
     s3File: S3File,
   ): Promise<FileResponse> {
     let fileDao = await this.fileService.findByPath(s3File.key);
@@ -68,7 +68,7 @@ export class AccessService {
     };
   }
 
-  async download(auth: SecurityContext, key: string) {
+  async download(auth: AuthToken, key: string) {
     const fileResponse = await this.head(auth, key);
     if (fileResponse === null || this.isReadable(fileResponse)) {
       throw new AuthorizationException('not have permission');
@@ -86,12 +86,12 @@ export class AccessService {
     return [permissionTypeValues.WRITE].includes(fileResponse.myPerm);
   }
 
-  async mkdir(auth: SecurityContext, req: AccessFileRequest) {
+  async mkdir(auth: AuthToken, req: AccessFileRequest) {
     return this.client.mkdir(req.key);
   }
 
   async upload(
-    auth: SecurityContext,
+    auth: AuthToken,
     req: FileUploadRequest,
     file: Express.Multer.File,
   ) {
@@ -117,7 +117,7 @@ export class AccessService {
     return result;
   }
 
-  async delete(auth: SecurityContext, req: AccessFileRequest) {
+  async delete(auth: AuthToken, req: AccessFileRequest) {
     return this.client.delete(req.key);
   }
 }

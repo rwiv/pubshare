@@ -3,7 +3,7 @@ import { Types } from '@/auth/authorization/types';
 import { AuthGuard } from '@/auth/authorization/AuthGuard';
 import { TypeGuard } from '@/auth/authorization/TypeGuard';
 import { Auth } from '@/auth/Auth';
-import { SecurityContext } from '@/auth/authentication/types';
+import { AuthToken } from '@/auth/authentication/types';
 import {WebException} from "@/misc/error/exception/WebException";
 import {PermissionException} from "@/domain/permission/common/PermissionException";
 
@@ -21,7 +21,7 @@ export class DevController {
   @Get('profile')
   @Types('ADMIN')
   @UseGuards(AuthGuard, TypeGuard)
-  getProfile(@Auth() auth: SecurityContext) {
+  getProfile(@Auth() auth: AuthToken) {
     return auth;
   }
 }

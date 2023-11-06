@@ -19,7 +19,7 @@ import {
 } from '@/domain/access/web/types';
 import { AuthGuard } from '@/auth/authorization/AuthGuard';
 import { Auth } from '@/auth/Auth';
-import { SecurityContext } from '@/auth/authentication/types';
+import { AuthToken } from '@/auth/authentication/types';
 
 @Controller('api/access')
 export class AccessController {
@@ -27,20 +27,20 @@ export class AccessController {
 
   @Get('head')
   @UseGuards(AuthGuard)
-  async head(@Auth() auth: SecurityContext, @Query('key') key: string) {
+  async head(@Auth() auth: AuthToken, @Query('key') key: string) {
     return this.accessService.head(auth, key);
   }
 
   @Get('list')
   @UseGuards(AuthGuard)
-  async list(@Auth() auth: SecurityContext, @Query('key') key: string) {
+  async list(@Auth() auth: AuthToken, @Query('key') key: string) {
     return this.accessService.list(auth, key);
   }
 
   @Get('download')
   @UseGuards(AuthGuard)
   async download(
-    @Auth() auth: SecurityContext,
+    @Auth() auth: AuthToken,
     @Res() res: Response,
     @Query('key') key: string,
   ) {
@@ -51,7 +51,7 @@ export class AccessController {
 
   @Put('mkdir')
   @UseGuards(AuthGuard)
-  async mkdir(@Auth() auth: SecurityContext, @Body() req: AccessFileRequest) {
+  async mkdir(@Auth() auth: AuthToken, @Body() req: AccessFileRequest) {
     await this.accessService.mkdir(auth, req);
     return 'upload complete';
   }
@@ -60,7 +60,7 @@ export class AccessController {
   @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   async upload(
-    @Auth() auth: SecurityContext,
+    @Auth() auth: AuthToken,
     @Body() req: FileUploadRequest,
     @UploadedFile() file: Express.Multer.File,
   ) {
@@ -70,7 +70,7 @@ export class AccessController {
 
   @Delete('delete')
   @UseGuards(AuthGuard)
-  async delete(@Auth() auth: SecurityContext, @Body() req: AccessFileRequest) {
+  async delete(@Auth() auth: AuthToken, @Body() req: AccessFileRequest) {
     await this.accessService.delete(auth, req);
     return 'delete complete';
   }

@@ -3,7 +3,7 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface SecurityContext {
+export interface AuthToken {
   id: number;
   email: string;
   certified: boolean;

@@ -9,7 +9,7 @@ import {
   Delete,
   ParseIntPipe,
   HttpCode,
-  HttpStatus,
+  HttpStatus, UseGuards,
 } from '@nestjs/common';
 import { AccountService } from '@/domain/account/domain/AccountService';
 import {
@@ -19,8 +19,12 @@ import {
 } from '@/domain/account/persistence/types';
 import { AccountType } from '@/domain/account/persistence/accountType';
 import { AuthenticationService } from '@/auth/authentication/AuthenticationService';
-import { LoginRequest } from '@/auth/authentication/types';
+import {LoginRequest, AuthToken} from '@/auth/authentication/types';
 import { AccountResponse } from '@/domain/account/web/types';
+import {Types} from "@/auth/authorization/types";
+import {AuthGuard} from "@/auth/authorization/AuthGuard";
+import {TypeGuard} from "@/auth/authorization/TypeGuard";
+import {Auth} from "@/auth/Auth";
 
 @Controller('api/accounts')
 export class AccountController {
@@ -45,6 +49,12 @@ export class AccountController {
   @Post('login')
   login(@Body() req: LoginRequest) {
     return this.authService.login(req);
+  }
+
+  @Get('me')
+  @UseGuards(AuthGuard)
+  getProfile(@Auth() auth: AuthToken) {
+    return auth;
   }
 
   @Get()

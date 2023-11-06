@@ -3,7 +3,7 @@ import { accountTypeValues } from '@/domain/account/persistence/accountType';
 import { FileAuthorityService } from '@/domain/permission/fileauthority/domain/FileAuthorityService';
 import { FilePolicyService } from '@/domain/permission/filepolicy/domain/FilePolicyService';
 import { RoleService } from '@/domain/permission/role/domain/RoleService';
-import { SecurityContext } from '@/auth/authentication/types';
+import { AuthToken } from '@/auth/authentication/types';
 import {
   permToPriority,
   priorityToPerm,
@@ -21,7 +21,7 @@ export class PermissionVerifier {
     private readonly roleService: RoleService,
   ) {}
 
-  async verify(auth: SecurityContext | null, file: File) {
+  async verify(auth: AuthToken | null, file: File) {
     // account is guest
     if (auth === null) {
       return file.guestDefaultPerm;
@@ -49,7 +49,7 @@ export class PermissionVerifier {
   }
 
   private async checkPolicy(
-    auth: SecurityContext,
+    auth: AuthToken,
     fileId: number,
   ): Promise<PermissionType | null> {
     const roles = await this.roleService.findByAccountId(auth.id);
@@ -75,7 +75,7 @@ export class PermissionVerifier {
   }
 
   private async checkAuthority(
-    auth: SecurityContext,
+    auth: AuthToken,
     fileId: number,
   ): Promise<PermissionType | null> {
     const authorities = await this.fileAuthorityService.findByFileId(fileId);

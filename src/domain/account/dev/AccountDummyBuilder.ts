@@ -5,13 +5,13 @@ import {
   AccountType,
   accountTypeValues,
 } from '@/domain/account/persistence/accountType';
-import { SecurityContext } from '@/auth/authentication/types';
+import { AuthToken } from '@/auth/authentication/types';
 
 @Injectable()
 export class AccountDummyBuilder {
   constructor(private readonly accountService: AccountService) {}
 
-  sc(account: Account): SecurityContext {
+  sc(account: Account): AuthToken {
     return {
       id: account.id,
       email: account.email,
