@@ -1,40 +1,23 @@
 import {useEffect, useState} from 'react';
-import { FileTable } from '../components/table/filev1/FileTable.tsx';
-import {ContextMenuBoundary} from "@/components/ctxmenu/ContextMenuBoundary.tsx";
 import {ContextMenuContent, ContextMenuItem} from "@/components/ui/context-menu.tsx";
-import {AccessClient, FileInfo} from "@/client/access/AccessClient.ts";
-import {FileResponse} from "@/components/table/filev1/types";
+import {list} from "@/client/access/AccessClient.ts";
 import {MainTemplate} from "@/pages/MainTemplate.tsx";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {accountQueryKeys, getMyData, login} from "@/client/account/accountClient.ts";
-import {AccountResponse} from "@/client/account/types.ts";
-import {HttpError} from "@/client/common/HttpError.ts";
+import {useQueryClient} from "@tanstack/react-query";
+import {accountQueryKeys, login} from "@/client/account/accountClient.ts";
 import {useTokenStore} from "@/stores/loginStore.ts";
+import {useMyData} from "@/hooks/useMyData.tsx";
+import {FileResponse} from "@/client/access/types.ts";
 // import viteLogo from '/vite.svg'
 
-function convertFile(info: FileInfo): FileResponse {
-  return {
-    type: info.isDirectory ? "directory" : "file",
-    name: info.key,
-    modified: info.lastModified,
-    size: info.size,
-  }
-}
-
 export function MainPage() {
-  const {data: me, error} = useQuery<unknown, HttpError, AccountResponse>({
-    queryKey: [accountQueryKeys.me], queryFn: getMyData, retry: 0,
-  });
-
-  const [files, setFiles] = useState<FileInfo[]>([]);
-
   const queryClient = useQueryClient();
   const {setToken} = useTokenStore();
+  const {data: me, error} = useMyData();
+  const [files, setFiles] = useState<FileResponse[]>([]);
 
   useEffect(() => {
-    const accessClient = new AccessClient();
-    accessClient.list().then(infos => {
-      setFiles(infos);
+    list("").then(files => {
+      setFiles(files);
     });
 
     login({
@@ -52,9 +35,11 @@ export function MainPage() {
     <MainTemplate>
       {me && me.email}
       {error&& error.message}
-      <ContextMenuBoundary menuContent={<MenuContent />}>
-        <FileTable files={files.map(file => convertFile(file))} />
-      </ContextMenuBoundary>
+      {files.length > 0 ? (
+        files.map(file => (<div key={file.id}>{file.path}</div>))
+      ) : (
+        <div>not exists files</div>
+      )}
     </MainTemplate>
   );
 }

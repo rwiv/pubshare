@@ -32,16 +32,16 @@ export async function login(req: LoginRequest) {
 }
 
 export async function findAll() {
-  const res = await axios.get(`${baseUrl}`);
+  const res = await axios.get(`${baseUrl}`, getHeaderConfig());
   return res.data;
 }
 
 export async function findById(id: number) {
-  const res = await axios.get(`${baseUrl}/${id}`);
+  const res = await axios.get(`${baseUrl}/${id}`, getHeaderConfig());
   return res.data;
 }
 
 export async function remove(id: number) {
-  const res = await axios.delete<LoginResponse>(`${baseUrl}/${id}`);
+  const res = await axios.delete<LoginResponse>(`${baseUrl}/${id}`, getHeaderConfig());
   return res.data;
 }

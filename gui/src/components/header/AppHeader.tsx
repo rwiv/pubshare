@@ -1,17 +1,12 @@
 import {UserNav} from "@/components/header/UserNav.tsx";
-import {HttpError} from "@/client/common/HttpError.ts";
-import {useQuery} from "@tanstack/react-query";
 import {Button} from "@/components/ui/button.tsx";
 import {Link} from "react-router-dom";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
 import {NavBar} from "@/components/header/NavBar.tsx";
-import {AccountResponse} from "@/client/account/types.ts";
-import {accountQueryKeys, getMyData} from "@/client/account/accountClient.ts";
+import {useMyData} from "@/hooks/useMyData.tsx";
 
 export function AppHeader() {
-  const {data: me, isLoading} = useQuery<unknown, HttpError, AccountResponse>({
-    queryKey: [accountQueryKeys.me], queryFn: getMyData, retry: 0,
-  });
+  const {data: me, isLoading} = useMyData();
 
   const render = () => {
     if (me !== null && me !== undefined) {
