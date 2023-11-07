@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Input} from "@/components/ui/input.tsx";
-import {Center, VStack} from "@/util/csshelper/layoutComponents.ts";
+import {Center, VStack} from "@/util/css/layoutComponents.ts";
 import {useNavigate} from "react-router";
 import {LoginRequest} from "@/client/account/types.ts";
 import {accountQueryKeys, login} from "@/client/account/accountClient.ts";

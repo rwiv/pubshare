@@ -2,7 +2,7 @@ import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.tsx";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {FileResponse} from "@/client/access/types.ts";
-import {accessQueryKeys, list, upload} from "@/client/access/accessClient.ts";
+import {accessQueryKeys, download, list, upload} from "@/client/access/accessClient.ts";
 import {useAccessStore} from "@/stores/accessStore.ts";
 import React, {useState} from "react";
 import {fileColumns} from "@/components/table/file/fileColumns.tsx";
@@ -27,8 +27,12 @@ export function FileTable() {
   };
 
   const onDoubleClick = async (file: FileResponse) => {
-    setCurDirectory(file);
-    await queryClient.setQueryData([accessQueryKeys.list], await list(file.path));
+    if (file.isDirectory) {
+      setCurDirectory(file);
+      await queryClient.setQueryData([accessQueryKeys.list], await list(file.path));
+    } else {
+      await download(file.path);
+    }
   }
 
   const onDrop = async (event: React.DragEvent<HTMLDivElement>) => {
@@ -73,6 +77,7 @@ export function FileTable() {
               <TableRow
                 key={row.id}
                 css={{
+                  userSelect: "none",
                   cursor: "default",
                   backgroundColor: row.original.id === curFile?.id ? "#c2e7ff" : "",
                   "&:hover": {

@@ -2,9 +2,10 @@ import React, {useState} from 'react'
 import {TreeHead} from "@/components/tree/TreeHead.tsx";
 import {FileNode} from "@/components/tree/types";
 import {FileResponse} from "@/client/access/types.ts";
-import {list} from "@/client/access/accessClient.ts";
+import {accessQueryKeys, list} from "@/client/access/accessClient.ts";
 import {getFilenameByKey} from "@/client/access/accessUtils.ts";
 import {useAccessStore} from "@/stores/accessStore.ts";
+import {useQueryClient} from "@tanstack/react-query";
 
 interface TreeNodeProps {
   file: FileNode;
@@ -12,12 +13,23 @@ interface TreeNodeProps {
   depth?: number;
 }
 
+function getFileName(key: string) {
+  const result = getFilenameByKey(key);
+  if (result === "") {
+    return "/";
+  } else {
+    return result;
+  }
+}
+
 export function TreeNode({ file, setRawData, depth = 0 }: TreeNodeProps) {
+  const queryClient = useQueryClient();
   const [collapsed, setCollapsed] = useState(false);
   const {setCurDirectory} = useAccessStore();
 
-  function onClick() {
+  async function onClick() {
     setCurDirectory(file);
+    await queryClient.setQueryData([accessQueryKeys.list], await list(file.path));
   }
 
   async function onIconClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -43,7 +55,7 @@ export function TreeNode({ file, setRawData, depth = 0 }: TreeNodeProps) {
       <TreeHead
         depth={depth}
         collapsed={collapsed}
-        content={getFilenameByKey(file.path)}
+        content={getFileName(file.path)}
         onClick={onClick}
         onIconClick={onIconClick}
       />
@@ -61,7 +73,7 @@ export function TreeNode({ file, setRawData, depth = 0 }: TreeNodeProps) {
       <TreeHead
         depth={depth}
         collapsed={collapsed}
-        content={getFilenameByKey(file.path)}
+        content={getFileName(file.path)}
         onClick={onClick}
         onIconClick={onIconClick}
       />

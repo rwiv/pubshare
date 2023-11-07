@@ -55,3 +55,5 @@ export default class MediaQueryHelper {
     }
   }
 }
+
+export const mq = new MediaQueryHelper();

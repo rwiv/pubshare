@@ -1,7 +1,7 @@
 import {ColumnDef, flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.tsx";
 import {PlusIcon} from "@radix-ui/react-icons";
-import {Center} from "@/util/csshelper/layoutComponents.ts";
+import {Center} from "@/util/css/layoutComponents.ts";
 import React from "react";
 
 interface DataTableProps<T> {

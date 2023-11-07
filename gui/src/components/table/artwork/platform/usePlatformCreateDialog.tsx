@@ -16,7 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog.tsx";
 import {useState} from "react";
-import {HStack} from "@/util/csshelper/layoutComponents.ts";
+import {HStack} from "@/util/css/layoutComponents.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {create, platformQueryKeys} from "@/client/artwork/platformClient.ts";
 

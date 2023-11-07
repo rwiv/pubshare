@@ -11,7 +11,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 import {findByNameContains} from "@/client/artwork/authorClient.ts";
 import {Separator} from "@/components/ui/separator.tsx";
-import {Center, VStack} from "@/util/csshelper/layoutComponents.ts";
+import {Center, VStack} from "@/util/css/layoutComponents.ts";
 import {Input} from "@/components/ui/input.tsx";
 
 function AuthorSearchArea() {
