@@ -7,7 +7,7 @@ import React from "react";
 interface DataTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
-  className: string;
+  className?: string;
   onClickRow?: (row: T) => void;
   openDialog?: React.Dispatch<React.SetStateAction<boolean>>;
   addDialog?: React.ReactNode;

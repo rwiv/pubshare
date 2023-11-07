@@ -26,7 +26,7 @@ export class FileDummyBuilder {
     guestDefaultPerm: PermissionType,
   ): FileCreation {
     return {
-      path: `${n}`,
+      path: `file${n}`,
       memberDefaultPerm,
       guestDefaultPerm,
     };

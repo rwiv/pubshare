@@ -20,19 +20,43 @@ export class AccountDummyBuilder {
     };
   }
 
+  acDt1(
+    s: string,
+    type: AccountType = accountTypeValues.ADMIN,
+    certified: boolean = true,
+  ) {
+    return this.accountService.create(this.acC(s, type, certified));
+  }
+
+  acDt2(
+    keyword: string,
+    password: string,
+    type: AccountType = accountTypeValues.ADMIN,
+    certified: boolean = true,
+  ) {
+    const creation = {
+      email: `${keyword}@gmail.com`,
+      password: password,
+      nickname: keyword,
+      certified,
+      type,
+    };
+    return this.accountService.create(creation);
+  }
+
   ac(
     n: number,
     type: AccountType = accountTypeValues.ADMIN,
     certified: boolean = true,
   ) {
-    return this.accountService.create(this.acC(n, type, certified));
+    return this.accountService.create(this.acC(`account${n}`, type, certified));
   }
 
-  acC(n: number, type: AccountType, certified: boolean): AccountCreation {
+  acC(str: string, type: AccountType, certified: boolean): AccountCreation {
     return {
-      email: `${n}`,
-      password: `${n}`,
-      nickname: `${n}`,
+      email: str,
+      password: str,
+      nickname: str,
       certified,
       type,
     };

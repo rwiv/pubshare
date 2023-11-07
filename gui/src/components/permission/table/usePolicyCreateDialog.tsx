@@ -18,12 +18,13 @@ import {
 import {useState} from "react";
 import {HStack} from "@/util/css/layoutComponents.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {authorQueryKeys, create} from "@/client/artwork/authorClient.ts";
+import {PolicyCreation} from "@/client/permission/types";
+import {createPolicy, policyQueryKeys} from "@/client/permission/policyClient.ts";
 
-export function useAuthorCreateDialog() {
+export function usePolicyCreateDialog() {
   const [open, setOpen] = useState(false);
 
-  const form = useForm<AuthorCreation>({
+  const form = useForm<PolicyCreation>({
     defaultValues: {
       name: "",
     }
@@ -31,9 +32,9 @@ export function useAuthorCreateDialog() {
 
   const queryClient = useQueryClient()
 
-  const onSubmit: SubmitHandler<AuthorCreation> = async creation => {
-    await create(creation);
-    await queryClient.invalidateQueries({ queryKey: [authorQueryKeys.findAll] });
+  const onSubmit: SubmitHandler<PolicyCreation> = async creation => {
+    await createPolicy(creation);
+    await queryClient.invalidateQueries({ queryKey: [policyQueryKeys.findAll] });
     setOpen(false);
   };
 
@@ -50,7 +51,7 @@ export function useAuthorCreateDialog() {
           <form className="space-y-4">
             <FormField control={form.control} name="name" render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>

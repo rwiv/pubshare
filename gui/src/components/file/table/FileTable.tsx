@@ -28,6 +28,7 @@ export function FileTable({ className }: FileTableProps) {
 
   const onClick = (file: FileResponse) => {
     setCurFile(file);
+    console.log(file)
   };
 
   const onDoubleClick = async (file: FileResponse) => {

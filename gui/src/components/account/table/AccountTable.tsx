@@ -1,31 +1,16 @@
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {ColumnDef} from "@tanstack/react-table";
+import {ColumnDef, Row} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon} from "@radix-ui/react-icons";
 import {DataTable} from "@/components/template/DataTable.tsx";
 import {AccountResponse} from "@/client/account/types.ts";
 import {accountQueryKeys, findAllAccounts, deleteAccount} from "@/client/account/accountClient.ts";
 
-const columns: ColumnDef<AccountResponse>[] = [
-  {
-    accessorKey: "id",
-    header: () => (<div className="text-center">Id</div>),
-    cell: ({ row }) => (<div className="text-center">{row.getValue("id")}</div>)
-  },
-  {
-    accessorKey: "name",
-    header: () => (<div className="text-center">Header</div>),
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("name")}</div>
-    )
-  },
-  {
-    id: "delete",
-    cell: ({ row }) => {
+function DeleteButton({ row }: { row: Row<AccountResponse> }) {
       const queryClient = useQueryClient();
 
       const onClick = async () => {
-        await deleteAccount(row.getValue("id"));
+        await deleteAccount(row.original.id);
         await queryClient.invalidateQueries({ queryKey: [accountQueryKeys.findAll] });
       };
 
@@ -37,6 +22,47 @@ const columns: ColumnDef<AccountResponse>[] = [
         </div>
       )
     }
+
+const columns: ColumnDef<AccountResponse>[] = [
+  {
+    accessorKey: "id",
+    header: () => (<div className="text-center">Id</div>),
+    cell: ({ row }) => (
+      <div className="text-center">{row.original.id}</div>
+    )
+  },
+  {
+    accessorKey: "email",
+    header: () => (<div className="text-center">Email</div>),
+    cell: ({ row }) => (
+      <div className="text-center">{row.original.email}</div>
+    )
+  },
+  {
+    accessorKey: "nickname",
+    header: () => (<div className="text-center">Nickname</div>),
+    cell: ({ row }) => (
+      <div className="text-center">{row.original.nickname}</div>
+    )
+  },
+  {
+    accessorKey: "certified",
+    header: () => (<div className="text-center">certified</div>),
+    cell: ({ row }) => {
+      const certified = row.original.certified;
+      return <div className="text-center">{certified ? "o" : "x"}</div>
+    }
+  },
+  {
+    accessorKey: "type",
+    header: () => (<div className="text-center">Type</div>),
+    cell: ({ row }) => (
+      <div className="text-center">{row.original.type}</div>
+    )
+  },
+  {
+    id: "delete",
+    cell: DeleteButton,
   },
 ];
 

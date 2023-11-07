@@ -13,5 +13,6 @@ import { PolicyController } from '@/domain/permission/policy/web/PolicyControlle
     PolicyService,
     PolicyDummyBuilder,
   ],
+  exports: [PolicyService, PolicyDummyBuilder],
 })
 export class PolicyModule {}

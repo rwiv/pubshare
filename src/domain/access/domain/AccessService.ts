@@ -65,7 +65,7 @@ export class AccessService {
       id: fileDao.id,
       path: s3File.key,
       isDirectory: s3File.isDirectory,
-      lastModified: s3File.lastModified,
+      lastModified: s3File.lastModified.toISOString(),
       size: s3File.size,
       myPerm,
     };

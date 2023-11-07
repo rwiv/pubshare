@@ -15,6 +15,6 @@ import { AccountDummyBuilder } from '@/domain/account/dev/AccountDummyBuilder';
     PrismaService,
     AuthenticationService,
   ],
-  exports: [AccountService],
+  exports: [AccountService, AccountDummyBuilder],
 })
 export class AccountModule {}

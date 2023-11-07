@@ -52,21 +52,21 @@ export const fileColumns: ColumnDef<FileResponse>[] = [
     accessorKey: "path",
     header: () => (<div className="text-start ml-2">Name</div>),
     cell: ({ row }) => (
-      <div className="text-start ml-2">{row.getValue("path")}</div>
+      <div className="text-start ml-2">{row.original.path}</div>
     )
   },
   {
     accessorKey: "lastModified",
     header: () => (<div className="text-start">Modified</div>),
     cell: ({ row }) => (
-      <div className="text-start">{isoToPretty(row.getValue("lastModified"))}</div>
+      <div className="text-start">{isoToPretty(row.original.lastModified)}</div>
     )
   },
   {
     accessorKey: "size",
     header: () => (<div className="text-start">Size</div>),
     cell: ({ row }) => (
-      <div className="text-start">{row.getValue("size")}</div>
+      <div className="text-start">{row.original.size}</div>
     )
   },
   {

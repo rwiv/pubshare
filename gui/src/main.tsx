@@ -8,11 +8,13 @@ import './globals.css'
 import {MainPage} from "@/pages/MainPage.tsx";
 import {LoginPage} from "@/pages/account/LoginPage.tsx";
 import {AccountListPage} from "@/pages/account/AccountListPage.tsx";
+import {PolicyListPage} from "@/pages/permission/PolicyListPage.tsx";
 
 const router = createBrowserRouter([
   { path: '/', element: <MainPage /> },
   { path: '/login', element: <LoginPage /> },
   { path: '/accounts', element: <AccountListPage /> },
+  { path: '/policies', element: <PolicyListPage /> },
 ]);
 
 const queryClient = new QueryClient();

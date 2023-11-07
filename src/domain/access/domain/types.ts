@@ -4,7 +4,7 @@ export interface FileResponse {
   id: number;
   path: string;
   isDirectory: boolean;
-  lastModified: Date | null;
+  lastModified: string | null;
   size: number | null;
   myPerm: PermissionType;
 }

@@ -12,7 +12,7 @@ export class PolicyDummyBuilder {
 
   plC(n: number): PolicyCreation {
     return {
-      name: `${n}`,
+      name: `policy${n}`,
     };
   }
 }

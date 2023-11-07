@@ -1,7 +1,6 @@
 import {appConstants} from "@/common/appConstants.ts";
-import {PolicyCreation} from "@/client/permission/types";
+import {Policy, PolicyCreation} from "@/client/permission/types";
 import axios from "axios";
-import {AccountResponse} from "@/client/account/types.ts";
 import {getHeaderConfig, getHeaders} from "@/client/common/clientUtils.ts";
 
 const baseUrl = `${appConstants.host}/api/policies`;
@@ -11,12 +10,12 @@ export const policyQueryKeys = {
 };
 
 export async function createPolicy(creation: PolicyCreation) {
-  const res = await axios.post<AccountResponse>(`${baseUrl}`, creation, getHeaderConfig());
+  const res = await axios.post<Policy>(`${baseUrl}`, creation, getHeaderConfig());
   return res.data;
 }
 
 export async function findAllPolicies() {
-  const res = await axios.get<AccountResponse>(`${baseUrl}`, getHeaderConfig());
+  const res = await axios.get<Policy[]>(`${baseUrl}`, getHeaderConfig());
   return res.data;
 }
 

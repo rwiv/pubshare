@@ -5,6 +5,10 @@ export function parseISOString(iso: string) {
 
 export function isoToPretty(iso: string) {
   const date = parseISOString(iso);
+  return dateToPretty(date);
+}
+
+export function dateToPretty(date: Date) {
   const dateStr = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
   const timeStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
   return `${dateStr} ${timeStr}`;

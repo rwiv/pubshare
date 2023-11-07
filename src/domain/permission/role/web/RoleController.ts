@@ -9,7 +9,7 @@ import {
 import { RoleService } from '@/domain/permission/role/domain/RoleService';
 import { RoleCreation } from '@/domain/permission/role/domain/types';
 
-@Controller('api/perm/roles')
+@Controller('api/roles')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
