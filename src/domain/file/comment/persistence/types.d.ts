@@ -8,7 +8,7 @@ interface FileComment {
   content: string;
 }
 
-interface FileCommentCreation {
+interface FileCommentCreationPrisma {
   content: string;
   file: PrismaConnect;
   createdBy: PrismaConnect;

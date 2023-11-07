@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { FileAuthorityService } from '@/domain/permission/fileauthority/domain/FileAuthorityService';
-import { FileAuthorityCreation } from '@/domain/permission/fileauthority/persistence/types';
 import {
   PermissionType,
   permissionTypeValues,
 } from '@/domain/permission/common/types';
+import { FileAuthorityCreation } from '@/domain/permission/fileauthority/domain/types';
 
 @Injectable()
 export class FileAuthorityDummyBuilder {
@@ -15,11 +15,7 @@ export class FileAuthorityDummyBuilder {
     accountId: number,
     permission: PermissionType = permissionTypeValues.WRITE,
   ) {
-    const creation: FileAuthorityCreation = {
-      file: { connect: { id: fileId } },
-      account: { connect: { id: accountId } },
-      permission,
-    };
+    const creation: FileAuthorityCreation = { fileId, accountId, permission };
     return this.fileAuthorityService.create(creation);
   }
 }

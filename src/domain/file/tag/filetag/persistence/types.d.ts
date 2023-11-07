@@ -3,7 +3,7 @@ interface FileTagCreation {
   tagId: number;
 }
 
-interface FileTagCreationRequest {
-  fildId: number;
+interface FileTagCreationByTagName {
+  fileId: number;
   tagName: string;
 }

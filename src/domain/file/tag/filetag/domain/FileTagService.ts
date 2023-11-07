@@ -9,14 +9,14 @@ export class FileTagService {
     private readonly tagService: TagService,
   ) {}
 
-  async create(creation: FileTagCreationRequest) {
+  async create(creation: FileTagCreationByTagName) {
     let tag = await this.tagService.findByName(creation.tagName);
     if (tag === null) {
       tag = await this.tagService.create({ name: creation.tagName });
     }
 
     return this.fileTagRepository.create({
-      fileId: creation.fildId,
+      fileId: creation.fileId,
       tagId: tag.id,
     });
   }

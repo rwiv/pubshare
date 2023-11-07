@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { RoleService } from '@/domain/permission/role/domain/RoleService';
-import { RoleCreation } from '@/domain/permission/role/persistence/types';
+import { RoleCreation } from '@/domain/permission/role/domain/types';
 
 @Controller('api/perm/roles')
 export class RoleController {

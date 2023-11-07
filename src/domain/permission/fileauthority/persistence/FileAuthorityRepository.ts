@@ -1,12 +1,12 @@
 import { PrismaService } from '@/misc/prisma/PrismaService';
 import { Injectable } from '@nestjs/common';
-import { FileAuthorityCreation } from '@/domain/permission/fileauthority/persistence/types';
+import { FileAuthorityCreationPrisma } from '@/domain/permission/fileauthority/persistence/types';
 
 @Injectable()
 export class FileAuthorityRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(creation: FileAuthorityCreation) {
+  create(creation: FileAuthorityCreationPrisma) {
     return this.prisma.fileAuthority.create({ data: creation });
   }
 

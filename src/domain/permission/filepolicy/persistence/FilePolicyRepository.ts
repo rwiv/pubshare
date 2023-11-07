@@ -1,12 +1,12 @@
 import { PrismaService } from '@/misc/prisma/PrismaService';
 import { Injectable } from '@nestjs/common';
-import { FilePolicyCreation } from '@/domain/permission/filepolicy/persistence/types';
+import { FilePolicyCreationPrisma } from '@/domain/permission/filepolicy/persistence/types';
 
 @Injectable()
 export class FilePolicyRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(creation: FilePolicyCreation) {
+  create(creation: FilePolicyCreationPrisma) {
     return this.prisma.filePolicy.create({ data: creation });
   }
 

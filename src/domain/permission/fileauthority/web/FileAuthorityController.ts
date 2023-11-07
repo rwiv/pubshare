@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { FileAuthorityService } from '@/domain/permission/fileauthority/domain/FileAuthorityService';
-import { FileAuthorityCreation } from '@/domain/permission/fileauthority/persistence/types';
+import { FileAuthorityCreation } from '@/domain/permission/fileauthority/domain/types';
 
 @Controller('api/file-authorities')
 export class FileAuthorityController {

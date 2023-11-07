@@ -7,10 +7,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { FileCommentService } from '@/domain/file/comment/domain/FileCommentService';
-import {
-  FileComment,
-  FileCommentCreation,
-} from '@/domain/file/comment/persistence/types';
+import { FileComment } from '@/domain/file/comment/persistence/types';
+import { FileCommentCreation } from '@/domain/file/comment/domain/types';
 
 @Controller('api/file-comments')
 export class FileCommentController {

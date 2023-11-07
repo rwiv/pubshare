@@ -1,7 +1,10 @@
-import {Injectable} from "@nestjs/common";
-import {FilePolicyService} from "@/domain/permission/filepolicy/domain/FilePolicyService";
-import {FilePolicyCreation} from "@/domain/permission/filepolicy/persistence/types";
-import {PermissionType, permissionTypeValues} from "@/domain/permission/common/types";
+import { Injectable } from '@nestjs/common';
+import { FilePolicyService } from '@/domain/permission/filepolicy/domain/FilePolicyService';
+import {
+  PermissionType,
+  permissionTypeValues,
+} from '@/domain/permission/common/types';
+import { FilePolicyCreation } from '@/domain/permission/filepolicy/domain/types';
 
 @Injectable()
 export class FilePolicyDummyBuilder {
@@ -12,11 +15,7 @@ export class FilePolicyDummyBuilder {
     policyId: number,
     permission: PermissionType = permissionTypeValues.WRITE,
   ) {
-    const creation: FilePolicyCreation = {
-      file: { connect: { id: fileId } },
-      policy: { connect: { id: policyId } },
-      permission,
-    };
+    const creation: FilePolicyCreation = { fileId, policyId, permission };
     return this.filePolicyService.create(creation);
   }
 }

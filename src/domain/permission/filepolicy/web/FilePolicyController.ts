@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { FilePolicyService } from '@/domain/permission/filepolicy/domain/FilePolicyService';
-import { FilePolicyCreation } from '@/domain/permission/filepolicy/persistence/types';
+import { FilePolicyCreation } from '@/domain/permission/filepolicy/domain/types';
 
 @Controller('api/file-policies')
 export class FilePolicyController {

@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { RoleRepository } from '@/domain/permission/role/persistence/RoleRepository';
-import { RoleCreation } from '@/domain/permission/role/persistence/types';
+import { RoleCreationPrisma } from '@/domain/permission/role/persistence/types';
+import { RoleCreation } from '@/domain/permission/role/domain/types';
+import { toPrismaConnect } from '@/misc/prisma/prismaUtil';
 
 @Injectable()
 export class RoleService {
   constructor(private readonly roleRepository: RoleRepository) {}
 
   create(creation: RoleCreation) {
-    return this.roleRepository.create(creation);
+    const form: RoleCreationPrisma = {
+      account: toPrismaConnect(creation.accountId),
+      policy: toPrismaConnect(creation.policyId),
+    };
+    return this.roleRepository.create(form);
   }
 
   findById(id: number) {

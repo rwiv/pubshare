@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/misc/prisma/PrismaService';
-import { FileCommentCreation } from '@/domain/file/comment/persistence/types';
+import { FileCommentCreationPrisma } from '@/domain/file/comment/persistence/types';
 
 @Injectable()
 export class FileCommentRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(creation: FileCommentCreation) {
+  create(creation: FileCommentCreationPrisma) {
     return this.prisma.fileComment.create({ data: creation });
   }
 

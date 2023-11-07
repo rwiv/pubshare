@@ -13,7 +13,7 @@ export class FileTagController {
   constructor(private readonly fileTagService: FileTagService) {}
 
   @Post()
-  create(@Body() creation: FileTagCreationRequest) {
+  create(@Body() creation: FileTagCreationByTagName) {
     return this.fileTagService.create(creation);
   }
 
