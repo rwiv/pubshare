@@ -9,6 +9,7 @@ import {FileResponse} from "@/client/access/types.ts";
 import {deleteFile, download, list, mkdir, upload} from "@/client/access/accessClient.ts";
 import {Button} from "@/components/ui/button.tsx";
 import {Input} from "@/components/ui/input.tsx";
+import {Tree} from "@/components/tree/Tree.tsx";
 // import viteLogo from '/vite.svg'
 
 export function MainPage() {
@@ -95,6 +96,7 @@ export function MainPage() {
       <Button onClick={onMkdir}>mkdir</Button>
       <Button onClick={onRmdir}>rmdir</Button>
       <Input type="file" ref={ref} />
+      <Tree />
     </MainTemplate>
   );
 }
