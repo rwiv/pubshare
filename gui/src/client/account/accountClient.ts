@@ -45,3 +45,9 @@ export async function deleteAccount(id: number) {
   const res = await axios.delete<LoginResponse>(`${baseUrl}/${id}`, getHeaderConfig());
   return res.data;
 }
+
+export async function certificate(id: number) {
+  const url = `${baseUrl}/certificate/${id}`;
+  const res = await axios.patch<AccountResponse>(url, getHeaderConfig());
+  return res.data;
+}

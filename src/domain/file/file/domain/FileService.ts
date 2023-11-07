@@ -17,4 +17,10 @@ export class FileService {
   findByPath(path: string) {
     return this.fileRepository.findByPath(path);
   }
+
+  async deleteByPath(path: string) {
+    const file = await this.fileRepository.findByPath(path);
+    await this.fileRepository.delete(file.id);
+    return file;
+  }
 }

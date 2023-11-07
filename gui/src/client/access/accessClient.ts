@@ -39,6 +39,11 @@ export async function upload(req: FileUploadRequest, file: File) {
   return res.data;
 }
 
+export async function mkdir(req: AccessFileRequest) {
+  const res = await axios.put<string>(`${baseUrl}/mkdir`, req, getHeaderConfig());
+  return res.data;
+}
+
 export async function deleteFile(req: AccessFileRequest) {
   const res = await axios({
     url: `${baseUrl}/delete`,

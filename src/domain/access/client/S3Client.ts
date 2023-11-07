@@ -9,10 +9,9 @@ import {
   PutObjectCommand,
   S3Client as Client,
 } from '@aws-sdk/client-s3';
-import { Readable } from 'stream';
 import { accessConfig } from '@/domain/access/common/accessConfig';
 import { S3File } from '@/domain/access/client/types';
-import {AccessException} from "@/domain/access/common/AccessException";
+import { AccessException } from '@/domain/access/common/AccessException';
 
 export class S3Client {
   private aws = getConfSync().aws;
@@ -78,9 +77,9 @@ export class S3Client {
     return this.s3.send(command);
   }
 
-  async upload(key: string, rs: Readable) {
+  async upload(key: string, buffer: Buffer) {
     const { Bucket, Key } = this.getBucketAndKey(key);
-    const command = new PutObjectCommand({ Bucket, Key, Body: rs });
+    const command = new PutObjectCommand({ Bucket, Key, Body: buffer });
     return this.s3.send(command);
   }
 

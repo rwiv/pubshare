@@ -6,7 +6,7 @@ import {accountQueryKeys, login} from "@/client/account/accountClient.ts";
 import {useTokenStore} from "@/stores/loginStore.ts";
 import {useMyData} from "@/hooks/useMyData.tsx";
 import {FileResponse} from "@/client/access/types.ts";
-import {deleteFile, download, list, upload} from "@/client/access/accessClient.ts";
+import {deleteFile, download, list, mkdir, upload} from "@/client/access/accessClient.ts";
 import {Button} from "@/components/ui/button.tsx";
 import {Input} from "@/components/ui/input.tsx";
 // import viteLogo from '/vite.svg'
@@ -19,7 +19,7 @@ export function MainPage() {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    list("").then(files => {
+    list("hello/").then(files => {
       setFiles(files);
     });
 
@@ -42,9 +42,9 @@ export function MainPage() {
   const onUpload = async () => {
     const file = ref?.current?.files?.item(0);
     if (file === null || file === undefined) {
-      throw Error("");
+      throw Error("error");
     }
-    const key = file.name;
+    const key = "hello/" + file.name;
     await upload({
       key,
       fileCreation: {
@@ -61,10 +61,19 @@ export function MainPage() {
     if (file === null || file === undefined) {
       throw Error("");
     }
-    const key = file.name;
-    // const key = "test123.txt";
+    const key = "hello/" + file.name;
     await deleteFile({ key })
     console.log("delete");
+  }
+
+  const onMkdir = async () => {
+    const key = "hello/testdir/";
+    await mkdir({ key });
+  }
+
+  const onRmdir = async () => {
+    const key = "hello/testdir/";
+    await deleteFile({ key });
   }
 
   return (
@@ -83,6 +92,8 @@ export function MainPage() {
       )}
       <Button onClick={onUpload}>upload</Button>
       <Button onClick={onDelete}>delete</Button>
+      <Button onClick={onMkdir}>mkdir</Button>
+      <Button onClick={onRmdir}>rmdir</Button>
       <Input type="file" ref={ref} />
     </MainTemplate>
   );

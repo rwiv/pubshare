@@ -123,7 +123,7 @@ export class AccessService {
     if (directory === null || !this.isWritable(directory)) {
       throw new AuthorizationException('not have permission');
     }
-    await this.client.upload(req.key, file.stream);
+    await this.client.upload(req.key, file.buffer);
     return this.fileService.create(req.fileCreation);
   }
 
@@ -142,6 +142,7 @@ export class AccessService {
   }
 
   async delete(auth: AuthToken, req: AccessFileRequest) {
+    await this.fileService.deleteByPath(req.key);
     return this.client.delete(req.key);
   }
 }

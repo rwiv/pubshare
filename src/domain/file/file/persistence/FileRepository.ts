@@ -17,4 +17,8 @@ export class FileRepository {
   findByPath(path: string) {
     return this.prisma.file.findUnique({ where: { path } });
   }
+
+  delete(id: number) {
+    return this.prisma.file.delete({ where: { id } });
+  }
 }
