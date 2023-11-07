@@ -6,6 +6,10 @@ import {getFilenameByKey} from "@/client/access/accessUtils.ts";
 
 const baseUrl = `${appConstants.host}/api/access`;
 
+export const accessQueryKeys = {
+  list: "list",
+};
+
 export async function list(key: string): Promise<FileResponse[]> {
   const url = `${baseUrl}/list?key=${key}`;
   const res = await axios.get<FileResponse[]>(url, getHeaderConfig());

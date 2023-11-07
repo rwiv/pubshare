@@ -7,9 +7,10 @@ interface IconProps {
 }
 
 function Icon({ collapsed, onClick }: IconProps) {
+  const className = "w-6 h-6 p-1 hover:bg-gray-300 rounded-full";
   const icon = collapsed
-    ? <ChevronDownIcon className="w-6 h-6 p-1 hover:bg-gray-300 rounded-lg" />
-    : <ChevronRightIcon className="w-6 h-6 p-1 hover:bg-gray-300 rounded-lg" />;
+    ? <ChevronDownIcon className={className} />
+    : <ChevronRightIcon className={className} />;
 
   return (
     <div className="w-8 h-8 mt-1.5 flex justify-center" onClick={onClick}>{icon}</div>
