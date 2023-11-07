@@ -6,8 +6,8 @@ import {useTokenStore} from "@/stores/loginStore.ts";
 import {useMyData} from "@/hooks/useMyData.tsx";
 import {deleteFile, mkdir} from "@/client/access/accessClient.ts";
 import {Button} from "@/components/ui/button.tsx";
-import {Tree} from "@/components/tree/Tree.tsx";
-import {FileTable} from "@/components/table/file/FileTable.tsx";
+import {Tree} from "@/components/file/tree/Tree.tsx";
+import {FileTable} from "@/components/file/table/FileTable.tsx";
 // import viteLogo from '/vite.svg'
 
 export function MainPage() {

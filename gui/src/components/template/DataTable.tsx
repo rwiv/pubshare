@@ -7,12 +7,13 @@ import React from "react";
 interface DataTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
+  className: string;
   onClickRow?: (row: T) => void;
   openDialog?: React.Dispatch<React.SetStateAction<boolean>>;
   addDialog?: React.ReactNode;
 }
 
-export function DataTable<T>({ data, columns, onClickRow, openDialog, addDialog }: DataTableProps<T>) {
+export function DataTable<T>({ data, columns, className, onClickRow, openDialog, addDialog }: DataTableProps<T>) {
 
   const table = useReactTable<T>({
     data, columns,
@@ -20,19 +21,14 @@ export function DataTable<T>({ data, columns, onClickRow, openDialog, addDialog 
   });
 
   return (
-    <div className="border rounded-lg">
+    <div className={className}>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="bg-muted/40">
               {headerGroup.headers.map((header) => (
                 <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                 </TableHead>
               ))}
             </TableRow>
@@ -42,7 +38,8 @@ export function DataTable<T>({ data, columns, onClickRow, openDialog, addDialog 
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
-                key={row.id} className="cursor-pointer"
+                key={row.id}
+                css={{ userSelect: "none", cursor: "default" }}
                 onClick={() => {if (onClickRow) onClickRow(row.original)}}>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

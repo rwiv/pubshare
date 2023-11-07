@@ -1,8 +1,8 @@
-import {UserNav} from "@/components/header/UserNav.tsx";
+import {UserNav} from "@/components/layout/UserNav.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Link} from "react-router-dom";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
-import {NavBar} from "@/components/header/NavBar.tsx";
+import {NavBar} from "@/components/layout/NavBar.tsx";
 import {useMyData} from "@/hooks/useMyData.tsx";
 
 export function AppHeader() {

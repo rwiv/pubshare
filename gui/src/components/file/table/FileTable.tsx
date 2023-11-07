@@ -5,9 +5,13 @@ import {FileResponse} from "@/client/access/types.ts";
 import {accessQueryKeys, download, list, upload} from "@/client/access/accessClient.ts";
 import {useAccessStore} from "@/stores/accessStore.ts";
 import React, {useState} from "react";
-import {fileColumns} from "@/components/table/file/fileColumns.tsx";
+import {fileColumns} from "@/components/file/table/fileColumns.tsx";
 
-export function FileTable() {
+interface FileTableProps {
+  className?: string;
+}
+
+export function FileTable({ className }: FileTableProps) {
 
   const queryClient = useQueryClient();
   const [isDragging, setIsDragging] = useState(false);
@@ -53,7 +57,7 @@ export function FileTable() {
 
   return (
     <div
-      className="m-3"
+      className={className}
       css={{ backgroundColor: isDragging ? "#c2e7ff" : "" }}
       onDragOver={event => event.preventDefault()}
       onDragEnter={() => setIsDragging(true)}

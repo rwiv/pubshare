@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import {TreeHead} from "@/components/tree/TreeHead.tsx";
-import {FileNode} from "@/components/tree/types";
+import {TreeHead} from "@/components/file/tree/TreeHead.tsx";
+import {FileNode} from "@/components/file/tree/types";
 import {FileResponse} from "@/client/access/types.ts";
 import {accessQueryKeys, list} from "@/client/access/accessClient.ts";
 import {getFilenameByKey} from "@/client/access/accessUtils.ts";

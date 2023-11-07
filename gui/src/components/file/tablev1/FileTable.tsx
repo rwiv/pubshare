@@ -2,8 +2,8 @@ import {useEffect, useRef, useState} from 'react';
 import { FileResponse } from './types';
 import { FileTableHeader } from './FileTableHeader.tsx';
 import {Table, TableBody} from "@/components/ui/table.tsx";
-import {FileRow} from "@/components/table/filev1/FileRow.tsx";
-import {DragPreview} from "@/components/table/filev1/DragPreview.tsx";
+import {FileRow} from "@/components/file/tablev1/FileRow.tsx";
+import {DragPreview} from "@/components/file/tablev1/DragPreview.tsx";
 
 interface FileTableProps {
   files: FileResponse[];

@@ -1,6 +1,6 @@
 import {useDebounce} from "react-use";
 import {useEffect, useState} from "react";
-import {FileResponse} from "@/components/table/filev1/types";
+import {FileResponse} from "@/components/file/tablev1/types";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 import { PlusIcon } from "@radix-ui/react-icons";
 

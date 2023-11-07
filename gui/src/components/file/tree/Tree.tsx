@@ -1,5 +1,5 @@
-import {TreeNode} from "@/components/tree/TreeNode.tsx";
-import {FileNode} from "@/components/tree/types";
+import {TreeNode} from "@/components/file/tree/TreeNode.tsx";
+import {FileNode} from "@/components/file/tree/types";
 import {useEffect, useState} from "react";
 import {list} from "@/client/access/accessClient.ts";
 import {FileResponse} from "@/client/access/types.ts";

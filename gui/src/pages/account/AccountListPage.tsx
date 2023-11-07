@@ -1,5 +1,5 @@
 import {MainTemplate} from "@/pages/MainTemplate.tsx";
-import {AccountTable} from "@/components/table/account/AccountTable.tsx";
+import {AccountTable} from "@/components/account/table/AccountTable.tsx";
 
 export function AccountListPage() {
   return (

@@ -10,9 +10,10 @@ import {
 import {Button} from "@/components/ui/button.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Center, VStack} from "@/util/css/layoutComponents.ts";
-import {signup} from "@/client/user/userClient.ts";
 import {useNavigate} from "react-router";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
+import {AccountCreation} from "@/client/account/types.ts";
+import {signup} from "@/client/account/accountClient.ts";
 
 export function SignupForm() {
 

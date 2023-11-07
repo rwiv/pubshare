@@ -1,4 +1,4 @@
-import {AppHeader} from "@/components/header/AppHeader.tsx";
+import {AppHeader} from "@/components/layout/AppHeader.tsx";
 import {HStack} from '@/util/css/layoutComponents.ts';
 import {ReactNode} from "react";
 import {mq} from "@/util/css/MediaQueryHelper.ts";

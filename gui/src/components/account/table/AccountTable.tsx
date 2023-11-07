@@ -2,11 +2,11 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ColumnDef} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon} from "@radix-ui/react-icons";
-import {DataTable} from "@/components/table/DataTable.tsx";
-import {findAll, platformQueryKeys, remove} from "@/client/artwork/platformClient.ts";
-import {usePlatformCreateDialog} from "@/components/table/artwork/platform/usePlatformCreateDialog.tsx";
+import {DataTable} from "@/components/template/DataTable.tsx";
+import {AccountResponse} from "@/client/account/types.ts";
+import {accountQueryKeys, findAllAccounts, deleteAccount} from "@/client/account/accountClient.ts";
 
-const columns: ColumnDef<Author>[] = [
+const columns: ColumnDef<AccountResponse>[] = [
   {
     accessorKey: "id",
     header: () => (<div className="text-center">Id</div>),
@@ -25,8 +25,8 @@ const columns: ColumnDef<Author>[] = [
       const queryClient = useQueryClient();
 
       const onClick = async () => {
-        await remove(row.getValue("id"));
-        await queryClient.invalidateQueries({ queryKey: [platformQueryKeys.findAll] });
+        await deleteAccount(row.getValue("id"));
+        await queryClient.invalidateQueries({ queryKey: [accountQueryKeys.findAll] });
       };
 
       return (
@@ -40,18 +40,16 @@ const columns: ColumnDef<Author>[] = [
   },
 ];
 
-export function PlatformTable() {
+export function AccountTable() {
   const { data: authors } = useQuery({
-    queryKey: [platformQueryKeys.findAll],
-    queryFn: findAll,
+    queryKey: [accountQueryKeys.findAll],
+    queryFn: findAllAccounts,
     initialData: [],
   });
-  const { setOpen, component } = usePlatformCreateDialog();
 
   return (
     <DataTable
       data={authors} columns={columns}
-      openDialog={setOpen} addDialog={component}
     />
   )
 }
