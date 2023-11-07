@@ -17,4 +17,8 @@ export class PolicyRepository {
   create(creation: PolicyCreation) {
     return this.prisma.policy.create({ data: creation });
   }
+
+  delete(id: number) {
+    return this.prisma.policy.delete({ where: { id } });
+  }
 }

@@ -17,4 +17,8 @@ export class PolicyService {
   findById(id: number) {
     return this.policyRepository.findById(id);
   }
+
+  delete(id: number) {
+    return this.policyRepository.delete(id);
+  }
 }

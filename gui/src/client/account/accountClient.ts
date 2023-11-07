@@ -20,9 +20,7 @@ export async function getMyData() {
 }
 
 export async function signup(creation: AccountCreation) {
-  const res = await axios.post<AccountResponse>(
-      `${baseUrl}/signup`, creation,
-  );
+  const res = await axios.post<AccountResponse>(`${baseUrl}/signup`, creation);
   return res.data;
 }
 
