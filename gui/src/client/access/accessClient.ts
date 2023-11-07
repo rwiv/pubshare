@@ -1,7 +1,8 @@
 import axios from "axios";
 import {appConstants} from "@/common/appConstants.ts";
 import {AccessFileRequest, FileResponse, FileUploadRequest} from "@/client/access/types.ts";
-import {getFilenameByKey, getHeaderConfig, getHeaders} from "@/client/common/clientUtils.ts";
+import {getHeaderConfig, getHeaders} from "@/client/common/clientUtils.ts";
+import {getFilenameByKey} from "@/client/access/accessUtils.ts";
 
 const baseUrl = `${appConstants.host}/api/access`;
 

@@ -1,14 +1,18 @@
-import {TriangleDownIcon, TriangleRightIcon} from "@radix-ui/react-icons";
+import {ChevronDownIcon, ChevronRightIcon} from "@radix-ui/react-icons";
+import React from "react";
 
 interface IconProps {
   collapsed: boolean;
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 function Icon({ collapsed, onClick }: IconProps) {
-  const icon = collapsed ? <TriangleDownIcon /> : <TriangleRightIcon />;
+  const icon = collapsed
+    ? <ChevronDownIcon className="w-6 h-6 p-1 hover:bg-gray-300 rounded-lg" />
+    : <ChevronRightIcon className="w-6 h-6 p-1 hover:bg-gray-300 rounded-lg" />;
+
   return (
-    <div onClick={onClick}>{icon}</div>
+    <div className="w-8 h-8 mt-1.5 flex justify-center" onClick={onClick}>{icon}</div>
   )
 }
 
@@ -16,7 +20,7 @@ interface TreeTitleProps {
   depth: number;
   content: string;
   onClick: () => void;
-  onIconClick: () => void;
+  onIconClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   collapsed: boolean;
 }
 

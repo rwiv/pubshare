@@ -10,7 +10,7 @@ export const useTokenStore = create<TokenState, [["zustand/persist", unknown]]>(
   persist(
     (set) => ({
       token: null,
-      setToken: token => set(() => ({ token })),
+      setToken: token => set(state => ({ ...state, token })),
     }),
     {
       name: "token",

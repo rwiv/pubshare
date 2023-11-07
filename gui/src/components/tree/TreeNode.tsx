@@ -1,62 +1,70 @@
 import React, {useState} from 'react'
 import {TreeHead} from "@/components/tree/TreeHead.tsx";
-import {NodeItem, RawItem} from "@/components/tree/types";
+import {FileNode} from "@/components/tree/types";
+import {FileResponse} from "@/client/access/types.ts";
+import {list} from "@/client/access/accessClient.ts";
+import {getFilenameByKey} from "@/client/access/accessUtils.ts";
+import {useAccessStore} from "@/stores/accessStore.ts";
 
 interface TreeNodeProps {
-  item: NodeItem;
-  setRawData: React.Dispatch<React.SetStateAction<RawItem[]>>;
+  file: FileNode;
+  setRawData: React.Dispatch<React.SetStateAction<FileResponse[]>>;
   depth?: number;
 }
 
-export function TreeNode({ item, setRawData, depth = 0 }: TreeNodeProps) {
+export function TreeNode({ file, setRawData, depth = 0 }: TreeNodeProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const {setCurDirectory} = useAccessStore();
 
-  function toggleCollapse() {
-    console.log("hello");
+  function onClick() {
+    setCurDirectory(file);
   }
 
-  async function onIconClick() {
-    setRawData(tree => [
-      ...tree,
-      { pmenuId: "root", menuId: "a" },
-      { pmenuId: "root", menuId: "b" },
-      { pmenuId: "a", menuId: "aa" },
-      { pmenuId: "a", menuId: "ab" },
-      { pmenuId: "b", menuId: "ba" },
-      { pmenuId: "b", menuId: "bb" },
-    ])
+  async function onIconClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    event.stopPropagation();
+    if (!file.isDirectory) return;
+
+    if (!collapsed) {
+      const files = await list(file.path);
+      setRawData(origin => {
+        const originIds = origin.map(file => file.id);
+        const filtered = files.filter(file => !originIds.includes(file.id));
+        return [
+        ...origin,
+        ...filtered,
+      ]});
+    }
+
     setCollapsed(prevValue => !prevValue);
   }
 
-  if(item.children.length > 0) {
-    return (
-      <div>
-        <TreeHead
-          depth={depth}
-          collapsed={collapsed}
-          content={item.menuId}
-          onClick={toggleCollapse}
-          onIconClick={onIconClick}
-        />
-        <div css={{
-          overflow: "hidden",
-          maxHeight: collapsed ? "100%" : "0",
-        }}>
-          {item.children.map((child) => (
-            <TreeNode key={child.menuId} item={child} depth={depth + 1} setRawData={setRawData} />
-          ))}
-        </div>
-      </div>
-    )
-  } else {
-    return (
+  return (file.children.length > 0 ? (
+    <div>
       <TreeHead
         depth={depth}
         collapsed={collapsed}
-        content={item.menuId}
-        onClick={toggleCollapse}
+        content={getFilenameByKey(file.path)}
+        onClick={onClick}
         onIconClick={onIconClick}
       />
-    )
-  }
+      <div css={{
+        overflow: "hidden",
+        maxHeight: collapsed ? "100%" : "0",
+      }}>
+        {file.children.map((child) => (
+          <TreeNode key={child.id} file={child} depth={depth + 1} setRawData={setRawData} />
+        ))}
+      </div>
+    </div>
+  ): (
+    <div>
+      <TreeHead
+        depth={depth}
+        collapsed={collapsed}
+        content={getFilenameByKey(file.path)}
+        onClick={onClick}
+        onIconClick={onIconClick}
+      />
+    </div>
+  ));
 }

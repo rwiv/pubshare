@@ -1,20 +1,26 @@
 import {TreeNode} from "@/components/tree/TreeNode.tsx";
-import {NodeItem, RawItem} from "@/components/tree/types";
-import {useState} from "react";
+import {FileNode} from "@/components/tree/types";
+import {useEffect, useState} from "react";
+import {list} from "@/client/access/accessClient.ts";
+import {FileResponse} from "@/client/access/types.ts";
+import {getParentKey} from "@/client/access/accessUtils.ts";
 
-const menuData: RawItem[] = [
-  { pmenuId: "ROOT", menuId: "root" },
-];
-
-function nest(menuData: RawItem[], menuId = "ROOT"): NodeItem[] {
-  return menuData
-    .filter(item => item.pmenuId === menuId)
-    .map(item => ({ ...item, children: nest(menuData, item.menuId) }));
+function nest(files: FileResponse[], parentPath = ""): FileNode[] {
+  return files
+    .filter(file => file.isDirectory)
+    .filter(file => getParentKey(file.path) === parentPath)
+    .map(file => ({ ...file, children: nest(files, file.path) }));
 }
 
 export function Tree() {
-  const [rawData, setRawData] = useState(menuData);
-  const data = nest(rawData);
+  const [rawData, setRawData] = useState<FileResponse[]>([]);
+  const root = nest(rawData);
+
+  useEffect(() => {
+    list("").then(files => {
+      setRawData(files);
+    })
+  }, []);
 
   return (
     <div css={{
@@ -24,8 +30,8 @@ export function Tree() {
       minHeight: "70vh",
       fontSize: "14px",
     }}>
-      {data.map((subItem, index) =>
-        <TreeNode item={subItem} key={index} setRawData={setRawData} />
+      {root.map((subItem, index) =>
+        <TreeNode file={subItem} key={index} setRawData={setRawData} />
       )}
     </div>
   )

@@ -1,8 +1,5 @@
-export interface RawItem {
-  pmenuId: string;
-  menuId: string;
-}
+import {FileResponse} from "@/client/access/types.ts";
 
-export interface NodeItem extends RawItem {
-  children: NodeItem[];
+export interface FileNode extends FileResponse {
+  children: FileNode[];
 }
