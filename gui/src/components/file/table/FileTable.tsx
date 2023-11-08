@@ -1,6 +1,6 @@
 import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.tsx";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useQuery, useQueryClient,} from "@tanstack/react-query";
 import {FileResponse} from "@/client/access/types.ts";
 import {accessQueryKeys, download, list, upload} from "@/client/access/accessClient.ts";
 import {useAccessStore} from "@/stores/accessStore.ts";
@@ -17,24 +17,25 @@ export function FileTable({ className }: FileTableProps) {
   const [isDragging, setIsDragging] = useState(false);
   const {curFile, curDirectory, setCurDirectory, setCurFile} = useAccessStore();
   const { data } = useQuery({
-    queryKey: [accessQueryKeys.list],
-    queryFn: () => list(curDirectory?.path ?? ""),
+    queryKey: [accessQueryKeys.list, curDirectory.path],
+    queryFn: ctx => list(ctx.queryKey[1]),
     initialData: [],
   });
   const table = useReactTable<FileResponse>({
-    data, columns: fileColumns,
+    data,
+    columns: fileColumns,
     getCoreRowModel: getCoreRowModel()
   });
 
   const onClick = (file: FileResponse) => {
     setCurFile(file);
-    console.log(file)
+    // console.log(file)
   };
 
   const onDoubleClick = async (file: FileResponse) => {
     if (file.isDirectory) {
       setCurDirectory(file);
-      await queryClient.setQueryData([accessQueryKeys.list], await list(file.path));
+      await queryClient.invalidateQueries({ queryKey: [accessQueryKeys.list] });
     } else {
       await download(file.path);
     }
@@ -44,7 +45,7 @@ export function FileTable({ className }: FileTableProps) {
     event.preventDefault();
     setIsDragging(false);
     const file = event.dataTransfer.files[0];
-    const key = (curDirectory?.path ?? "") + file.name;
+    const key = curDirectory.path + file.name;
     await upload({
       key,
       fileCreation: {

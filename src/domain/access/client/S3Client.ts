@@ -65,7 +65,7 @@ export class S3Client {
     const res = await this.s3.send(command);
     return {
       key,
-      isDirectory: this.isDirectory(key),
+      isDirectory: this.isDirKey(key),
       lastModified: res.LastModified,
       size: res.ContentLength,
     };
@@ -85,7 +85,7 @@ export class S3Client {
 
   async mkdir(key: string) {
     let Key = key;
-    if (Key.charAt(Key.length - 1) !== '/') {
+    if (!this.isDirKey(key)) {
       Key = Key + '/';
     }
     const Bucket = this.aws.bucketName;
@@ -99,7 +99,7 @@ export class S3Client {
     return this.s3.send(command);
   }
 
-  private isDirectory(key: string): boolean {
+  private isDirKey(key: string): boolean {
     return key.charAt(key.length - 1) === '/';
   }
 

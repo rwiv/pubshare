@@ -10,6 +10,6 @@ export class TagService {
   }
 
   findByName(name: string) {
-    return this.tagRepository.fundByName(name);
+    return this.tagRepository.findByName(name);
   }
 }

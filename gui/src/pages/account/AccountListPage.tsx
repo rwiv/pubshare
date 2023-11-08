@@ -4,9 +4,7 @@ import {AccountTable} from "@/components/account/table/AccountTable.tsx";
 export function AccountListPage() {
   return (
     <MainTemplate>
-      <div className="m-4">
-        <AccountTable />
-      </div>
+      <AccountTable className="m-3" />
     </MainTemplate>
   )
 }

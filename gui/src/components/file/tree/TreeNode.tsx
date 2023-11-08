@@ -29,7 +29,7 @@ export function TreeNode({ file, setRawData, depth = 0 }: TreeNodeProps) {
 
   async function onClick() {
     setCurDirectory(file);
-    await queryClient.setQueryData([accessQueryKeys.list], await list(file.path));
+    await queryClient.invalidateQueries({ queryKey: [accessQueryKeys.list] });
   }
 
   async function onIconClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {

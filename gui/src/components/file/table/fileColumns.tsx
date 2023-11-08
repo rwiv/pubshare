@@ -3,12 +3,50 @@ import {FileResponse} from "@/client/access/types.ts";
 import {accessQueryKeys, deleteFile, download} from "@/client/access/accessClient.ts";
 import {HStack} from "@/util/css/layoutComponents.ts";
 import {Button} from "@/components/ui/button.tsx";
-import {Cross1Icon, DownloadIcon} from "@radix-ui/react-icons";
+import {Cross1Icon, DownloadIcon, PlusIcon} from "@radix-ui/react-icons";
 import {isoToPretty} from "@/util/date.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {ReactNode} from "react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu.tsx";
+import {useFolderCreateDialog} from "@/components/file/table/useFolderCreateDialog.tsx";
 
-function ButtonSet({ row }: { row: Row<FileResponse> }) {
+function FileAddButton() {
+
+  const {setOpen, component} = useFolderCreateDialog();
+
+  const onFolderBtnClick = () => {
+    setOpen(true);
+  }
+
+  return (
+    <div className="flex justify-end m-2">
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button
+            asChild variant="ghost" size="icon"
+            className="w-9 h-9 rounded-full cursor-pointer"
+            css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
+          >
+            <PlusIcon className="p-2" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuGroup>
+            <div>
+              <DropdownMenuItem>Add File</DropdownMenuItem>
+            </div>
+            <div onClick={onFolderBtnClick}>
+              <DropdownMenuItem>Add Folder</DropdownMenuItem>
+            </div>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+        {component}
+      </DropdownMenu>
+    </div>
+  );
+}
+
+function RowButtonSet({ row }: { row: Row<FileResponse> }) {
   const queryClient = useQueryClient();
   const file = row.original;
 
@@ -25,7 +63,8 @@ function ButtonSet({ row }: { row: Row<FileResponse> }) {
   function Icon({ children }: { children: ReactNode }) {
     return (
       <Button
-        variant="ghost" className="h-8 w-8 p-0 rounded-full"
+        asChild variant="ghost" size="icon"
+        className="h-9 w-9 rounded-full cursor-pointer"
         css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
       >
         {children}
@@ -37,11 +76,11 @@ function ButtonSet({ row }: { row: Row<FileResponse> }) {
     <HStack className="justify-end mr-2">
       {!file.isDirectory && (
         <Icon>
-          <DownloadIcon className="h-4 w-4" onClick={onDownload} />
+          <DownloadIcon className="p-2.5" onClick={onDownload} />
         </Icon>
       )}
       <Icon>
-        <Cross1Icon className="h-4 w-4" onClick={onDelete} />
+        <Cross1Icon className="p-2.5" onClick={onDelete} />
       </Icon>
     </HStack>
   )
@@ -71,6 +110,7 @@ export const fileColumns: ColumnDef<FileResponse>[] = [
   },
   {
     id: "buttons",
-    cell: ButtonSet,
+    header: FileAddButton,
+    cell: RowButtonSet,
   },
 ];

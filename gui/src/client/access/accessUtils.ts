@@ -1,5 +1,5 @@
 export function getFilenameByKey(key: string) {
-  if (key.charAt(key.length - 1) === '/') {
+  if (isDirKey(key)) {
     key = key.substring(0, key.length - 1);
   }
   const chunks = key.split("/");
@@ -7,7 +7,7 @@ export function getFilenameByKey(key: string) {
 }
 
 export function getParentKey(key: string) {
-  if (key.charAt(key.length - 1) === '/') {
+  if (isDirKey(key)) {
     key = key.substring(0, key.length - 1);
   }
   const chunks = key.split("/");
@@ -18,4 +18,8 @@ export function getParentKey(key: string) {
   } else {
     return result + "/";
   }
+}
+
+export function isDirKey(key: string) {
+  return key.charAt(key.length - 1) === "/";
 }

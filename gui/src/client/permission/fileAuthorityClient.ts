@@ -6,7 +6,7 @@ import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 const baseUrl = `${appConstants.host}/api/file-authorities`;
 
 export const faQueryKeys = {
-  fileId: "file-authorities/fileId",
+  fileId: "file-authorities/file-id",
 };
 
 export async function createFilePolicy(creation: FileAuthorityCreation) {

@@ -7,7 +7,7 @@ import {FileComment, FileCommentCreation} from "@/client/file/types";
 const baseUrl = `${appConstants.host}/api/file-comments`;
 
 export const fileCommentQueryKeys = {
-  fileId: "file-comments/fileId",
+  fileId: "file-comments/file-id",
 };
 
 export async function createRole(creation: FileCommentCreation) {

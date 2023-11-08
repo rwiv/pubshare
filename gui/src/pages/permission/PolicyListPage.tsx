@@ -4,7 +4,7 @@ import {MainTemplate} from "@/pages/MainTemplate.tsx";
 export function PolicyListPage() {
   return (
     <MainTemplate>
-      <PolicyTable />
+      <PolicyTable className="m-3" />
     </MainTemplate>
   )
 }

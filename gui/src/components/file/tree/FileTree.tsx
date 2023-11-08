@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {list} from "@/client/access/accessClient.ts";
 import {FileResponse} from "@/client/access/types.ts";
 import {getParentKey} from "@/client/access/accessUtils.ts";
+import {rootFileResponse} from "@/client/access/rootFileResponse.ts";
 
 function nest(files: FileResponse[]) {
   const root = rootFile();
@@ -19,10 +20,17 @@ function nestRecur(files: FileResponse[], parentPath = ""): FileNode[] {
 }
 
 function rootFile(): FileNode {
-  return { id: -1, path: "", isDirectory: true, lastModified: new Date(), size: 0, myPerm: "READ", children: [] };
+  return {
+    ...rootFileResponse,
+    children: [],
+  }
 }
 
-export function Tree() {
+interface FileTreeProps {
+  className?: string;
+}
+
+export function FileTree({ className }: FileTreeProps) {
   const [rawData, setRawData] = useState<FileResponse[]>([]);
   const root = nest(rawData);
 
@@ -33,7 +41,7 @@ export function Tree() {
   }, []);
 
   return (
-    <div css={{
+    <div className={className} css={{
       minWidth: "16rem",
       width: "auto",
       height: "auth",

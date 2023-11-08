@@ -6,7 +6,7 @@ import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 const baseUrl = `${appConstants.host}/api/file-policies`;
 
 export const fpQueryKeys = {
-  fileId: "file-policies/fileId",
+  fileId: "file-policies/file-id",
 };
 
 export async function createFilePolicy(creation: FilePolicyCreation) {

@@ -15,7 +15,7 @@ const VStack = styled.div({
 const HStack = styled.div({
   display: "flex",
   flexDirection: "row",
-  flexWrap: "wrap",
+  flexWrap: "nowrap",
   gap: 8
 });
 

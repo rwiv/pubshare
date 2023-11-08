@@ -1,15 +1,20 @@
 import {appConstants} from "@/common/appConstants.ts";
-import {FileCommentCreation} from "@/client/file/types";
+import {Tag, TagCreation} from "@/client/file/types";
 import axios from "axios";
-import {Role} from "@/client/permission/types";
 import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 
 const baseUrl = `${appConstants.host}/api/tags`;
 
 export const tagQueryKeys = {
+  name: "tags/name"
 };
 
-export async function createRole(creation: FileCommentCreation) {
-  const res = await axios.post<Role>(`${baseUrl}`, creation, getHeaderConfig());
+export async function createTag(creation: TagCreation) {
+  const res = await axios.post<Tag>(`${baseUrl}`, creation, getHeaderConfig());
+  return res.data;
+}
+
+export async function findTagsByName(name: string) {
+  const res = await axios.get<Tag>(`${baseUrl}/name/${name}`, getHeaderConfig());
   return res.data;
 }

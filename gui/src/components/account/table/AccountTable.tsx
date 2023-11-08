@@ -15,9 +15,14 @@ function DeleteButton({ row }: { row: Row<AccountResponse> }) {
       };
 
       return (
-        <div className="flex justify-end">
-          <Button variant="ghost" className="h-8 w-8 p-0" onClick={onClick}>
-            <Cross1Icon className="h-4 w-4" />
+        <div className="flex justify-end mr-2">
+          <Button
+            asChild variant="ghost" size="icon"
+            className="h-9 w-9 rounded-full cursor-pointer"
+            css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
+            onClick={onClick}
+          >
+            <Cross1Icon className="p-2.5" />
           </Button>
         </div>
       )
@@ -66,7 +71,11 @@ const columns: ColumnDef<AccountResponse>[] = [
   },
 ];
 
-export function AccountTable() {
+interface AccountTableProps {
+  className?: string;
+}
+
+export function AccountTable({ className }: AccountTableProps) {
   const { data: authors } = useQuery({
     queryKey: [accountQueryKeys.findAll],
     queryFn: findAllAccounts,
@@ -74,8 +83,6 @@ export function AccountTable() {
   });
 
   return (
-    <DataTable
-      data={authors} columns={columns}
-    />
+    <DataTable data={authors} columns={columns} className={className} />
   )
 }

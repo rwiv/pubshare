@@ -13,7 +13,7 @@ export class TagRepository {
     return this.prisma.tag.findUnique({ where: { id } });
   }
 
-  fundByName(name: string) {
+  findByName(name: string) {
     return this.prisma.tag.findUnique({ where: { name } });
   }
 }

@@ -1,19 +1,14 @@
 import {ColumnDef, flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.tsx";
-import {PlusIcon} from "@radix-ui/react-icons";
-import {Center} from "@/util/css/layoutComponents.ts";
-import React from "react";
 
 interface DataTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
   className?: string;
   onClickRow?: (row: T) => void;
-  openDialog?: React.Dispatch<React.SetStateAction<boolean>>;
-  addDialog?: React.ReactNode;
 }
 
-export function DataTable<T>({ data, columns, className, onClickRow, openDialog, addDialog }: DataTableProps<T>) {
+export function DataTable<T>({ data, columns, className, onClickRow }: DataTableProps<T>) {
 
   const table = useReactTable<T>({
     data, columns,
@@ -25,7 +20,7 @@ export function DataTable<T>({ data, columns, className, onClickRow, openDialog,
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id} className="bg-muted/40">
+            <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <TableHead key={header.id}>
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
@@ -61,24 +56,8 @@ export function DataTable<T>({ data, columns, className, onClickRow, openDialog,
               </TableCell>
             </TableRow>
           )}
-          {openDialog && (
-            <TableRow
-              className="cursor-pointer bg-muted/10"
-              onClick={() => openDialog(true)}
-            >
-              <TableCell
-                colSpan={columns.length}
-                className="h-12 text-center"
-              >
-                <Center>
-                  <PlusIcon className="w-4 h-4" />
-                </Center>
-              </TableCell>
-            </TableRow>
-          )}
         </TableBody>
       </Table>
-      {addDialog}
     </div>
   )
 }
