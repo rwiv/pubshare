@@ -11,7 +11,6 @@ export const accessQueryKeys = {
 };
 
 export async function list(key: string): Promise<FileResponse[]> {
-  console.log(key)
   const url = `${baseUrl}/list?key=${key}`;
   const res = await axios.get<FileResponse[]>(url, getHeaderConfig());
   return res.data;

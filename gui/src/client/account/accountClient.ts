@@ -7,7 +7,8 @@ const baseUrl = `${appConstants.host}/api/accounts`;
 
 export const accountQueryKeys = {
   me: "me",
-  findAll: "findAll",
+  findAll: "accounts/findAll",
+  findById: "accounts/findById"
 };
 
 export async function getMyData() {

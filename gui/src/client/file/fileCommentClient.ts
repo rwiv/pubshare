@@ -10,7 +10,7 @@ export const fileCommentQueryKeys = {
   fileId: "file-comments/file-id",
 };
 
-export async function createRole(creation: FileCommentCreation) {
+export async function createFileComment(creation: FileCommentCreation) {
   const res = await axios.post<Role>(`${baseUrl}`, creation, getHeaderConfig());
   return res.data;
 }

@@ -15,7 +15,7 @@ interface Inputs {
   name: string;
 }
 
-export function FormTemplate() {
+export function FormExample() {
   const form = useForm<Inputs>({
     defaultValues: {
       name: "",

@@ -9,7 +9,7 @@ import {FileTable} from "@/components/file/table/FileTable.tsx";
 import {mq} from "@/util/css/MediaQueryHelper.ts";
 import {AppHeader} from "@/components/layout/AppHeader.tsx";
 import {HStack} from "@/util/css/layoutComponents.ts";
-import {FileInfo} from "@/components/file/info/FileInfo.tsx";
+import {FileDetail} from "@/components/file/detail/FileDetail.tsx";
 // import viteLogo from '/vite.svg'
 
 const left = mq.m_all(1,1,2,2,3,3);
@@ -56,7 +56,7 @@ export function MainPage() {
           <Button onClick={onRmdir}>rmdir</Button>
         </div>
         <div css={right}>
-          <FileInfo className="m-3" />
+          <FileDetail className="m-3" />
         </div>
       </HStack>
     </>

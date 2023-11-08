@@ -1,10 +1,10 @@
 import {useAccessStore} from "@/stores/accessStore.ts";
 
-interface FileInfoProps {
+interface FileDetailProps {
   className?: string;
 }
 
-export function FileInfo({ className }: FileInfoProps) {
+export function FileDetail({ className }: FileDetailProps) {
   const {curFile} = useAccessStore();
   return (
     <div className={className}>

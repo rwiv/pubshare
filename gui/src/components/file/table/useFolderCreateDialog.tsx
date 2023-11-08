@@ -33,7 +33,6 @@ export function useFolderCreateDialog() {
   const [open, setOpen] = useState(false);
   const form = useForm<FolderCreationForm>({ defaultValues: { name: "" } });
 
-
   const onSubmit: SubmitHandler<PolicyCreation> = async creation => {
     const key = `${curDirectory.path}${creation.name}/`;
     await mkdir({ key });

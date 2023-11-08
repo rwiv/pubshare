@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog.tsx";
 import {useState} from "react";
 
-export function InnerDialog() {
+export function DialogExample() {
 
   const [open, setOpen] = useState(false);
 
