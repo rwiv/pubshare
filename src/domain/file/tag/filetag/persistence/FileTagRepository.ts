@@ -1,5 +1,6 @@
 import { PrismaService } from '@/misc/prisma/PrismaService';
 import { Injectable } from '@nestjs/common';
+import { FileTagCreation } from '@/domain/file/tag/filetag/persistence/types';
 
 @Injectable()
 export class FileTagRepository {

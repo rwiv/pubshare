@@ -33,7 +33,7 @@ export interface RoleCreation {
   policyId: number;
 }
 
-export interface FilAuthority {
+export interface FileAuthority {
   id: number;
   fileId: number;
   accountId: number;

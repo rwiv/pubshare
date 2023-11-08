@@ -3,10 +3,9 @@ import {Role, RoleCreation} from "@/client/permission/types";
 import axios from "axios";
 import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 
-const baseUrl = `${appConstants.host}/api/roles`;
+const baseUrl = `${appConstants.host}/api/file-tags`;
 
-export const roleQueryKeys = {
-  accountId: "roles/account-id"
+export const fileTagQueryKeys = {
 };
 
 export async function createRole(creation: RoleCreation) {
@@ -14,7 +13,3 @@ export async function createRole(creation: RoleCreation) {
   return res.data;
 }
 
-export async function findRolesByAccountId(accountId: number) {
-  const res = await axios.get<Role[]>(`${baseUrl}/account-id/${accountId}`, getHeaderConfig());
-  return res.data;
-}

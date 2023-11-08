@@ -1,9 +1,6 @@
-interface FileTagCreation {
-  fileId: number;
-  tagId: number;
-}
+import { PrismaConnect } from '@/misc/prisma/prisma.types';
 
-interface FileTagCreationByTagName {
-  fileId: number;
-  tagName: string;
+interface FileTagCreation {
+  file: PrismaConnect;
+  tag: PrismaConnect;
 }

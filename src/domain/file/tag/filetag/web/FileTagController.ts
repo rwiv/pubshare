@@ -7,6 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { FileTagService } from '@/domain/file/tag/filetag/domain/FileTagService';
+import { FileTagCreationByTagName } from '@/domain/file/tag/filetag/domain/types';
 
 @Controller('api/file-tags')
 export class FileTagController {

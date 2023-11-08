@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FileTagRepository } from '@/domain/file/tag/filetag/persistence/FileTagRepository';
 import { TagService } from '@/domain/file/tag/tag/domain/TagService';
+import { FileTagCreationByTagName } from '@/domain/file/tag/filetag/domain/types';
 
 @Injectable()
 export class FileTagService {
@@ -16,8 +17,8 @@ export class FileTagService {
     }
 
     return this.fileTagRepository.create({
-      fileId: creation.fileId,
-      tagId: tag.id,
+      file: { connect: { id: creation.fileId } },
+      tag: { connect: { id: tag.id } },
     });
   }
 
