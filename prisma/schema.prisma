@@ -16,7 +16,7 @@ model Account {
   type      String  @default("MEMBER")
 
   FileComment     FileComment[]
-  roles           Role[]
+  accountRoles    AccountRole[]
   fileAuthorities FileAuthority[]
 }
 
@@ -65,11 +65,11 @@ model Policy {
   id   Int    @id @default(autoincrement())
   name String @unique
 
-  roles        Role[]
+  accountRoles AccountRole[]
   filePolicies FilePolicy[]
 }
 
-model Role {
+model AccountRole {
   id        Int @id @default(autoincrement())
   accountId Int
   policyId  Int

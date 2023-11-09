@@ -1,8 +1,8 @@
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {accountQueryKeys, findAccountById} from "@/client/account/accountClient.ts";
 import {AccountResponse} from "@/client/account/types.ts";
-import {Role} from "@/client/permission/types";
-import {createRole, findRolesByAccountId, roleQueryKeys} from "@/client/permission/roleClient.ts";
+import {AccountRoleResponse} from "@/client/permission/types";
+import {findAccountRolesByAccountId, accountRoleQueryKeys} from "@/client/permission/accountRoleClient.ts";
 import {Button} from "@/components/ui/button.tsx";
 import {VStack} from "@/util/css/layoutComponents.ts";
 
@@ -20,9 +20,9 @@ export function AccountDetail({ className, accountId }: AccountDetailProps) {
     queryFn: ctx => findAccountById(parseInt(ctx.queryKey[1] as string)),
   });
 
-  const {data: roles} = useQuery<Role[]>({
-    queryKey: [roleQueryKeys.accountId, accountId],
-    queryFn: ctx => findRolesByAccountId(parseInt(ctx.queryKey[1] as string)),
+  const {data: accountRoles} = useQuery<AccountRoleResponse[]>({
+    queryKey: [accountRoleQueryKeys.accountId, accountId],
+    queryFn: ctx => findAccountRolesByAccountId(parseInt(ctx.queryKey[1] as string)),
     initialData: [],
   });
 
@@ -34,10 +34,9 @@ export function AccountDetail({ className, accountId }: AccountDetailProps) {
   return (
     <VStack className={className}>
       {account && account.email}
-      {roles.map(role => (
-        <div key={role.id}>
-          <div>{role.policyId}</div>
-          <div>{role.policyId}</div>
+      {accountRoles.map(accountRole => (
+        <div key={accountRole.id}>
+          <div>{accountRole.policy.id}</div>
         </div>
       ))}
       <div>

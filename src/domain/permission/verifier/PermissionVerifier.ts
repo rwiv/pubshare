@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { accountTypeValues } from '@/domain/account/persistence/accountType';
 import { FileAuthorityService } from '@/domain/permission/fileauthority/domain/FileAuthorityService';
 import { FilePolicyService } from '@/domain/permission/filepolicy/domain/FilePolicyService';
-import { RoleService } from '@/domain/permission/role/domain/RoleService';
+import { AccountRoleService } from '@/domain/permission/accountrole/domain/AccountRoleService';
 import { AuthToken } from '@/auth/authentication/types';
 import {
   permToPriority,
@@ -18,7 +18,7 @@ export class PermissionVerifier {
   constructor(
     private readonly filePolicyService: FilePolicyService,
     private readonly fileAuthorityService: FileAuthorityService,
-    private readonly roleService: RoleService,
+    private readonly accountRoleService: AccountRoleService,
   ) {}
 
   async verify(auth: AuthToken | null, file: File) {
@@ -52,7 +52,7 @@ export class PermissionVerifier {
     auth: AuthToken,
     fileId: number,
   ): Promise<PermissionType | null> {
-    const roles = await this.roleService.findByAccountId(auth.id);
+    const accountRoles = await this.accountRoleService.findByAccountId(auth.id);
 
     const filePolicies = await this.filePolicyService.findByFileId(fileId);
     const filePolicyMap = new Map<number, string>();
@@ -60,8 +60,8 @@ export class PermissionVerifier {
       filePolicyMap.set(fp.policy.id, fp.permission);
     });
 
-    const matches = filterMap(roles, (role) => {
-      const rolePerm = filePolicyMap.get(role.policy.id);
+    const matches = filterMap(accountRoles, (accountRole) => {
+      const rolePerm = filePolicyMap.get(accountRole.policy.id);
       const ok = rolePerm !== undefined;
       const res = permToPriority(rolePerm);
       return { ok, res };

@@ -30,19 +30,19 @@ export interface FilePolicyCreation {
   permission: PermissionType;
 }
 
-export interface Role {
+export interface AccountRole {
   id: number;
   accountId: number;
   policyId: number;
 }
 
-export interface RoleResponse {
+export interface AccountRoleResponse {
   id: number;
   accountId: number;
   policy: Policy;
 }
 
-export interface RoleCreation {
+export interface AccountRoleCreation {
   accountId: number;
   policyId: number;
 }

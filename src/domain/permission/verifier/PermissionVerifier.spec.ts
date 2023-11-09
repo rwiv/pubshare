@@ -5,12 +5,12 @@ import { AccountModule } from '@/domain/account/AccountModule';
 import { AuthModule } from '@/auth/AuthModule';
 import { FileDummyBuilder } from '@/domain/file/file/dev/FileDummyBuilder';
 import { PolicyDummyBuilder } from '@/domain/permission/policy/dev/PolicyDummyBuilder';
-import { RoleDummyBuilder } from '@/domain/permission/role/dev/RoleDummyBuilder';
+import { AccountRoleDummyBuilder } from '@/domain/permission/accountrole/dev/AccountRoleDummyBuilder';
 import { FilePolicyDummyBuilder } from '@/domain/permission/filepolicy/dev/FilePolicyDummyBuilder';
 import { FileAuthorityDummyBuilder } from '@/domain/permission/fileauthority/dev/FileAuthorityDummyBuilder';
 import { FileModule } from '@/domain/file/file/FileModule';
 import { PolicyModule } from '@/domain/permission/policy/PolicyModule';
-import { RoleModule } from '@/domain/permission/role/RoleModule';
+import { AccountRoleModule } from '@/domain/permission/accountrole/AccountRoleModule';
 import { FilePolicyModule } from '@/domain/permission/filepolicy/FilePolicyModule';
 import { FileAuthorityModule } from '@/domain/permission/fileauthority/FileAuthorityModule';
 import { PermissionVerifier } from '@/domain/permission/verifier/PermissionVerifier';
@@ -22,7 +22,7 @@ describe('PermissionVerifier', () => {
   let ac: AccountDummyBuilder;
   let fi: FileDummyBuilder;
   let pl: PolicyDummyBuilder;
-  let ro: RoleDummyBuilder;
+  let ro: AccountRoleDummyBuilder;
   let fp: FilePolicyDummyBuilder;
   let fa: FileAuthorityDummyBuilder;
   let pv: PermissionVerifier;
@@ -36,7 +36,7 @@ describe('PermissionVerifier', () => {
         AuthModule,
         FileModule,
         PolicyModule,
-        RoleModule,
+        AccountRoleModule,
         FilePolicyModule,
         FileAuthorityModule,
         PermissionVerifierModule,
@@ -46,7 +46,7 @@ describe('PermissionVerifier', () => {
     ac = module.get(AccountDummyBuilder);
     fi = module.get(FileDummyBuilder);
     pl = module.get(PolicyDummyBuilder);
-    ro = module.get(RoleDummyBuilder);
+    ro = module.get(AccountRoleDummyBuilder);
     fp = module.get(FilePolicyDummyBuilder);
     fa = module.get(FileAuthorityDummyBuilder);
     pv = module.get(PermissionVerifier);

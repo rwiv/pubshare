@@ -1,5 +1,5 @@
 import {appConstants} from "@/common/appConstants.ts";
-import {Role} from "@/client/permission/types";
+import {AccountRole} from "@/client/permission/types";
 import axios from "axios";
 import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 import {FileComment, FileCommentCreation} from "@/client/file/types";
@@ -11,7 +11,7 @@ export const fileCommentQueryKeys = {
 };
 
 export async function createFileComment(creation: FileCommentCreation) {
-  const res = await axios.post<Role>(`${baseUrl}`, creation, getHeaderConfig());
+  const res = await axios.post<AccountRole>(`${baseUrl}`, creation, getHeaderConfig());
   return res.data;
 }
 
