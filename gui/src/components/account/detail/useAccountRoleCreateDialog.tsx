@@ -1,30 +1,17 @@
 import {SubmitHandler, useForm} from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form.tsx";
-import {Button} from "@/components/ui/button.tsx";
-import {
-  Dialog, DialogClose,
-  DialogContent,
-  DialogDescription, DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog.tsx";
+import {Form} from "@/components/ui/form.tsx";
 import {useEffect, useState} from "react";
-import {HStack} from "@/util/css/layoutComponents.ts";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {AccountRoleCreation, Role} from "@/client/permission/types";
-import {findAllRoles, roleQueryKeys} from "@/client/permission/roleClient.ts";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
+import {useQueryClient} from "@tanstack/react-query";
+import {AccountRoleCreation} from "@/client/permission/types";
+import {SelectItem} from "@/components/ui/select.tsx";
 import {accountRoleQueryKeys, createAccountRole} from "@/client/permission/accountRoleClient.ts";
 import {HttpError} from "@/client/common/HttpError.ts";
 import {ToastAction} from "@/components/ui/toast.tsx";
 import {useToast} from "@/components/ui/use-toast.ts";
 import {prettifyCode} from "@/client/common/errorUtil.ts";
+import {DialogTemplate} from "@/components/common/DialogTemplate.tsx";
+import {SelectFormField} from "@/components/common/form/SelectFormField.tsx";
+import {useRolesAll} from "@/hooks/query/permissionQueries.tsx";
 
 interface AccountRoleCreationForm {
   accountId: string;
@@ -36,16 +23,12 @@ export function useAccountRoleCreateDialog(accountId: number) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const {data: roles} = useRolesAll();
   const form = useForm<AccountRoleCreationForm>({
     defaultValues: {
       accountId: "",
       roleId: "",
     }
-  });
-  const {data: roles} = useQuery<Role[]>({
-    queryKey: [roleQueryKeys.findAll],
-    queryFn: findAllRoles,
-    initialData: [],
   });
 
 
@@ -78,47 +61,21 @@ export function useAccountRoleCreateDialog(accountId: number) {
   };
 
   const component = (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add Role</DialogTitle>
-          <DialogDescription>
-            Please fill out the form
-          </DialogDescription>
-        </DialogHeader>
-
-        <Form {...form}>
-          <form className="space-y-4">
-            <FormField control={form.control} name="roleId" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Role</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={"Select Role"} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {roles.map(role => (
-                      <SelectItem key={role.id} value={`${role.id}`}>{role.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )} />
-          </form>
-        </Form>
-
-        <DialogFooter>
-          <HStack className="justify-end gap-3 mx-3 my-1">
-            <DialogClose asChild>
-              <Button type="button" variant="secondary">Close</Button>
-            </DialogClose>
-            <Button type="submit" onClick={form.handleSubmit(onSubmit)}>Submit</Button>
-          </HStack>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <DialogTemplate
+      title="Add Role" description="Please fill out the form"
+      open={open} setOpen={setOpen}
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <Form {...form}>
+        <form className="space-y-4">
+          <SelectFormField form={form} fieldName="roleId" label="Role" placeholder="Select Role">
+            {roles.map(role => (
+              <SelectItem key={role.id} value={`${role.id}`}>{role.name}</SelectItem>
+            ))}
+          </SelectFormField>
+        </form>
+      </Form>
+    </DialogTemplate>
   )
 
   return { setOpen, component };

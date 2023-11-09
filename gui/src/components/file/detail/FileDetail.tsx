@@ -13,11 +13,11 @@ import {
   findFileAuthoritiesByFileId
 } from "@/client/permission/fileAuthorityClient.ts";
 import {FileCommentList} from "@/components/file/detail/FileCommentList.tsx";
-import {useMyData} from "@/hooks/useMyData.tsx";
 import {FileTagResponse} from "@/client/file/types";
 import {deleteFileTag, fileTagQueryKeys, findFileTagsByFileId} from "@/client/file/fileTagClient.ts";
 import {useFileTagCreateDialog} from "@/components/file/detail/useFileTagCreateDialog.tsx";
-import {useRoleCreateDialog} from "@/components/permission/table/useRoleCreateDialog.tsx";
+import {SmallIconButton} from "@/components/common/SmallIconButton.tsx";
+import {useMyData} from "@/hooks/query/accountQueries.tsx";
 
 interface FileDetailProps {
   className?: string;
@@ -61,14 +61,9 @@ export function FileDetail({ className, file }: FileDetailProps) {
         {fileTags.map(fileTag => (
           <HStack key={fileTag.id}>
             <h2 className="m-1">{fileTag.tag.name}</h2>
-            <Button
-              asChild variant="ghost" size="icon"
-              className="h-9 w-9 rounded-full cursor-pointer"
-              css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-              onClick={() => onDeleteFileTag(fileTag.id)}
-            >
+            <SmallIconButton onClick={() => onDeleteFileTag(fileTag.id)}>
               <Cross1Icon className="p-2.5" />
-            </Button>
+            </SmallIconButton>
           </HStack>
         ))}
         <div>
@@ -98,14 +93,9 @@ export function FileDetail({ className, file }: FileDetailProps) {
         {fileRoles.map(fileRole => (
           <HStack key={fileRole.id}>
             <h2 className="m-1">{fileRole.role.name}: {fileRole.permission}</h2>
-            <Button
-              asChild variant="ghost" size="icon"
-              className="h-9 w-9 rounded-full cursor-pointer"
-              css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-              onClick={() => onDeleteFileRole(fileRole.id)}
-            >
+            <SmallIconButton onClick={() => onDeleteFileRole(fileRole.id)}>
               <Cross1Icon className="p-2.5" />
-            </Button>
+            </SmallIconButton>
           </HStack>
         ))}
         <div>
@@ -135,14 +125,9 @@ export function FileDetail({ className, file }: FileDetailProps) {
         {fileAuthorities.map(fileAuthority => (
           <HStack key={fileAuthority.id}>
             <h2 className="m-1">{fileAuthority.account.nickname}: {fileAuthority.permission}</h2>
-            <Button
-              asChild variant="ghost" size="icon"
-              className="h-9 w-9 rounded-full cursor-pointer"
-              css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-              onClick={() => onDeleteFileAuthority(fileAuthority.id)}
-            >
+            <SmallIconButton onClick={() => onDeleteFileAuthority(fileAuthority.id)}>
               <Cross1Icon className="p-2.5" />
-            </Button>
+            </SmallIconButton>
           </HStack>
         ))}
         <div>

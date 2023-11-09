@@ -1,11 +1,12 @@
 import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.tsx";
-import {useQuery, useQueryClient,} from "@tanstack/react-query";
+import {useQueryClient,} from "@tanstack/react-query";
 import {FileResponse} from "@/client/access/types.ts";
-import {accessQueryKeys, download, list, upload} from "@/client/access/accessClient.ts";
+import {accessQueryKeys, download, upload} from "@/client/access/accessClient.ts";
 import {useAccessStore} from "@/stores/accessStore.ts";
 import React, {useState} from "react";
 import {fileColumns} from "@/components/file/table/fileColumns.tsx";
+import {useFileList} from "@/hooks/query/accessQueries.tsx";
 
 interface FileTableProps {
   className?: string;
@@ -16,11 +17,7 @@ export function FileTable({ className }: FileTableProps) {
   const queryClient = useQueryClient();
   const [isDragging, setIsDragging] = useState(false);
   const {curFile, curDirectory, setCurDirectory, setCurFile} = useAccessStore();
-  const { data } = useQuery({
-    queryKey: [accessQueryKeys.list, curDirectory.path],
-    queryFn: ctx => list(ctx.queryKey[1]),
-    initialData: [],
-  });
+  const {data} = useFileList(curDirectory.path);
   const table = useReactTable<FileResponse>({
     data,
     columns: fileColumns,
@@ -29,7 +26,6 @@ export function FileTable({ className }: FileTableProps) {
 
   const onClick = (file: FileResponse) => {
     setCurFile(file);
-    // console.log(file)
   };
 
   const onDoubleClick = async (file: FileResponse) => {

@@ -1,33 +1,19 @@
 import {SubmitHandler, useForm} from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form.tsx";
-import {Button} from "@/components/ui/button.tsx";
-import {
-  Dialog, DialogClose,
-  DialogContent,
-  DialogDescription, DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog.tsx";
+import {Form} from "@/components/ui/form.tsx";
 import {useEffect, useState} from "react";
-import {HStack} from "@/util/css/layoutComponents.ts";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useQueryClient} from "@tanstack/react-query";
 import {FileAuthorityCreation} from "@/client/permission/types";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
+import {SelectItem} from "@/components/ui/select.tsx";
 import {HttpError} from "@/client/common/HttpError.ts";
 import {ToastAction} from "@/components/ui/toast.tsx";
 import {useToast} from "@/components/ui/use-toast.ts";
 import {prettifyCode} from "@/client/common/errorUtil.ts";
 import {PermissionType} from "@/client/access/types.ts";
-import {PermissionTypeSelect} from "@/components/common/PermissionTypeForm.tsx";
+import {PermissionTypeSelect} from "@/components/common/form/PermissionTypeForm.tsx";
 import {createFileAuthority, fileAuthorityQueryKeys} from "@/client/permission/fileAuthorityClient.ts";
-import {accountQueryKeys, findAllAccounts} from "@/client/account/accountClient.ts";
-import {AccountResponse} from "@/client/account/types.ts";
+import {SelectFormField} from "@/components/common/form/SelectFormField.tsx";
+import {DialogTemplate} from "@/components/common/DialogTemplate.tsx";
+import {useAccountsAll} from "@/hooks/query/accountQueries.tsx";
 
 interface FileAuthorityCreationForm {
   fileId: string;
@@ -40,16 +26,12 @@ export function useFileAuthorityCreateDialog(fileId: number) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const {data: accounts} = useAccountsAll();
   const form = useForm<FileAuthorityCreationForm>({
     defaultValues: {
       fileId: "",
       accountId: "",
     }
-  });
-  const {data: accounts} = useQuery<AccountResponse[]>({
-    queryKey: [accountQueryKeys.findAll],
-    queryFn: findAllAccounts,
-    initialData: [],
   });
 
   useEffect(() => {
@@ -82,60 +64,24 @@ export function useFileAuthorityCreateDialog(fileId: number) {
   };
 
   const component = (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add Role</DialogTitle>
-          <DialogDescription>
-            Please fill out the form
-          </DialogDescription>
-        </DialogHeader>
-
-        <Form {...form}>
-          <form className="space-y-4">
-            <FormField control={form.control} name="accountId" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Account</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={"Select Role"} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {accounts.map(account => (
-                      <SelectItem key={account.id} value={`${account.id}`}>{account.username}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}/>
-            <FormField control={form.control} name="permission" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Permission</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={"Select Permission"} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <PermissionTypeSelect />
-                </Select>
-              </FormItem>
-            )}/>
-          </form>
-        </Form>
-
-        <DialogFooter>
-          <HStack className="justify-end gap-3 mx-3 my-1">
-            <DialogClose asChild>
-              <Button type="button" variant="secondary">Close</Button>
-            </DialogClose>
-            <Button type="submit" onClick={form.handleSubmit(onSubmit)}>Submit</Button>
-          </HStack>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <DialogTemplate
+      title="Add Role" description=""
+      open={open} setOpen={setOpen}
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <Form {...form}>
+        <form className="space-y-4">
+          <SelectFormField form={form} fieldName="accountId" label="Account" placeholder="Select Account">
+            {accounts.map(account => (
+              <SelectItem key={account.id} value={`${account.id}`}>{account.username}</SelectItem>
+            ))}
+          </SelectFormField>
+          <SelectFormField form={form} fieldName="permission" label="Permission" placeholder="Select Permission">
+            <PermissionTypeSelect />
+          </SelectFormField>
+        </form>
+      </Form>
+    </DialogTemplate>
   )
 
   return { setOpen, component };

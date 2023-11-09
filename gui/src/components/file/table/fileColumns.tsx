@@ -2,16 +2,14 @@ import {ColumnDef, Row} from "@tanstack/react-table";
 import {FileResponse} from "@/client/access/types.ts";
 import {accessQueryKeys, deleteFile, download} from "@/client/access/accessClient.ts";
 import {HStack} from "@/util/css/layoutComponents.ts";
-import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon, DownloadIcon, PlusIcon} from "@radix-ui/react-icons";
 import {isoToPretty} from "@/util/date.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {ReactNode} from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu.tsx";
 import {useFolderCreateDialog} from "@/components/file/table/useFolderCreateDialog.tsx";
+import {SmallIconButton} from "@/components/common/SmallIconButton.tsx";
 
 function FileAddButton() {
-
   const {setOpen, component} = useFolderCreateDialog();
 
   const onFolderBtnClick = () => {
@@ -22,13 +20,9 @@ function FileAddButton() {
     <div className="flex justify-end m-2">
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Button
-            asChild variant="ghost" size="icon"
-            className="w-9 h-9 rounded-full cursor-pointer"
-            css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-          >
+          <SmallIconButton>
             <PlusIcon className="p-2" />
-          </Button>
+          </SmallIconButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuGroup>
@@ -60,28 +54,16 @@ function RowButtonSet({ row }: { row: Row<FileResponse> }) {
     await queryClient.invalidateQueries({ queryKey: [accessQueryKeys.list] });
   };
 
-  function Icon({ children }: { children: ReactNode }) {
-    return (
-      <Button
-        asChild variant="ghost" size="icon"
-        className="h-9 w-9 rounded-full cursor-pointer"
-        css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-      >
-        {children}
-      </Button>
-    )
-  }
-
   return (
     <HStack className="justify-end mr-2">
       {!file.isDirectory && (
-        <Icon>
+        <SmallIconButton>
           <DownloadIcon className="p-2.5" onClick={onDownload} />
-        </Icon>
+        </SmallIconButton>
       )}
-      <Icon>
+      <SmallIconButton>
         <Cross1Icon className="p-2.5" onClick={onDelete} />
-      </Icon>
+      </SmallIconButton>
     </HStack>
   )
 }

@@ -27,7 +27,6 @@ export class PermissionVerifier {
   async verify(auth: AuthToken, file: File) {
     const account = await this.accountService.findByUsername(auth.username);
 
-    // account is guest
     if (account.type === accountTypes.GUEST) {
       return file.guestDefaultPerm;
     } else if (auth.type === accountTypes.ADMIN) {

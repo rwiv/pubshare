@@ -1,14 +1,15 @@
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useQueryClient} from "@tanstack/react-query";
 import {ColumnDef, Row} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon, FileTextIcon} from "@radix-ui/react-icons";
 import {DataTable} from "@/components/common/DataTable.tsx";
 import {AccountResponse} from "@/client/account/types.ts";
-import {accountQueryKeys, findAllAccounts, deleteAccount, certificate} from "@/client/account/accountClient.ts";
+import {accountQueryKeys, deleteAccount, certificate} from "@/client/account/accountClient.ts";
 import {Badge} from "@/components/ui/badge.tsx";
-import {ReactNode} from "react";
 import {HStack} from "@/util/css/layoutComponents.ts";
 import {useNavigate} from "react-router";
+import {SmallIconButton} from "@/components/common/SmallIconButton.tsx";
+import {useAccountsAll} from "@/hooks/query/accountQueries.tsx";
 
 function ButtonSet({ row }: { row: Row<AccountResponse> }) {
   const queryClient = useQueryClient();
@@ -23,26 +24,14 @@ function ButtonSet({ row }: { row: Row<AccountResponse> }) {
     await queryClient.invalidateQueries({ queryKey: [accountQueryKeys.findAll] });
   };
 
-  function Icon({ children }: {children: ReactNode}) {
-    return (
-      <Button
-        asChild variant="ghost" size="icon"
-        className="h-9 w-9 rounded-full cursor-pointer"
-        css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-      >
-        {children}
-      </Button>
-    )
-  }
-
   return (
     <HStack className="justify-end mr-2">
-      <Icon>
+      <SmallIconButton>
         <FileTextIcon className="p-2.5" onClick={onClickDetailBtn} />
-      </Icon>
-      <Icon>
+      </SmallIconButton>
+      <SmallIconButton>
         <Cross1Icon className="p-2.5" onClick={onClickDeleteBtn} />
-      </Icon>
+      </SmallIconButton>
     </HStack>
   )
 }
@@ -120,11 +109,7 @@ interface AccountTableProps {
 }
 
 export function AccountTable({ className }: AccountTableProps) {
-  const { data: authors } = useQuery({
-    queryKey: [accountQueryKeys.findAll],
-    queryFn: findAllAccounts,
-    initialData: [],
-  });
+  const { data: authors } = useAccountsAll();
 
   return (
     <DataTable data={authors} columns={columns} className={className} />

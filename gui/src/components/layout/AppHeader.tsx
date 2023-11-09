@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {Link} from "react-router-dom";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
 import {NavBar} from "@/components/layout/NavBar.tsx";
-import {useMyData} from "@/hooks/useMyData.tsx";
+import {useMyData} from "@/hooks/query/accountQueries.tsx";
 
 export function AppHeader() {
 

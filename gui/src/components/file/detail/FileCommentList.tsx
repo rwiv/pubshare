@@ -12,6 +12,7 @@ import {
 import {HStack, VStack} from "@/util/css/layoutComponents.ts";
 import {AccountResponse} from "@/client/account/types.ts";
 import {Cross1Icon} from "@radix-ui/react-icons";
+import {SmallIconButton} from "@/components/common/SmallIconButton.tsx";
 
 interface FileCommentListProps {
   file: FileResponse;
@@ -48,14 +49,9 @@ export function FileCommentList({ file, me }: FileCommentListProps) {
       {fileComments.map(fileComment => (
         <HStack key={fileComment.id}>
           <h2 className="m-1">{fileComment.content}</h2>
-          <Button
-            asChild variant="ghost" size="icon"
-            className="h-9 w-9 rounded-full cursor-pointer"
-            css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-            onClick={() => onDelete(fileComment.id)}
-          >
+          <SmallIconButton onClick={() => onDelete(fileComment.id)}>
             <Cross1Icon className="p-2.5" />
-          </Button>
+          </SmallIconButton>
         </HStack>
       ))}
       <div className="grid w-full gap-2">

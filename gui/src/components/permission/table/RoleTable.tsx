@@ -1,11 +1,12 @@
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useQueryClient} from "@tanstack/react-query";
 import {ColumnDef, Row} from "@tanstack/react-table";
-import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon, PlusIcon} from "@radix-ui/react-icons";
 import {DataTable} from "@/components/common/DataTable.tsx";
 import {Role} from "@/client/permission/types";
-import {deleteRole, findAllRoles, roleQueryKeys} from "@/client/permission/roleClient.ts";
+import {deleteRole, roleQueryKeys} from "@/client/permission/roleClient.ts";
 import {useRoleCreateDialog} from "@/components/permission/table/useRoleCreateDialog.tsx";
+import {SmallIconButton} from "@/components/common/SmallIconButton.tsx";
+import {useRolesAll} from "@/hooks/query/permissionQueries.tsx";
 
 function AddRoleButton() {
 
@@ -17,14 +18,9 @@ function AddRoleButton() {
 
   return (
     <div className="flex justify-end m-2">
-      <Button
-        asChild variant="ghost" size="icon"
-        className="w-9 h-9 rounded-full cursor-pointer"
-        css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-        onClick={onClick}
-      >
+      <SmallIconButton onClick={onClick} >
         <PlusIcon className="p-2" />
-      </Button>
+      </SmallIconButton>
       {component}
     </div>
   )
@@ -40,14 +36,9 @@ function DeleteButton({ row }: { row: Row<Role> }) {
 
   return (
     <div className="flex justify-end mr-2">
-      <Button
-        asChild variant="ghost" size="icon"
-        className="h-9 w-9 rounded-full cursor-pointer"
-        css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-        onClick={onClick}
-      >
+      <SmallIconButton onClick={onClick}>
         <Cross1Icon className="p-2.5" />
-      </Button>
+      </SmallIconButton>
     </div>
   )
 }
@@ -79,11 +70,7 @@ interface RoleTableProps {
 }
 
 export function RoleTable({ className }: RoleTableProps) {
-  const { data: authors } = useQuery<Role[]>({
-    queryKey: [roleQueryKeys.findAll],
-    queryFn: findAllRoles,
-    initialData: [],
-  });
+  const { data: authors } = useRolesAll();
 
   return (
     <DataTable data={authors} columns={columns} className={className} />

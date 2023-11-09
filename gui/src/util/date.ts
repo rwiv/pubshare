@@ -3,7 +3,8 @@ export function parseISOString(iso: string) {
   return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
 }
 
-export function isoToPretty(iso: string) {
+export function isoToPretty(iso: string | null) {
+  if (iso === null) return "";
   const date = parseISOString(iso);
   return dateToPretty(date);
 }
