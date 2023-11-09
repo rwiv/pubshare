@@ -6,9 +6,10 @@ import {NavBar} from "@/components/layout/NavBar.tsx";
 import {useMyData} from "@/hooks/useMyData.tsx";
 
 export function AppHeader() {
+
   const {data: me, isLoading} = useMyData();
 
-  const render = () => {
+  function UserInfo() {
     if (me !== null && me !== undefined && me.type !== "GUEST") {
       return (
         <div className="ml-auto mr-4 flex items-center space-x-4">
@@ -40,10 +41,10 @@ export function AppHeader() {
   }
 
   return (
-    <div className="border-b">
+    <div className="border-b shadow-sm">
       <div className="flex h-16 items-center px-4">
         <NavBar className="mx-6" />
-        {render()}
+        {UserInfo()}
       </div>
     </div>
   );

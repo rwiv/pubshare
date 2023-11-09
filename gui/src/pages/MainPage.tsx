@@ -37,13 +37,13 @@ export function MainPage() {
     <>
       <AppHeader />
       <HStack>
-        <div css={left}>
+        <div css={left} className="min-h-screen bg-muted/60">
           <FileTree className="m-3" />
         </div>
-        <div css={center}>
+        <div css={center} className="min-h-screen">
           <FileTable className="m-3" />
         </div>
-        <div css={right}>
+        <div css={right} className="min-h-screen">
           {curFile && <FileDetail className="m-3"  file={curFile}/>}
         </div>
       </HStack>

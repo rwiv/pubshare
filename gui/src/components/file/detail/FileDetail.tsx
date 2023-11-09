@@ -12,6 +12,7 @@ import {
   fileAuthorityQueryKeys,
   findFileAuthoritiesByFileId
 } from "@/client/permission/fileAuthorityClient.ts";
+import {FileCommentList} from "@/components/file/detail/FileCommentList.tsx";
 
 interface FileDetailProps {
   className?: string;
@@ -44,49 +45,75 @@ export function FileDetail({ className, file }: FileDetailProps) {
     await queryClient.invalidateQueries({ queryKey: [fileAuthorityQueryKeys.fileId, file.id] });
   }
 
+  function FileInfo() {
+    return (
+      <div>
+        <h1>Info</h1>
+        <div>id: {file.id}</div>
+        <div>path: {file.path}</div>
+        <div>member permission: {file.memberDefaultPerm}</div>
+        <div>guest permission: {file.guestDefaultPerm}</div>
+        <div>my permission: {file.myPerm}</div>
+      </div>
+    )
+  }
+
+  function Roles() {
+    return (
+      <div>
+        <h1>Roles</h1>
+        {fileRoles.map(fileRole => (
+          <HStack key={fileRole.id}>
+            <h2 className="m-1">{fileRole.role.name}: {fileRole.permission}</h2>
+            <Button
+              asChild variant="ghost" size="icon"
+              className="h-9 w-9 rounded-full cursor-pointer"
+              css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
+              onClick={() => onDeleteFileRole(fileRole.id)}
+            >
+              <Cross1Icon className="p-2.5" />
+            </Button>
+          </HStack>
+        ))}
+        <div>
+          <Button onClick={() => setOpenFileRole(true)}>Add Role</Button>
+        </div>
+        {fileRoleComp}
+      </div>
+    )
+  }
+
+  function Authorities() {
+    return (
+      <div>
+        <h1>Authorities</h1>
+        {fileAuthorities.map(fileAuthority => (
+          <HStack key={fileAuthority.id}>
+            <h2 className="m-1">{fileAuthority.account.nickname}: {fileAuthority.permission}</h2>
+            <Button
+              asChild variant="ghost" size="icon"
+              className="h-9 w-9 rounded-full cursor-pointer"
+              css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
+              onClick={() => onDeleteFileAuthority(fileAuthority.id)}
+            >
+              <Cross1Icon className="p-2.5" />
+            </Button>
+          </HStack>
+        ))}
+        <div>
+          <Button onClick={() => setOpenFileAuthority(true)}>Add Authority</Button>
+        </div>
+        {fileAuthorityComp}
+      </div>
+    )
+  }
+
   return (
     <VStack className={className}>
-      <div>id: {file.id}</div>
-      <div>path: {file.path}</div>
-      <div>member permission: {file.memberDefaultPerm}</div>
-      <div>guest permission: {file.guestDefaultPerm}</div>
-      <div>my permission: {file.myPerm}</div>
-      <h1>Roles</h1>
-      {fileRoles.map(fileRole => (
-        <HStack key={fileRole.id}>
-          <h2 className="m-1">{fileRole.role.name}: {fileRole.permission}</h2>
-          <Button
-            asChild variant="ghost" size="icon"
-            className="h-9 w-9 rounded-full cursor-pointer"
-            css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-            onClick={() => onDeleteFileRole(fileRole.id)}
-          >
-            <Cross1Icon className="p-2.5" />
-          </Button>
-        </HStack>
-      ))}
-      <div>
-        <Button onClick={() => setOpenFileRole(true)}>Add Role</Button>
-      </div>
-      {fileRoleComp}
-      <h1>Authorities</h1>
-      {fileAuthorities.map(fileAuthority => (
-        <HStack key={fileAuthority.id}>
-          <h2 className="m-1">{fileAuthority.account.nickname}: {fileAuthority.permission}</h2>
-          <Button
-            asChild variant="ghost" size="icon"
-            className="h-9 w-9 rounded-full cursor-pointer"
-            css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
-            onClick={() => onDeleteFileAuthority(fileAuthority.id)}
-          >
-            <Cross1Icon className="p-2.5" />
-          </Button>
-        </HStack>
-      ))}
-      <div>
-        <Button onClick={() => setOpenFileAuthority(true)}>Add Authority</Button>
-      </div>
-      {fileAuthorityComp}
+      <FileInfo />
+      <Roles />
+      <Authorities />
+      <FileCommentList />
     </VStack>
   )
 }
