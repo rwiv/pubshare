@@ -50,4 +50,8 @@ export class FileAuthorityService {
     }
     return result;
   }
+
+  delete(id: number) {
+    return this.fileAuthorityRepository.delete(id);
+  }
 }

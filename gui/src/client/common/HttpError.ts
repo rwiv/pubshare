@@ -3,7 +3,7 @@ export interface HttpErrorResponse {
   message: string,
   uuid: string,
   timestamp: string,
-  exception: string,
+  code: string,
 }
 
 export class HttpError extends Error {
@@ -21,6 +21,6 @@ export class HttpError extends Error {
     this.message = error.message;
     this.uuid = error.uuid;
     this.timestamp = error.timestamp;
-    this.code = error.exception;
+    this.code = error.code;
   }
 }

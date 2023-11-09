@@ -4,8 +4,10 @@ export interface FileResponse {
   id: number;
   path: string;
   isDirectory: boolean;
-  lastModified: string;
-  size: number;
+  lastModified: string | null;
+  size: number | null;
+  memberDefaultPerm: PermissionType;
+  guestDefaultPerm: PermissionType;
   myPerm: PermissionType;
 }
 

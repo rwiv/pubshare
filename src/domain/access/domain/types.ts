@@ -6,5 +6,7 @@ export interface FileResponse {
   isDirectory: boolean;
   lastModified: string | null;
   size: number | null;
+  memberDefaultPerm: PermissionType;
+  guestDefaultPerm: PermissionType;
   myPerm: PermissionType;
 }

@@ -11,7 +11,7 @@ import { AuthToken } from '@/auth/authentication/types';
 import { File } from '@/domain/file/file/persistence/types';
 import { S3File } from '@/domain/access/client/types';
 import { accessConfig } from '@/domain/access/common/accessConfig';
-import { permissionTypeValues } from '@/domain/permission/common/types';
+import {PermissionType, permissionTypeValues} from '@/domain/permission/common/types';
 import { AuthorizationException } from '@/auth/authorization/AuthorizationException';
 import {AccessException} from "@/domain/access/common/AccessException";
 
@@ -53,11 +53,12 @@ export class AccessService {
     s3File: S3File,
   ): Promise<FileResponse> {
     let fileDao = await this.fileService.findByPath(s3File.key);
+    const { memberDefaultPerm, guestDefaultPerm } = accessConfig;
     if (fileDao === null) {
       fileDao = await this.fileService.create({
         path: s3File.key,
-        memberDefaultPerm: accessConfig.memberDefaultPerm,
-        guestDefaultPerm: accessConfig.guestDefaultPerm,
+        memberDefaultPerm,
+        guestDefaultPerm,
       });
     }
 
@@ -68,17 +69,20 @@ export class AccessService {
       isDirectory: s3File.isDirectory,
       lastModified: s3File.lastModified.toISOString(),
       size: s3File.size,
+      memberDefaultPerm: fileDao.memberDefaultPerm as PermissionType,
+      guestDefaultPerm: fileDao.guestDefaultPerm as PermissionType,
       myPerm,
     };
   }
 
   private async getRootFileResponse(auth: AuthToken): Promise<FileResponse> {
     let fileDao = await this.fileService.findByPath('');
+    const { memberDefaultPerm, guestDefaultPerm } = accessConfig;
     if (fileDao === null) {
       fileDao = await this.fileService.create({
         path: '',
-        memberDefaultPerm: accessConfig.memberDefaultPerm,
-        guestDefaultPerm: accessConfig.guestDefaultPerm,
+        memberDefaultPerm,
+        guestDefaultPerm,
       });
     }
 
@@ -89,6 +93,8 @@ export class AccessService {
       isDirectory: true,
       lastModified: null,
       size: null,
+      memberDefaultPerm: fileDao.memberDefaultPerm as PermissionType,
+      guestDefaultPerm: fileDao.guestDefaultPerm as PermissionType,
       myPerm,
     };
   }

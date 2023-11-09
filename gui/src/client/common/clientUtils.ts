@@ -1,9 +1,9 @@
 import axios from "axios";
 import {HttpError, HttpErrorResponse} from "@/client/common/HttpError.ts";
 
-export function runCatching<T>(fn: () => T) {
+export async function runCatching<T>(fn: () => T) {
   try {
-    return fn();
+    return await fn();
   } catch (e) {
     if (axios.isAxiosError<HttpErrorResponse>(e)) {
       const errorResponse = e.response?.data;

@@ -5,6 +5,7 @@ import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '@/auth/authorization/public';
 import { jwtConstants } from '@/auth/authentication/jwtConstants';
 import { AuthorizationException } from '@/auth/authorization/AuthorizationException';
+import {defaultGuestAuth} from "@/auth/authentication/defaultGuestObj";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -32,8 +33,8 @@ export class AuthGuard implements CanActivate {
       request['account'] = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
-    } catch {
-      throw new AuthorizationException('jwt verify failure');
+    } catch (e) {
+      request['account'] = defaultGuestAuth;
     }
     return true;
   }

@@ -17,6 +17,8 @@ import {useQueryClient} from "@tanstack/react-query";
 import {AccountResponse} from "@/client/account/types.ts";
 import {accountQueryKeys} from "@/client/account/accountClient.ts";
 import {useTokenStore} from "@/stores/loginStore.ts";
+import {accessQueryKeys} from "@/client/access/accessClient.ts";
+import {useAccessStore} from "@/stores/accessStore.ts";
 
 interface UserNavProps {
   me: AccountResponse;
@@ -26,10 +28,12 @@ export function UserNav({ me }: UserNavProps) {
 
   const queryClient = useQueryClient();
   const {setToken} = useTokenStore();
+  const { curDirectory} = useAccessStore();
 
   const onLogout = async () => {
     setToken(null);
     await queryClient.setQueryData([accountQueryKeys.me], null);
+    await queryClient.invalidateQueries({ queryKey: [accessQueryKeys.list, curDirectory.path] });
   }
 
   return (

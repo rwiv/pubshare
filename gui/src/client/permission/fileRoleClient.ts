@@ -5,7 +5,7 @@ import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 
 const baseUrl = `${appConstants.host}/api/file-roles`;
 
-export const fpQueryKeys = {
+export const fileRoleQueryKeys = {
   fileId: "file-roles/file-id",
 };
 
@@ -16,5 +16,10 @@ export async function createFileRole(creation: FileRoleCreation) {
 
 export async function findFileRolesByFileId(fileId: number) {
   const res = await axios.get<FileRoleResponse[]>(`${baseUrl}/file-id/${fileId}`, getHeaderConfig());
+  return res.data;
+}
+
+export async function deleteFileRole(id: number) {
+  const res = await axios.delete<FileRoleResponse>(`${baseUrl}/${id}`, getHeaderConfig());
   return res.data;
 }

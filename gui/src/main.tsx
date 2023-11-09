@@ -10,6 +10,7 @@ import {LoginPage} from "@/pages/account/LoginPage.tsx";
 import {AccountListPage} from "@/pages/account/AccountListPage.tsx";
 import {RoleListPage} from "@/pages/permission/RoleListPage.tsx";
 import {AccountDetailPage} from "@/pages/account/AccountDetailPage.tsx";
+import {Toaster} from "@/components/ui/toaster.tsx";
 
 const router = createBrowserRouter([
   { path: '/', element: <MainPage /> },
@@ -25,7 +26,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <DndProvider backend={HTML5Backend}>
-          <RouterProvider router={router} />
+        <Toaster />
+        <RouterProvider router={router} />
       </DndProvider>
     </QueryClientProvider>
   </React.StrictMode>,

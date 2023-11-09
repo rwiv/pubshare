@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -26,5 +26,10 @@ export class FileAuthorityController {
   @Get('file-id/:fileId')
   findByFileId(@Param('fileId', ParseIntPipe) fileId: number) {
     return this.fileAuthorityService.findByFileId(fileId);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.fileAuthorityService.delete(id);
   }
 }

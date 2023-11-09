@@ -17,4 +17,8 @@ export class FileRoleRepository {
   findByFileId(fileId: number) {
     return this.prisma.fileRole.findMany({ where: { fileId } });
   }
+
+  delete(id: number) {
+    return this.prisma.fileRole.delete({ where: { id } });
+  }
 }

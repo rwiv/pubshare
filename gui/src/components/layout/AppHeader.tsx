@@ -9,7 +9,7 @@ export function AppHeader() {
   const {data: me, isLoading} = useMyData();
 
   const render = () => {
-    if (me !== null && me !== undefined) {
+    if (me !== null && me !== undefined && me.type !== "GUEST") {
       return (
         <div className="ml-auto mr-4 flex items-center space-x-4">
           <UserNav me={me} />

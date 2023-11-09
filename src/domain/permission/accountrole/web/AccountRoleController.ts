@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -26,5 +27,10 @@ export class AccountRoleController {
   @Get('account-id/:accountId')
   findByAccountId(@Param('accountId', ParseIntPipe) accountId: number) {
     return this.accountRoleService.findByAccountId(accountId);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.accountRoleService.delete(id);
   }
 }

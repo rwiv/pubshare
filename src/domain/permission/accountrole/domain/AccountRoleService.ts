@@ -12,12 +12,12 @@ import { PermissionException } from '@/domain/permission/common/PermissionExcept
 @Injectable()
 export class AccountRoleService {
   constructor(
-    private readonly roleRepository: AccountRoleRepository,
+    private readonly accountRoleRepository: AccountRoleRepository,
     private readonly roleService: RoleService,
   ) {}
 
   async create(creation: AccountRoleCreation) {
-    const exists = await this.roleRepository.findByAccountId(creation.accountId);
+    const exists = await this.accountRoleRepository.findByAccountId(creation.accountId);
     const match = exists.filter((role) => role.roleId === creation.roleId);
     if (match.length > 0) {
       throw new PermissionException('duplicate roles cannot be registered in one account');
@@ -27,20 +27,24 @@ export class AccountRoleService {
       account: toPrismaConnect(creation.accountId),
       role: toPrismaConnect(creation.roleId),
     };
-    return this.roleRepository.create(form);
+    return this.accountRoleRepository.create(form);
   }
 
   findById(id: number) {
-    return this.roleRepository.findById(id);
+    return this.accountRoleRepository.findById(id);
   }
 
   async findByAccountId(accountId: number) {
-    const accountRoles = await this.roleRepository.findByAccountId(accountId);
+    const accountRoles = await this.accountRoleRepository.findByAccountId(accountId);
     const result: AccountRoleResponse[] = [];
     for (const accountRole of accountRoles) {
       const role = await this.roleService.findById(accountRole.roleId);
       result.push({ id: accountRole.id, accountId: accountRole.accountId, role: role });
     }
     return result;
+  }
+
+  delete(id: number) {
+    return this.accountRoleRepository.delete(id);
   }
 }

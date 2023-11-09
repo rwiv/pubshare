@@ -17,4 +17,8 @@ export class AccountRoleRepository {
   findByAccountId(accountId: number) {
     return this.prisma.accountRole.findMany({ where: { accountId } });
   }
+
+  delete(id: number) {
+    return this.prisma.accountRole.delete({ where: { id } });
+  }
 }

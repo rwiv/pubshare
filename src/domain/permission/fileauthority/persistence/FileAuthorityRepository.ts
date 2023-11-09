@@ -17,4 +17,8 @@ export class FileAuthorityRepository {
   findByFileId(fileId: number) {
     return this.prisma.fileAuthority.findMany({ where: { fileId } });
   }
+
+  delete(id: number) {
+    return this.prisma.fileAuthority.delete({ where: { id } });
+  }
 }

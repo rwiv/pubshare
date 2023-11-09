@@ -50,4 +50,8 @@ export class FileRoleService {
     }
     return result;
   }
+
+  delete(id: number) {
+    return this.fileRoleRepository.delete(id);
+  }
 }
