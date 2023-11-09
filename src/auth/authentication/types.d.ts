@@ -1,11 +1,9 @@
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
 export interface AuthToken {
-  id: number;
-  email: string;
-  certified: boolean;
+  username: string;
   type: string;
 }

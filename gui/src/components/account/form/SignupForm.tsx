@@ -18,7 +18,7 @@ export function SignupForm() {
 
   const form = useForm<AccountCreation>({
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
       nickname: "",
       certified: false,
@@ -40,7 +40,7 @@ export function SignupForm() {
         <Center>
           {/*<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">*/}
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-4 border rounded-lg">
-            <FormField control={form.control} name="email" render={({ field }) => (
+            <FormField control={form.control} name="username" render={({ field }) => (
               <FormItem className="w-96">
                 <FormLabel>Email</FormLabel>
                 <FormControl>

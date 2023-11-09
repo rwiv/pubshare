@@ -2,7 +2,7 @@ import { AccountType } from '@/domain/account/persistence/accountType';
 
 export interface Account {
   id: number;
-  email: string;
+  username: string;
   password: string;
   nickname: string;
   certified: boolean;
@@ -10,7 +10,7 @@ export interface Account {
 }
 
 export interface AccountCreation {
-  email: string;
+  username: string;
   password: string;
   nickname: string;
   certified: boolean;
@@ -18,7 +18,7 @@ export interface AccountCreation {
 }
 
 export interface AccountUpdate {
-  email: string;
+  username: string;
   password: string;
   nickname: string;
   certified: boolean;

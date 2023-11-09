@@ -18,13 +18,15 @@ import {
   AccountCreation,
   AccountUpdate,
 } from '@/domain/account/persistence/types';
-import {AccountType, accountTypeValues} from '@/domain/account/persistence/accountType';
+import {
+  AccountType,
+  accountTypeValues,
+} from '@/domain/account/persistence/accountType';
 import { AuthenticationService } from '@/auth/authentication/AuthenticationService';
 import { LoginRequest, AuthToken } from '@/auth/authentication/types';
 import { AccountResponse } from '@/domain/account/web/types';
 import { AuthGuard } from '@/auth/authorization/AuthGuard';
 import { Auth } from '@/auth/Auth';
-import {defaultGuestAccount} from "@/auth/authentication/defaultGuestObj";
 
 @Controller('api/accounts')
 export class AccountController {
@@ -34,8 +36,8 @@ export class AccountController {
   ) {}
 
   private convert(account: Account): AccountResponse {
-    const { id, email, nickname, certified, type } = account;
-    return { id, email, certified, nickname, type: type as AccountType };
+    const { id, username, nickname, certified, type } = account;
+    return { id, username, certified, nickname, type: type as AccountType };
   }
 
   @Post('signup')
@@ -53,10 +55,17 @@ export class AccountController {
   @Get('me')
   @UseGuards(AuthGuard)
   async getProfile(@Auth() auth: AuthToken) {
-    if (auth.type === accountTypeValues.GUEST) {
-      return defaultGuestAccount;
+    const account = await this.accountService.findByUsername(auth.username);
+    if (auth.type === accountTypeValues.GUEST && account === null) {
+      const guest = await this.accountService.create({
+        username: 'guest',
+        password: 'guest',
+        nickname: 'guest',
+        certified: false,
+        type: accountTypeValues.GUEST,
+      });
+      return this.convert(guest);
     }
-    const account = await this.accountService.findById(auth.id);
     return this.convert(account);
   }
 

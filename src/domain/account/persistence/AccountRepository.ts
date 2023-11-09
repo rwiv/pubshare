@@ -22,7 +22,7 @@ export class AccountRepository {
   }
 
   findByUsername(username: string) {
-    return this.prisma.account.findUnique({ where: { email: username } });
+    return this.prisma.account.findUnique({ where: { username } });
   }
 
   update(id: number, update: AccountUpdate) {

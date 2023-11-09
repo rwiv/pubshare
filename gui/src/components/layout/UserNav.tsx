@@ -50,7 +50,7 @@ export function UserNav({ me }: UserNavProps) {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{me.nickname}</p>
-            <p className="text-xs leading-none text-muted-foreground">{me.email}</p>
+            <p className="text-xs leading-none text-muted-foreground">{me.username}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

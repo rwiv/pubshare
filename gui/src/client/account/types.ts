@@ -3,14 +3,14 @@ export type AccountType = 'MEMBER' | 'ADMIN' | 'GUEST';
 
 export interface AccountResponse {
   id: number;
-  email: string;
+  username: string;
   nickname: string;
   certified: boolean;
   type: AccountType;
 }
 
 export interface AccountCreation {
-  email: string;
+  username: string;
   password: string;
   nickname: string;
   certified: boolean;
@@ -22,6 +22,6 @@ export interface LoginResponse {
 }
 
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }

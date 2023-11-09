@@ -24,6 +24,6 @@ describe('AccountService', () => {
     const a1 = await ac.ac(1);
     const result = await accountService.findById(a1.id);
     console.log(result);
-    expect(result.email).toBe('1');
+    expect(result.username).toBe('1');
   });
 });

@@ -78,10 +78,10 @@ const columns: ColumnDef<AccountResponse>[] = [
     )
   },
   {
-    accessorKey: "email",
+    accessorKey: "username",
     header: () => (<div className="text-center">Email</div>),
     cell: ({ row }) => (
-      <div className="text-center">{row.original.email}</div>
+      <div className="text-center">{row.original.username}</div>
     )
   },
   {

@@ -12,6 +12,8 @@ import {
 } from '@/domain/permission/common/types';
 import { filterMap, find } from '@/util/iter';
 import { File } from '@/domain/file/file/persistence/types';
+import { AccountService } from '@/domain/account/domain/AccountService';
+import { Account } from '@/domain/account/persistence/types';
 
 @Injectable()
 export class PermissionVerifier {
@@ -19,20 +21,21 @@ export class PermissionVerifier {
     private readonly fileRoleService: FileRoleService,
     private readonly fileAuthorityService: FileAuthorityService,
     private readonly accountRoleService: AccountRoleService,
+    private readonly accountService: AccountService,
   ) {}
 
-  async verify(auth: AuthToken | null, file: File) {
-    // account is guest
-    if (auth === null) {
-      return file.guestDefaultPerm;
-    }
+  async verify(auth: AuthToken, file: File) {
+    const account = await this.accountService.findByUsername(auth.username);
 
-    if (auth.type === accountTypeValues.ADMIN) {
+    // account is guest
+    if (account.type === accountTypeValues.GUEST) {
+      return file.guestDefaultPerm;
+    } else if (auth.type === accountTypeValues.ADMIN) {
       return permissionTypeValues.WRITE;
     }
 
-    let perm = await this.checkRole(auth, file.id);
-    const authorityPerm = await this.checkAuthority(auth, file.id);
+    let perm = await this.checkRole(account, file.id);
+    const authorityPerm = await this.checkAuthority(account, file.id);
     if (authorityPerm !== null) {
       if (perm === null) {
         perm = authorityPerm;
@@ -48,11 +51,8 @@ export class PermissionVerifier {
     }
   }
 
-  private async checkRole(
-    auth: AuthToken,
-    fileId: number,
-  ): Promise<PermissionType | null> {
-    const accountRoles = await this.accountRoleService.findByAccountId(auth.id);
+  private async checkRole(account: Account, fileId: number): Promise<PermissionType | null> {
+    const accountRoles = await this.accountRoleService.findByAccountId(account.id);
 
     const fileRoles = await this.fileRoleService.findByFileId(fileId);
     const fileRoleMap = new Map<number, string>();
@@ -74,14 +74,11 @@ export class PermissionVerifier {
     }
   }
 
-  private async checkAuthority(
-    auth: AuthToken,
-    fileId: number,
-  ): Promise<PermissionType | null> {
+  private async checkAuthority(account: Account, fileId: number): Promise<PermissionType | null> {
     const authorities = await this.fileAuthorityService.findByFileId(fileId);
     const match = find(
       authorities,
-      (authority) => authority.account.id === auth.id,
+      (authority) => authority.account.id === account.id,
     );
 
     if (match === null) {

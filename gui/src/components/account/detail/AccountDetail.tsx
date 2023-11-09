@@ -38,7 +38,7 @@ export function AccountDetail({ className, accountId }: AccountDetailProps) {
 
   return (
     <VStack className={className}>
-      {account && account.email}
+      {account && account.username}
       <h1>Roles</h1>
       {accountRoles.map(accountRole => (
         <HStack key={accountRole.id}>

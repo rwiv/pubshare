@@ -23,7 +23,7 @@ export function MainPage() {
 
   useEffect(() => {
     // login({
-    //   email: "admin",
+    //   username: "admin",
     //   password: "admin",
     // }).then(res=> {
     //   setToken(res.accessToken);

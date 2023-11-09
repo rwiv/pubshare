@@ -13,9 +13,7 @@ export class AccountDummyBuilder {
 
   sc(account: Account): AuthToken {
     return {
-      id: account.id,
-      email: account.email,
-      certified: account.certified,
+      username: account.username,
       type: account.type,
     };
   }
@@ -35,7 +33,7 @@ export class AccountDummyBuilder {
     certified: boolean = true,
   ) {
     const creation = {
-      email: `${keyword}@gmail.com`,
+      username: `${keyword}@gmail.com`,
       password: password,
       nickname: keyword,
       certified,
@@ -54,7 +52,7 @@ export class AccountDummyBuilder {
 
   acC(str: string, type: AccountType, certified: boolean): AccountCreation {
     return {
-      email: str,
+      username: str,
       password: str,
       nickname: str,
       certified,

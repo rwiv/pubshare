@@ -20,7 +20,7 @@ export function LoginForm() {
 
   const form = useForm<LoginRequest>({
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     }
   });
@@ -44,7 +44,7 @@ export function LoginForm() {
       <Form {...form}>
         <Center>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
-            <FormField control={form.control} name="email" render={({ field }) => (
+            <FormField control={form.control} name="username" render={({ field }) => (
               <FormItem className="w-96">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
