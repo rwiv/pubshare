@@ -4,12 +4,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AccountModule } from '@/domain/account/AccountModule';
 import { AuthModule } from '@/auth/AuthModule';
 import { FileDummyBuilder } from '@/domain/file/file/dev/FileDummyBuilder';
-import { PolicyDummyBuilder } from '@/domain/permission/policy/dev/PolicyDummyBuilder';
+import { RoleDummyBuilder } from '@/domain/permission/role/dev/RoleDummyBuilder';
 import { AccountRoleDummyBuilder } from '@/domain/permission/accountrole/dev/AccountRoleDummyBuilder';
 import { FilePolicyDummyBuilder } from '@/domain/permission/filepolicy/dev/FilePolicyDummyBuilder';
 import { FileAuthorityDummyBuilder } from '@/domain/permission/fileauthority/dev/FileAuthorityDummyBuilder';
 import { FileModule } from '@/domain/file/file/FileModule';
-import { PolicyModule } from '@/domain/permission/policy/PolicyModule';
+import { RoleModule } from '@/domain/permission/role/RoleModule';
 import { AccountRoleModule } from '@/domain/permission/accountrole/AccountRoleModule';
 import { FilePolicyModule } from '@/domain/permission/filepolicy/FilePolicyModule';
 import { FileAuthorityModule } from '@/domain/permission/fileauthority/FileAuthorityModule';
@@ -21,7 +21,7 @@ import { permissionTypeValues } from '@/domain/permission/common/types';
 describe('PermissionVerifier', () => {
   let ac: AccountDummyBuilder;
   let fi: FileDummyBuilder;
-  let pl: PolicyDummyBuilder;
+  let pl: RoleDummyBuilder;
   let ro: AccountRoleDummyBuilder;
   let fp: FilePolicyDummyBuilder;
   let fa: FileAuthorityDummyBuilder;
@@ -35,7 +35,7 @@ describe('PermissionVerifier', () => {
         AccountModule,
         AuthModule,
         FileModule,
-        PolicyModule,
+        RoleModule,
         AccountRoleModule,
         FilePolicyModule,
         FileAuthorityModule,
@@ -45,7 +45,7 @@ describe('PermissionVerifier', () => {
 
     ac = module.get(AccountDummyBuilder);
     fi = module.get(FileDummyBuilder);
-    pl = module.get(PolicyDummyBuilder);
+    pl = module.get(RoleDummyBuilder);
     ro = module.get(AccountRoleDummyBuilder);
     fp = module.get(FilePolicyDummyBuilder);
     fa = module.get(FileAuthorityDummyBuilder);

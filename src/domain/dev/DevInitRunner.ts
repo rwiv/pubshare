@@ -2,16 +2,16 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { AccountService } from '@/domain/account/domain/AccountService';
 import { accountTypeValues } from '@/domain/account/persistence/accountType';
 import { AccountDummyBuilder } from '@/domain/account/dev/AccountDummyBuilder';
-import { PolicyDummyBuilder } from '@/domain/permission/policy/dev/PolicyDummyBuilder';
-import { PolicyService } from '@/domain/permission/policy/domain/PolicyService';
+import { RoleDummyBuilder } from '@/domain/permission/role/dev/RoleDummyBuilder';
+import { RoleService } from '@/domain/permission/role/domain/RoleService';
 
 @Injectable()
 export class DevInitRunner implements OnApplicationBootstrap {
   constructor(
     private readonly accountService: AccountService,
     private readonly ac: AccountDummyBuilder,
-    private readonly policyService: PolicyService,
-    private readonly pl: PolicyDummyBuilder,
+    private readonly policyService: RoleService,
+    private readonly pl: RoleDummyBuilder,
   ) {}
 
   async onApplicationBootstrap(): Promise<void> {

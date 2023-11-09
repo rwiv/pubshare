@@ -31,7 +31,7 @@ export class PermissionVerifier {
       return permissionTypeValues.WRITE;
     }
 
-    let perm = await this.checkPolicy(auth, file.id);
+    let perm = await this.checkRole(auth, file.id);
     const authorityPerm = await this.checkAuthority(auth, file.id);
     if (authorityPerm !== null) {
       if (perm === null) {
@@ -48,7 +48,7 @@ export class PermissionVerifier {
     }
   }
 
-  private async checkPolicy(
+  private async checkRole(
     auth: AuthToken,
     fileId: number,
   ): Promise<PermissionType | null> {
@@ -57,11 +57,11 @@ export class PermissionVerifier {
     const filePolicies = await this.filePolicyService.findByFileId(fileId);
     const filePolicyMap = new Map<number, string>();
     filePolicies.forEach((fp) => {
-      filePolicyMap.set(fp.policy.id, fp.permission);
+      filePolicyMap.set(fp.role.id, fp.permission);
     });
 
     const matches = filterMap(accountRoles, (accountRole) => {
-      const rolePerm = filePolicyMap.get(accountRole.policy.id);
+      const rolePerm = filePolicyMap.get(accountRole.role.id);
       const ok = rolePerm !== undefined;
       const res = permToPriority(rolePerm);
       return { ok, res };

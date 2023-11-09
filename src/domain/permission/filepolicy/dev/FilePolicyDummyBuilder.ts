@@ -12,10 +12,10 @@ export class FilePolicyDummyBuilder {
 
   fp(
     fileId: number,
-    policyId: number,
+    roleId: number,
     permission: PermissionType = permissionTypeValues.WRITE,
   ) {
-    const creation: FilePolicyCreation = { fileId, policyId, permission };
+    const creation: FilePolicyCreation = { fileId, roleId, permission };
     return this.filePolicyService.create(creation);
   }
 }

@@ -18,18 +18,18 @@ import {
 import {useState} from "react";
 import {HStack} from "@/util/css/layoutComponents.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {PolicyCreation} from "@/client/permission/types";
-import {createPolicy, policyQueryKeys} from "@/client/permission/policyClient.ts";
+import {RoleCreation} from "@/client/permission/types";
+import {createRole, roleQueryKeys} from "@/client/permission/roleClient.ts";
 
 export function usePolicyCreateDialog() {
 
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const form = useForm<PolicyCreation>({ defaultValues: { name: "" } });
+  const form = useForm<RoleCreation>({ defaultValues: { name: "" } });
 
-  const onSubmit: SubmitHandler<PolicyCreation> = async creation => {
-    await createPolicy(creation);
-    await queryClient.invalidateQueries({ queryKey: [policyQueryKeys.findAll] });
+  const onSubmit: SubmitHandler<RoleCreation> = async creation => {
+    await createRole(creation);
+    await queryClient.invalidateQueries({ queryKey: [roleQueryKeys.findAll] });
     setOpen(false);
   };
 

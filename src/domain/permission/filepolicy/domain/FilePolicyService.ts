@@ -6,7 +6,7 @@ import {
   FilePolicyResponse,
 } from '@/domain/permission/filepolicy/domain/types';
 import { toPrismaConnect } from '@/misc/prisma/prismaUtil';
-import { PolicyService } from '@/domain/permission/policy/domain/PolicyService';
+import { RoleService } from '@/domain/permission/role/domain/RoleService';
 import { PermissionType } from '@/domain/permission/common/types';
 import { PermissionException } from '@/domain/permission/common/PermissionException';
 
@@ -14,19 +14,19 @@ import { PermissionException } from '@/domain/permission/common/PermissionExcept
 export class FilePolicyService {
   constructor(
     private readonly filePolicyRepository: FilePolicyRepository,
-    private readonly policyService: PolicyService,
+    private readonly policyService: RoleService,
   ) {}
 
   async create(creation: FilePolicyCreation) {
     const exists = await this.filePolicyRepository.findByFileId(creation.fileId);
-    const match = exists.filter((filePolicy) => filePolicy.policyId === creation.policyId);
+    const match = exists.filter((filePolicy) => filePolicy.roleId === creation.roleId);
     if (match.length > 0) {
       throw new PermissionException('duplicate policies cannot be registered in one file');
     }
 
     const form: FilePolicyCreationPrisma = {
       file: toPrismaConnect(creation.fileId),
-      policy: toPrismaConnect(creation.policyId),
+      role: toPrismaConnect(creation.roleId),
       permission: creation.permission,
     };
     return this.filePolicyRepository.create(form);
@@ -40,11 +40,11 @@ export class FilePolicyService {
     const filePolicies = await this.filePolicyRepository.findByFileId(fileId);
     const result: FilePolicyResponse[] = [];
     for (const filePolicy of filePolicies) {
-      const policy = await this.policyService.findById(filePolicy.policyId);
+      const policy = await this.policyService.findById(filePolicy.roleId);
       result.push({
         id: filePolicy.id,
         fileId: filePolicy.fileId,
-        policy,
+        role: policy,
         permission: filePolicy.permission as PermissionType,
       });
     }

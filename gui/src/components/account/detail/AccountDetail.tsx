@@ -2,7 +2,11 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {accountQueryKeys, findAccountById} from "@/client/account/accountClient.ts";
 import {AccountResponse} from "@/client/account/types.ts";
 import {AccountRoleResponse} from "@/client/permission/types";
-import {findAccountRolesByAccountId, accountRoleQueryKeys} from "@/client/permission/accountRoleClient.ts";
+import {
+  findAccountRolesByAccountId,
+  accountRoleQueryKeys,
+  createAccountRole
+} from "@/client/permission/accountRoleClient.ts";
 import {Button} from "@/components/ui/button.tsx";
 import {VStack} from "@/util/css/layoutComponents.ts";
 
@@ -27,8 +31,8 @@ export function AccountDetail({ className, accountId }: AccountDetailProps) {
   });
 
   const onClick = async () => {
-    // await createRole({ accountId, policyId });
-    // await queryClient.invalidateQueries({ queryKey: [roleQueryKeys.accountId, accountId] });
+    // await createAccountRole({ accountId, roleId })
+    // await queryClient.invalidateQueries({ queryKey: [accountRoleQueryKeys.accountId, accountId] });
   }
 
   return (
@@ -36,7 +40,7 @@ export function AccountDetail({ className, accountId }: AccountDetailProps) {
       {account && account.email}
       {accountRoles.map(accountRole => (
         <div key={accountRole.id}>
-          <div>{accountRole.policy.id}</div>
+          <div>{accountRole.role.id}</div>
         </div>
       ))}
       <div>

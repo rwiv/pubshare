@@ -34,8 +34,8 @@ export function NavBar({ className, ...props }: HTMLAttributes<HTMLElement>) {
       <Link to="/accounts" className={isCurrent("/accounts")}>
         Account
       </Link>
-      <Link to="/policies" className={isCurrent("/policies")}>
-        Policy
+      <Link to="/roles" className={isCurrent("/roles")}>
+        Role
       </Link>
     </nav>
   )

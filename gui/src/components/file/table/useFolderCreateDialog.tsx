@@ -18,7 +18,7 @@ import {
 import {useState} from "react";
 import {HStack} from "@/util/css/layoutComponents.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {PolicyCreation} from "@/client/permission/types";
+import {RoleCreation} from "@/client/permission/types";
 import {useAccessStore} from "@/stores/accessStore.ts";
 import {accessQueryKeys, mkdir} from "@/client/access/accessClient.ts";
 
@@ -33,7 +33,7 @@ export function useFolderCreateDialog() {
   const [open, setOpen] = useState(false);
   const form = useForm<FolderCreationForm>({ defaultValues: { name: "" } });
 
-  const onSubmit: SubmitHandler<PolicyCreation> = async creation => {
+  const onSubmit: SubmitHandler<RoleCreation> = async creation => {
     const key = `${curDirectory.path}${creation.name}/`;
     await mkdir({ key });
     await queryClient.invalidateQueries({ queryKey: [accessQueryKeys.list] });

@@ -61,7 +61,7 @@ model FileTag {
   tag  Tag  @relation(fields: [tagId], references: [id])
 }
 
-model Policy {
+model Role {
   id   Int    @id @default(autoincrement())
   name String @unique
 
@@ -72,20 +72,20 @@ model Policy {
 model AccountRole {
   id        Int @id @default(autoincrement())
   accountId Int
-  policyId  Int
+  roleId    Int
 
   account Account @relation(fields: [accountId], references: [id])
-  policy  Policy  @relation(fields: [policyId], references: [id])
+  role    Role    @relation(fields: [roleId], references: [id])
 }
 
 model FilePolicy {
   id         Int    @id @default(autoincrement())
   fileId     Int
-  policyId   Int
+  roleId     Int
   permission String
 
-  file   File   @relation(fields: [fileId], references: [id])
-  policy Policy @relation(fields: [policyId], references: [id])
+  file File @relation(fields: [fileId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
 }
 
 model FileAuthority {

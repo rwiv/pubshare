@@ -3,8 +3,8 @@ import {ColumnDef, Row} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon, PlusIcon} from "@radix-ui/react-icons";
 import {DataTable} from "@/components/template/DataTable.tsx";
-import {Policy} from "@/client/permission/types";
-import {deletePolicy, findAllPolicies, policyQueryKeys} from "@/client/permission/policyClient.ts";
+import {Role} from "@/client/permission/types";
+import {deleteRole, findAllRoles, roleQueryKeys} from "@/client/permission/roleClient.ts";
 import {usePolicyCreateDialog} from "@/components/permission/table/usePolicyCreateDialog.tsx";
 
 function AddPolicyButton() {
@@ -30,12 +30,12 @@ function AddPolicyButton() {
   )
 }
 
-function DeleteButton({ row }: { row: Row<Policy> }) {
+function DeleteButton({ row }: { row: Row<Role> }) {
   const queryClient = useQueryClient();
 
   const onClick = async () => {
-    await deletePolicy(row.original.id);
-    await queryClient.invalidateQueries({ queryKey: [policyQueryKeys.findAll] });
+    await deleteRole(row.original.id);
+    await queryClient.invalidateQueries({ queryKey: [roleQueryKeys.findAll] });
   };
 
   return (
@@ -52,7 +52,7 @@ function DeleteButton({ row }: { row: Row<Policy> }) {
   )
 }
 
-const columns: ColumnDef<Policy>[] = [
+const columns: ColumnDef<Role>[] = [
   {
     accessorKey: "id",
     header: () => (<div className="text-center">Id</div>),
@@ -74,14 +74,14 @@ const columns: ColumnDef<Policy>[] = [
   },
 ];
 
-interface PolicyTableProps {
+interface RoleTableProps {
   className?: string;
 }
 
-export function PolicyTable({ className }: PolicyTableProps) {
-  const { data: authors } = useQuery<Policy[]>({
-    queryKey: [policyQueryKeys.findAll],
-    queryFn: findAllPolicies,
+export function RoleTable({ className }: RoleTableProps) {
+  const { data: authors } = useQuery<Role[]>({
+    queryKey: [roleQueryKeys.findAll],
+    queryFn: findAllRoles,
     initialData: [],
   });
 

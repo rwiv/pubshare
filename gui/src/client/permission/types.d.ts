@@ -1,50 +1,50 @@
 import {PermissionType} from "@/client/access/types.ts";
 import {Account} from "../../../../src/domain/account/persistence/types";
 
-export interface Policy {
+export interface Role {
   id: number;
   name: string;
 }
 
-export interface PolicyCreation {
+export interface RoleCreation {
   name: string;
 }
 
 export interface FilePolicy {
   id: number;
   fileId: number;
-  policyId: number;
+  roleId: number;
   permission: PermissionType;
 }
 
 export interface FilePolicyResponse {
   id: number;
   fileId: number;
-  policy: Policy;
+  role: Role;
   permission: PermissionType;
 }
 
 export interface FilePolicyCreation {
   fileId: number;
-  policyId: number;
+  roleId: number;
   permission: PermissionType;
 }
 
 export interface AccountRole {
   id: number;
   accountId: number;
-  policyId: number;
+  roleId: number;
 }
 
 export interface AccountRoleResponse {
   id: number;
   accountId: number;
-  policy: Policy;
+  role: Role;
 }
 
 export interface AccountRoleCreation {
   accountId: number;
-  policyId: number;
+  roleId: number;
 }
 
 export interface FileAuthority {

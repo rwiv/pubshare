@@ -3,6 +3,6 @@ import { PermissionType } from '@/domain/permission/common/types';
 
 export interface FilePolicyCreationPrisma {
   file: PrismaConnect;
-  policy: PrismaConnect;
+  role: PrismaConnect;
   permission: PermissionType;
 }

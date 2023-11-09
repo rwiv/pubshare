@@ -1,18 +1,18 @@
-import { Policy } from '@/domain/permission/policy/domain/types';
+import { Role } from '@/domain/permission/role/domain/types';
 
 export interface AccountRole {
   id: number;
   accountId: number;
-  policyId: number;
+  roleId: number;
 }
 
 export interface AccountRoleResponse {
   id: number;
   accountId: number;
-  policy: Policy;
+  role: Role;
 }
 
 export interface AccountRoleCreation {
   accountId: number;
-  policyId: number;
+  roleId: number;
 }

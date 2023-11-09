@@ -4,7 +4,7 @@ import { AccountRoleRepository } from '@/domain/permission/accountrole/persisten
 import { AccountRoleService } from '@/domain/permission/accountrole/domain/AccountRoleService';
 import { AccountRoleDummyBuilder } from '@/domain/permission/accountrole/dev/AccountRoleDummyBuilder';
 import { AccountRoleController } from '@/domain/permission/accountrole/web/AccountRoleController';
-import { PolicyModule } from '@/domain/permission/policy/PolicyModule';
+import { RoleModule } from '@/domain/permission/role/RoleModule';
 
 @Module({
   controllers: [AccountRoleController],
@@ -14,7 +14,7 @@ import { PolicyModule } from '@/domain/permission/policy/PolicyModule';
     AccountRoleService,
     AccountRoleDummyBuilder,
   ],
-  imports: [PolicyModule],
+  imports: [RoleModule],
   exports: [AccountRoleService],
 })
 export class AccountRoleModule {}

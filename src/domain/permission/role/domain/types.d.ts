@@ -1,4 +1,4 @@
-export interface Policy {
+export interface Role {
   id: number;
   name: string;
 }
