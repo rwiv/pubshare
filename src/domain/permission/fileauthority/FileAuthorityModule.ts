@@ -4,6 +4,7 @@ import { PrismaService } from '@/misc/prisma/PrismaService';
 import { FileAuthorityService } from '@/domain/permission/fileauthority/domain/FileAuthorityService';
 import { FileAuthorityDummyBuilder } from '@/domain/permission/fileauthority/dev/FileAuthorityDummyBuilder';
 import { FileAuthorityController } from '@/domain/permission/fileauthority/web/FileAuthorityController';
+import { AccountModule } from '@/domain/account/AccountModule';
 
 @Module({
   controllers: [FileAuthorityController],
@@ -13,6 +14,7 @@ import { FileAuthorityController } from '@/domain/permission/fileauthority/web/F
     FileAuthorityService,
     FileAuthorityDummyBuilder,
   ],
+  imports: [AccountModule],
   exports: [FileAuthorityService],
 })
 export class FileAuthorityModule {}

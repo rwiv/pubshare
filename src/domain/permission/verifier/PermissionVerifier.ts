@@ -57,11 +57,11 @@ export class PermissionVerifier {
     const filePolicies = await this.filePolicyService.findByFileId(fileId);
     const filePolicyMap = new Map<number, string>();
     filePolicies.forEach((fp) => {
-      filePolicyMap.set(fp.policyId, fp.permission);
+      filePolicyMap.set(fp.policy.id, fp.permission);
     });
 
     const matches = filterMap(roles, (role) => {
-      const rolePerm = filePolicyMap.get(role.policyId);
+      const rolePerm = filePolicyMap.get(role.policy.id);
       const ok = rolePerm !== undefined;
       const res = permToPriority(rolePerm);
       return { ok, res };
@@ -81,7 +81,7 @@ export class PermissionVerifier {
     const authorities = await this.fileAuthorityService.findByFileId(fileId);
     const match = find(
       authorities,
-      (authority) => authority.accountId === auth.id,
+      (authority) => authority.account.id === auth.id,
     );
 
     if (match === null) {

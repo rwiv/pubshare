@@ -1,5 +1,5 @@
 import {appConstants} from "@/common/appConstants.ts";
-import {FileAuthority, FileAuthorityCreation} from "@/client/permission/types";
+import {FileAuthority, FileAuthorityCreation, FileAuthorityResponse} from "@/client/permission/types";
 import axios from "axios";
 import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 
@@ -15,6 +15,6 @@ export async function createFilePolicy(creation: FileAuthorityCreation) {
 }
 
 export async function findFileAuthoritiesByFileId(fileId: number) {
-  const res = await axios.get<FileAuthority[]>(`${baseUrl}/file-id/${fileId}`, getHeaderConfig());
+  const res = await axios.get<FileAuthorityResponse[]>(`${baseUrl}/file-id/${fileId}`, getHeaderConfig());
   return res.data;
 }

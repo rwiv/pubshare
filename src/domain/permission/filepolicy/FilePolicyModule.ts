@@ -4,6 +4,7 @@ import { FilePolicyRepository } from '@/domain/permission/filepolicy/persistence
 import { FilePolicyService } from '@/domain/permission/filepolicy/domain/FilePolicyService';
 import { FilePolicyDummyBuilder } from '@/domain/permission/filepolicy/dev/FilePolicyDummyBuilder';
 import { FilePolicyController } from '@/domain/permission/filepolicy/web/FilePolicyController';
+import { PolicyModule } from '@/domain/permission/policy/PolicyModule';
 
 @Module({
   controllers: [FilePolicyController],
@@ -13,6 +14,7 @@ import { FilePolicyController } from '@/domain/permission/filepolicy/web/FilePol
     FilePolicyService,
     FilePolicyDummyBuilder,
   ],
+  imports: [PolicyModule],
   exports: [FilePolicyService],
 })
 export class FilePolicyModule {}

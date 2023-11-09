@@ -1,5 +1,5 @@
 import {appConstants} from "@/common/appConstants.ts";
-import {Role, RoleCreation} from "@/client/permission/types";
+import {Role, RoleCreation, RoleResponse} from "@/client/permission/types";
 import axios from "axios";
 import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 
@@ -15,6 +15,6 @@ export async function createRole(creation: RoleCreation) {
 }
 
 export async function findRolesByAccountId(accountId: number) {
-  const res = await axios.get<Role[]>(`${baseUrl}/account-id/${accountId}`, getHeaderConfig());
+  const res = await axios.get<RoleResponse[]>(`${baseUrl}/account-id/${accountId}`, getHeaderConfig());
   return res.data;
 }
