@@ -8,6 +8,7 @@ import {
 import { toPrismaConnect } from '@/misc/prisma/prismaUtil';
 import { AccountService } from '@/domain/account/domain/AccountService';
 import { PermissionType } from '@/domain/permission/common/types';
+import { PermissionException } from '@/domain/permission/common/PermissionException';
 
 @Injectable()
 export class FileAuthorityService {
@@ -16,8 +17,13 @@ export class FileAuthorityService {
     private readonly accountService: AccountService,
   ) {}
 
-  create(creation: FileAuthorityCreation) {
-    // TODO: 같은 account 중복 금지 로직 추가
+  async create(creation: FileAuthorityCreation) {
+    const exists = await this.fileAuthorityRepository.findByFileId(creation.fileId);
+    const match = exists.filter((fileAuthority) => fileAuthority.accountId === creation.accountId);
+    if (match.length > 0) {
+      throw new PermissionException('duplicate Accounts cannot be registered in one FileAuthority');
+    }
+
     const form: FileAuthorityCreationPrisma = {
       file: toPrismaConnect(creation.fileId),
       account: toPrismaConnect(creation.accountId),
@@ -31,13 +37,10 @@ export class FileAuthorityService {
   }
 
   async findByFileId(fileId: number) {
-    const fileAuthorities =
-      await this.fileAuthorityRepository.findByFileId(fileId);
+    const fileAuthorities = await this.fileAuthorityRepository.findByFileId(fileId);
     const result: FileAuthorityResponse[] = [];
     for (const fileAuthority of fileAuthorities) {
-      const account = await this.accountService.findById(
-        fileAuthority.accountId,
-      );
+      const account = await this.accountService.findById(fileAuthority.accountId);
       result.push({
         id: fileAuthority.id,
         fileId: fileAuthority.fileId,

@@ -13,6 +13,7 @@ import { S3File } from '@/domain/access/client/types';
 import { accessConfig } from '@/domain/access/common/accessConfig';
 import { permissionTypeValues } from '@/domain/permission/common/types';
 import { AuthorizationException } from '@/auth/authorization/AuthorizationException';
+import {AccessException} from "@/domain/access/common/AccessException";
 
 @Injectable()
 export class AccessService {
@@ -142,6 +143,13 @@ export class AccessService {
   }
 
   async delete(auth: AuthToken, req: AccessFileRequest) {
+    const file = await this.client.head(req.key);
+    if (file.isDirectory) {
+      const children = await this.client.list(file.key);
+      if (children.length > 0) {
+        throw new AccessException('file exists in the folder');
+      }
+    }
     await this.fileService.deleteByPath(req.key);
     return this.client.delete(req.key);
   }

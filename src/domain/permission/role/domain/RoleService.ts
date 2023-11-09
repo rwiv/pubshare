@@ -7,6 +7,7 @@ import {
 } from '@/domain/permission/role/domain/types';
 import { toPrismaConnect } from '@/misc/prisma/prismaUtil';
 import { PolicyService } from '@/domain/permission/policy/domain/PolicyService';
+import { PermissionException } from '@/domain/permission/common/PermissionException';
 
 @Injectable()
 export class RoleService {
@@ -15,7 +16,13 @@ export class RoleService {
     private readonly policyService: PolicyService,
   ) {}
 
-  create(creation: RoleCreation) {
+  async create(creation: RoleCreation) {
+    const exists = await this.roleRepository.findByAccountId(creation.accountId);
+    const match = exists.filter((role) => role.policyId === creation.policyId);
+    if (match.length > 0) {
+      throw new PermissionException('duplicate policies cannot be registered in one account');
+    }
+
     const form: RoleCreationPrisma = {
       account: toPrismaConnect(creation.accountId),
       policy: toPrismaConnect(creation.policyId),

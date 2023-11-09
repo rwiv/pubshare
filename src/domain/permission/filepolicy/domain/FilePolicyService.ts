@@ -8,6 +8,7 @@ import {
 import { toPrismaConnect } from '@/misc/prisma/prismaUtil';
 import { PolicyService } from '@/domain/permission/policy/domain/PolicyService';
 import { PermissionType } from '@/domain/permission/common/types';
+import { PermissionException } from '@/domain/permission/common/PermissionException';
 
 @Injectable()
 export class FilePolicyService {
@@ -16,7 +17,13 @@ export class FilePolicyService {
     private readonly policyService: PolicyService,
   ) {}
 
-  create(creation: FilePolicyCreation) {
+  async create(creation: FilePolicyCreation) {
+    const exists = await this.filePolicyRepository.findByFileId(creation.fileId);
+    const match = exists.filter((filePolicy) => filePolicy.policyId === creation.policyId);
+    if (match.length > 0) {
+      throw new PermissionException('duplicate policies cannot be registered in one file');
+    }
+
     const form: FilePolicyCreationPrisma = {
       file: toPrismaConnect(creation.fileId),
       policy: toPrismaConnect(creation.policyId),
