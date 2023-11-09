@@ -22,15 +22,15 @@ export function MainPage() {
   const {curFile} = useAccessStore();
 
   useEffect(() => {
-    // login({
-    //   username: "admin",
-    //   password: "admin",
-    // }).then(res=> {
-    //   setToken(res.accessToken);
-    //   queryClient.invalidateQueries({
-    //     queryKey: [accountQueryKeys.me]
-    //   });
-    // });
+    login({
+      username: "admin",
+      password: "admin",
+    }).then(res=> {
+      setToken(res.accessToken);
+      queryClient.invalidateQueries({
+        queryKey: [accountQueryKeys.me]
+      });
+    });
   }, [queryClient, setToken]);
 
   return (

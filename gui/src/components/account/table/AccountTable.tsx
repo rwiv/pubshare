@@ -58,12 +58,12 @@ function CertifiedCell({ row }: { row: Row<AccountResponse> }) {
 
   if (file.certified) {
     return (
-      <div className="text-center">o</div>
+      <div className="text-center">certified</div>
     )
   } else {
     return (
       <div className="flex justify-center">
-        <Button onClick={onClick}>certify</Button>
+        <Button variant="secondary" onClick={onClick}>certify</Button>
       </div>
     )
   }
@@ -103,7 +103,8 @@ const columns: ColumnDef<AccountResponse>[] = [
       const type = row.original.type.toLowerCase();
       return (
         <div className="flex justify-center">
-          <Badge variant={type === "admin" ? "default" : "secondary"}>{type}</Badge>
+          {/*<Badge variant={type === "admin" ? "default" : "secondary"}>{type}</Badge>*/}
+          <Badge variant="default">{type}</Badge>
         </div>
       )
     }
