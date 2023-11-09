@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, ParseIntPipe, Post} from '@nestjs/common';
 import { TagService } from '@/domain/file/tag/tag/domain/TagService';
 
 @Controller('api/tags')
@@ -13,5 +13,10 @@ export class TagController {
   @Get('name/:fileId')
   findByName(@Param('name') name: string) {
     return this.tagService.findByName(name);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.tagService.delete(id);
   }
 }

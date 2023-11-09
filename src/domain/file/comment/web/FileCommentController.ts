@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -24,5 +24,10 @@ export class FileCommentController {
     @Param('fileId', ParseIntPipe) fileId: number,
   ): Promise<FileComment[]> {
     return this.fileCommentService.findByFileId(fileId);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.fileCommentService.delete(id);
   }
 }

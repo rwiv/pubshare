@@ -21,4 +21,8 @@ export class FileTagRepository {
   findByTagId(tagId: number) {
     return this.prisma.fileTag.findMany({ where: { tagId } });
   }
+
+  delete(id: number) {
+    return this.prisma.fileTag.delete({ where: { id } });
+  }
 }

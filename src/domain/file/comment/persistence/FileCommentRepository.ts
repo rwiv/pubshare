@@ -20,8 +20,6 @@ export class FileCommentRepository {
       include: {
         file: true,
         createdBy: true,
-        parent: true,
-        children: true,
       },
     });
   }
@@ -30,5 +28,9 @@ export class FileCommentRepository {
     return this.prisma.fileComment.findMany({
       where: { fileId },
     });
+  }
+
+  delete(id: number) {
+    return this.prisma.fileComment.delete({ where: { id }});
   }
 }

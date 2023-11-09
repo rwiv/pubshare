@@ -33,15 +33,14 @@ describe('FileCommentService', () => {
 
     const fc1 = await fileCommentService.create({
       content: 'fc1',
-      file: { connect: { id: f2.id } },
-      createdBy: { connect: { id: a1.id } },
+      fileId: f2.id,
+      createdById: a1.id,
     });
 
     const fc2 = await fileCommentService.create({
       content: 'fc2',
-      file: { connect: { id: f2.id } },
-      createdBy: { connect: { id: a1.id } },
-      parent: { connect: { id: fc1.id } },
+      fileId: f2.id,
+      createdById: a1.id,
     });
 
     const fc1r = await fileCommentService.findById(fc1.id);

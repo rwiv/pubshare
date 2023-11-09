@@ -2,7 +2,6 @@ export interface FileComment {
   id: number;
   fileId: number;
   createdById: number;
-  parentId?: number;
   content: string;
 }
 
@@ -10,7 +9,6 @@ export interface FileCommentCreation {
   content: string;
   fileId: number;
   createdById: number;
-  parentId?: number;
 }
 
 export interface Tag {
@@ -25,7 +23,13 @@ export interface TagCreation {
 export interface FileTag {
   id: number;
   fileId: number;
-  tagName: string;
+  tagId: string;
+}
+
+export interface FileTagResponse {
+  id: number;
+  fileId: number;
+  tag: Tag;
 }
 
 export interface FileTagCreationByTagName {

@@ -4,7 +4,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
+  FormLabel, FormMessage,
 } from "@/components/ui/form.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {
@@ -16,55 +16,48 @@ import {
 } from "@/components/ui/dialog.tsx";
 import {useEffect, useState} from "react";
 import {HStack} from "@/util/css/layoutComponents.ts";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {AccountRoleCreation, Role} from "@/client/permission/types";
-import {findAllRoles, roleQueryKeys} from "@/client/permission/roleClient.ts";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
-import {accountRoleQueryKeys, createAccountRole} from "@/client/permission/accountRoleClient.ts";
+import {useQueryClient} from "@tanstack/react-query";
 import {HttpError} from "@/client/common/HttpError.ts";
 import {ToastAction} from "@/components/ui/toast.tsx";
 import {useToast} from "@/components/ui/use-toast.ts";
 import {prettifyCode} from "@/client/common/errorUtil.ts";
+import {FileTagCreationByTagName} from "@/client/file/types";
+import {createFileTag, fileTagQueryKeys} from "@/client/file/fileTagClient.ts";
+import {Input} from "@/components/ui/input.tsx";
 
-interface AccountRoleCreationForm {
-  accountId: string;
-  roleId: string;
+interface FileTagCreationForm {
+  fileId: string;
+  tagName: string;
 }
 
-export function useAccountRoleCreateDialog(accountId: number) {
+export function useFileTagCreateDialog(fileId: number) {
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const form = useForm<AccountRoleCreationForm>({
+  const form = useForm<FileTagCreationForm>({
     defaultValues: {
-      accountId: "",
-      roleId: "",
+      fileId: "",
+      tagName: "",
     }
   });
-  const {data: roles} = useQuery<Role[]>({
-    queryKey: [roleQueryKeys.findAll],
-    queryFn: findAllRoles,
-    initialData: [],
-  });
-
 
   useEffect(() => {
-    form.setValue("accountId", `${accountId}`);
-  }, [accountId, form]);
+    form.setValue("fileId", `${fileId}`);
+  }, [fileId, form]);
 
-  const onSubmit: SubmitHandler<AccountRoleCreationForm> = async form => {
-    if (form.accountId === "" || form.roleId === "") {
+  const onSubmit: SubmitHandler<FileTagCreationForm> = async form => {
+    if (form.fileId === "" || form.tagName === "") {
       throw Error("form data is empty");
     }
-    const creation: AccountRoleCreation = {
-      accountId: parseInt(form.accountId),
-      roleId: parseInt(form.roleId),
+    const creation: FileTagCreationByTagName = {
+      fileId: parseInt(form.fileId),
+      tagName: form.tagName,
     }
 
     try {
-      await createAccountRole(creation);
-      await queryClient.invalidateQueries({ queryKey: [accountRoleQueryKeys.accountId, accountId] });
+      await createFileTag(creation);
+      await queryClient.invalidateQueries({ queryKey: [fileTagQueryKeys.fileId, fileId] });
       setOpen(false);
     } catch (e) {
       if (e instanceof HttpError) {
@@ -81,34 +74,24 @@ export function useAccountRoleCreateDialog(accountId: number) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Role</DialogTitle>
+          <DialogTitle>Add Tag</DialogTitle>
           <DialogDescription>
             Please fill out the form
           </DialogDescription>
         </DialogHeader>
-
         <Form {...form}>
           <form className="space-y-4">
-            <FormField control={form.control} name="roleId" render={({ field }) => (
+            <FormField control={form.control} name="tagName" render={({ field }) => (
               <FormItem>
-                <FormLabel>Role</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={"Select Role"} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {roles.map(role => (
-                      <SelectItem key={role.id} value={`${role.id}`}>{role.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <FormLabel>Tag Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
               </FormItem>
-            )} />
+            )}/>
           </form>
         </Form>
-
         <DialogFooter>
           <HStack className="justify-end gap-3 mx-3 my-1">
             <DialogClose asChild>

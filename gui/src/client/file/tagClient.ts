@@ -18,3 +18,8 @@ export async function findTagsByName(name: string) {
   const res = await axios.get<Tag>(`${baseUrl}/name/${name}`, getHeaderConfig());
   return res.data;
 }
+
+export async function deleteTag(id: number) {
+  const res = await axios.delete<Tag>(`${baseUrl}/${id}`, getHeaderConfig());
+  return res.data;
+}

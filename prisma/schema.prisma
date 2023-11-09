@@ -36,13 +36,10 @@ model FileComment {
   id          Int    @id @default(autoincrement())
   fileId      Int
   createdById Int
-  parentId    Int?
   content     String
 
-  file      File          @relation(fields: [fileId], references: [id], onDelete: Cascade)
-  createdBy Account       @relation(fields: [createdById], references: [id])
-  parent    FileComment?  @relation("ParentChildren", fields: [parentId], references: [id])
-  children  FileComment[] @relation("ParentChildren")
+  file      File    @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  createdBy Account @relation(fields: [createdById], references: [id])
 }
 
 model Tag {

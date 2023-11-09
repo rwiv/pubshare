@@ -9,7 +9,15 @@ export class TagService {
     return this.tagRepository.create(creation);
   }
 
+  findById(id: number) {
+    return this.tagRepository.findById(id);
+  }
+
   findByName(name: string) {
     return this.tagRepository.findByName(name);
+  }
+
+  delete(id: number) {
+    return this.tagRepository.delete(id);
   }
 }

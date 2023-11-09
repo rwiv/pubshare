@@ -16,4 +16,8 @@ export class TagRepository {
   findByName(name: string) {
     return this.prisma.tag.findUnique({ where: { name } });
   }
+
+  delete(id: number) {
+    return this.prisma.tag.delete({ where: { id } });
+  }
 }

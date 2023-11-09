@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -26,5 +26,10 @@ export class FileTagController {
   @Get('tag-id/:tagId')
   findByTagId(@Param('tagId', ParseIntPipe) tagId: number) {
     return this.fileTagService.findByTagId(tagId);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.fileTagService.delete(id);
   }
 }

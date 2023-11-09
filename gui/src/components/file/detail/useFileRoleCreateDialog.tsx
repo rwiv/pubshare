@@ -27,6 +27,7 @@ import {prettifyCode} from "@/client/common/errorUtil.ts";
 import {PermissionType} from "@/client/access/types.ts";
 import {createFileRole, fileRoleQueryKeys} from "@/client/permission/fileRoleClient.ts";
 import {PermissionTypeSelect} from "@/components/common/PermissionTypeForm.tsx";
+import {Input} from "@/components/ui/input.tsx";
 
 interface FileRoleCreationForm {
   fileId: string;
@@ -44,6 +45,11 @@ export function useFileRoleCreateDialog(fileId: number) {
       fileId: "",
       roleId: "",
     }
+  });
+  const {data: roles} = useQuery<Role[]>({
+    queryKey: [roleQueryKeys.findAll],
+    queryFn: findAllRoles,
+    initialData: [],
   });
 
   useEffect(() => {
@@ -75,52 +81,6 @@ export function useFileRoleCreateDialog(fileId: number) {
     }
   };
 
-  function FileRoleForm() {
-
-    const {data: roles} = useQuery<Role[]>({
-      queryKey: [roleQueryKeys.findAll],
-      queryFn: findAllRoles,
-      initialData: [],
-    });
-
-    return (
-      <Form {...form}>
-        <form className="space-y-4">
-          <FormField control={form.control} name="roleId" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Role</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={"Select Role"} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {roles.map(role => (
-                    <SelectItem key={role.id} value={`${role.id}`}>{role.name}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}/>
-          <FormField control={form.control} name="permission" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Permission</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={"Select Permission"} />
-                  </SelectTrigger>
-                </FormControl>
-                <PermissionTypeSelect />
-              </Select>
-            </FormItem>
-          )}/>
-        </form>
-      </Form>
-    )
-  }
-
   const component = (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
@@ -130,7 +90,42 @@ export function useFileRoleCreateDialog(fileId: number) {
             Please fill out the form
           </DialogDescription>
         </DialogHeader>
-        <FileRoleForm />
+
+        <Form {...form}>
+          <form className="space-y-4">
+            <FormField control={form.control} name="roleId" render={({ field }) => (
+              <FormItem>
+                <FormLabel>Role</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={"Select Role"} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {roles.map(role => (
+                      <SelectItem key={role.id} value={`${role.id}`}>{role.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}/>
+            <FormField control={form.control} name="permission" render={({ field }) => (
+              <FormItem>
+                <FormLabel>Permission</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={"Select Permission"} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <PermissionTypeSelect />
+                </Select>
+              </FormItem>
+            )}/>
+          </form>
+        </Form>
+
         <DialogFooter>
           <HStack className="justify-end gap-3 mx-3 my-1">
             <DialogClose asChild>

@@ -13,6 +13,11 @@ import {
   findFileAuthoritiesByFileId
 } from "@/client/permission/fileAuthorityClient.ts";
 import {FileCommentList} from "@/components/file/detail/FileCommentList.tsx";
+import {useMyData} from "@/hooks/useMyData.tsx";
+import {FileTagResponse} from "@/client/file/types";
+import {deleteFileTag, fileTagQueryKeys, findFileTagsByFileId} from "@/client/file/fileTagClient.ts";
+import {useFileTagCreateDialog} from "@/components/file/detail/useFileTagCreateDialog.tsx";
+import {useRoleCreateDialog} from "@/components/permission/table/useRoleCreateDialog.tsx";
 
 interface FileDetailProps {
   className?: string;
@@ -22,28 +27,7 @@ interface FileDetailProps {
 export function FileDetail({ className, file }: FileDetailProps) {
 
   const queryClient = useQueryClient();
-  const {setOpen: setOpenFileRole, component: fileRoleComp} = useFileRoleCreateDialog(file.id);
-  const {setOpen: setOpenFileAuthority, component: fileAuthorityComp} = useFileAuthorityCreateDialog(file.id);
-  const {data: fileRoles} = useQuery<FileRoleResponse[]>({
-    queryKey: [fileRoleQueryKeys.fileId, file.id],
-    queryFn: ctx => findFileRolesByFileId(parseInt(ctx.queryKey[1] as string)),
-    initialData: [],
-  });
-  const {data: fileAuthorities} = useQuery<FileAuthorityResponse[]>({
-    queryKey: [fileAuthorityQueryKeys.fileId, file.id],
-    queryFn: ctx => findFileAuthoritiesByFileId(parseInt(ctx.queryKey[1] as string)),
-    initialData: [],
-  });
-
-  const onDeleteFileRole = async (fileRoleId: number) => {
-    await deleteFileRole(fileRoleId);
-    await queryClient.invalidateQueries({ queryKey: [fileRoleQueryKeys.fileId, file.id] });
-  }
-
-  const onDeleteFileAuthority = async (fileAuthorityId: number) => {
-    await deleteFileAuthority(fileAuthorityId);
-    await queryClient.invalidateQueries({ queryKey: [fileAuthorityQueryKeys.fileId, file.id] });
-  }
+  const {data: me} = useMyData();
 
   function FileInfo() {
     return (
@@ -58,7 +42,56 @@ export function FileDetail({ className, file }: FileDetailProps) {
     )
   }
 
+  function FileTags() {
+    const {setOpen, component} = useFileTagCreateDialog(file.id);
+    const {data: fileTags} = useQuery<FileTagResponse[]>({
+      queryKey: [fileTagQueryKeys.fileId, file.id],
+      queryFn: ctx => findFileTagsByFileId(parseInt(ctx.queryKey[1] as string)),
+      initialData: [],
+    });
+
+    const onDeleteFileTag = async (fileTagId: number) => {
+      await deleteFileTag(fileTagId);
+      await queryClient.invalidateQueries({ queryKey: [fileTagQueryKeys.fileId, file.id] });
+    }
+
+    return (
+      <div>
+        <h1>Tags</h1>
+        {fileTags.map(fileTag => (
+          <HStack key={fileTag.id}>
+            <h2 className="m-1">{fileTag.tag.name}</h2>
+            <Button
+              asChild variant="ghost" size="icon"
+              className="h-9 w-9 rounded-full cursor-pointer"
+              css={{ "&:hover": { backgroundColor: "#dfe0e0" } }}
+              onClick={() => onDeleteFileTag(fileTag.id)}
+            >
+              <Cross1Icon className="p-2.5" />
+            </Button>
+          </HStack>
+        ))}
+        <div>
+          <Button onClick={() => setOpen(true)}>Add Tag</Button>
+        </div>
+        {component}
+      </div>
+    )
+  }
+
   function Roles() {
+    const {setOpen, component} = useFileRoleCreateDialog(file.id);
+    const {data: fileRoles} = useQuery<FileRoleResponse[]>({
+      queryKey: [fileRoleQueryKeys.fileId, file.id],
+      queryFn: ctx => findFileRolesByFileId(parseInt(ctx.queryKey[1] as string)),
+      initialData: [],
+    });
+
+    const onDeleteFileRole = async (fileRoleId: number) => {
+      await deleteFileRole(fileRoleId);
+      await queryClient.invalidateQueries({ queryKey: [fileRoleQueryKeys.fileId, file.id] });
+    }
+
     return (
       <div>
         <h1>Roles</h1>
@@ -76,14 +109,26 @@ export function FileDetail({ className, file }: FileDetailProps) {
           </HStack>
         ))}
         <div>
-          <Button onClick={() => setOpenFileRole(true)}>Add Role</Button>
+          <Button onClick={() => setOpen(true)}>Add Role</Button>
         </div>
-        {fileRoleComp}
+        {component}
       </div>
     )
   }
 
   function Authorities() {
+    const {setOpen, component} = useFileAuthorityCreateDialog(file.id);
+    const {data: fileAuthorities} = useQuery<FileAuthorityResponse[]>({
+      queryKey: [fileAuthorityQueryKeys.fileId, file.id],
+      queryFn: ctx => findFileAuthoritiesByFileId(parseInt(ctx.queryKey[1] as string)),
+      initialData: [],
+    });
+
+    const onDeleteFileAuthority = async (fileAuthorityId: number) => {
+      await deleteFileAuthority(fileAuthorityId);
+      await queryClient.invalidateQueries({ queryKey: [fileAuthorityQueryKeys.fileId, file.id] });
+    }
+
     return (
       <div>
         <h1>Authorities</h1>
@@ -101,9 +146,9 @@ export function FileDetail({ className, file }: FileDetailProps) {
           </HStack>
         ))}
         <div>
-          <Button onClick={() => setOpenFileAuthority(true)}>Add Authority</Button>
+          <Button onClick={() => setOpen(true)}>Add Authority</Button>
         </div>
-        {fileAuthorityComp}
+        {component}
       </div>
     )
   }
@@ -111,9 +156,10 @@ export function FileDetail({ className, file }: FileDetailProps) {
   return (
     <VStack className={className}>
       <FileInfo />
+      <FileTags />
       <Roles />
       <Authorities />
-      <FileCommentList />
+      {me && <FileCommentList file={file} me={me} />}
     </VStack>
   )
 }

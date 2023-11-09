@@ -13,7 +13,6 @@ export class FileCommentService {
       content: creation.content,
       file: toPrismaConnect(creation.fileId),
       createdBy: toPrismaConnect(creation.createdById),
-      parent: toPrismaConnect(creation.parentId),
     };
     return this.fileCommentRepository.create(form);
   }
@@ -24,5 +23,9 @@ export class FileCommentService {
 
   findByFileId(fileId: number) {
     return this.fileCommentRepository.findByFileId(fileId);
+  }
+
+  delete(id: number) {
+    return this.fileCommentRepository.delete(id);
   }
 }

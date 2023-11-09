@@ -15,7 +15,12 @@ export async function createFileComment(creation: FileCommentCreation) {
   return res.data;
 }
 
-export async function fileFileCommentsByFileId(fileId: number) {
-  const res = await axios.post<FileComment[]>(`${baseUrl}/file-id/${fileId}`, getHeaderConfig());
+export async function findFileCommentsByFileId(fileId: number) {
+  const res = await axios.get<FileComment[]>(`${baseUrl}/file-id/${fileId}`, getHeaderConfig());
+  return res.data;
+}
+
+export async function deleteFileComment(id: number) {
+  const res = await axios.delete<FileComment>(`${baseUrl}/${id}`, getHeaderConfig());
   return res.data;
 }

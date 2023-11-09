@@ -46,6 +46,11 @@ export function useFileAuthorityCreateDialog(fileId: number) {
       accountId: "",
     }
   });
+  const {data: accounts} = useQuery<AccountResponse[]>({
+    queryKey: [accountQueryKeys.findAll],
+    queryFn: findAllAccounts,
+    initialData: [],
+  });
 
   useEffect(() => {
     form.setValue("fileId", `${fileId}`);
@@ -76,52 +81,6 @@ export function useFileAuthorityCreateDialog(fileId: number) {
     }
   };
 
-  function FileAuthorityForm() {
-
-    const {data: accounts} = useQuery<AccountResponse[]>({
-      queryKey: [accountQueryKeys.findAll],
-      queryFn: findAllAccounts,
-      initialData: [],
-    });
-
-    return (
-      <Form {...form}>
-        <form className="space-y-4">
-          <FormField control={form.control} name="accountId" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Account</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={"Select Role"} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {accounts.map(account => (
-                    <SelectItem key={account.id} value={`${account.id}`}>{account.username}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}/>
-          <FormField control={form.control} name="permission" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Permission</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={"Select Permission"} />
-                  </SelectTrigger>
-                </FormControl>
-                <PermissionTypeSelect />
-              </Select>
-            </FormItem>
-          )}/>
-        </form>
-      </Form>
-    )
-  }
-
   const component = (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
@@ -131,7 +90,42 @@ export function useFileAuthorityCreateDialog(fileId: number) {
             Please fill out the form
           </DialogDescription>
         </DialogHeader>
-        <FileAuthorityForm />
+
+        <Form {...form}>
+          <form className="space-y-4">
+            <FormField control={form.control} name="accountId" render={({ field }) => (
+              <FormItem>
+                <FormLabel>Account</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={"Select Role"} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {accounts.map(account => (
+                      <SelectItem key={account.id} value={`${account.id}`}>{account.username}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}/>
+            <FormField control={form.control} name="permission" render={({ field }) => (
+              <FormItem>
+                <FormLabel>Permission</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={"Select Permission"} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <PermissionTypeSelect />
+                </Select>
+              </FormItem>
+            )}/>
+          </form>
+        </Form>
+
         <DialogFooter>
           <HStack className="justify-end gap-3 mx-3 my-1">
             <DialogClose asChild>
