@@ -21,7 +21,7 @@ import {useQueryClient} from "@tanstack/react-query";
 import {RoleCreation} from "@/client/permission/types";
 import {createRole, roleQueryKeys} from "@/client/permission/roleClient.ts";
 
-export function usePolicyCreateDialog() {
+export function useRoleCreateDialog() {
 
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
@@ -37,7 +37,7 @@ export function usePolicyCreateDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Policy</DialogTitle>
+          <DialogTitle>Add Role</DialogTitle>
           <DialogDescription>
             Please fill out the form
           </DialogDescription>

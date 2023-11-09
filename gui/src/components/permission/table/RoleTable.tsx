@@ -5,11 +5,11 @@ import {Cross1Icon, PlusIcon} from "@radix-ui/react-icons";
 import {DataTable} from "@/components/template/DataTable.tsx";
 import {Role} from "@/client/permission/types";
 import {deleteRole, findAllRoles, roleQueryKeys} from "@/client/permission/roleClient.ts";
-import {usePolicyCreateDialog} from "@/components/permission/table/usePolicyCreateDialog.tsx";
+import {useRoleCreateDialog} from "@/components/permission/table/useRoleCreateDialog.tsx";
 
-function AddPolicyButton() {
+function AddRoleButton() {
 
-  const { setOpen, component } = usePolicyCreateDialog();
+  const { setOpen, component } = useRoleCreateDialog();
 
   const onClick = () => {
     setOpen(true);
@@ -69,7 +69,7 @@ const columns: ColumnDef<Role>[] = [
   },
   {
     id: "delete",
-    header: AddPolicyButton,
+    header: AddRoleButton,
     cell: DeleteButton,
   },
 ];

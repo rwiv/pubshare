@@ -20,7 +20,7 @@ export class AccountRoleService {
     const exists = await this.roleRepository.findByAccountId(creation.accountId);
     const match = exists.filter((role) => role.roleId === creation.roleId);
     if (match.length > 0) {
-      throw new PermissionException('duplicate policies cannot be registered in one account');
+      throw new PermissionException('duplicate roles cannot be registered in one account');
     }
 
     const form: AccountRoleCreationPrisma = {

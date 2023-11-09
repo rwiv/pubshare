@@ -10,21 +10,21 @@ export interface RoleCreation {
   name: string;
 }
 
-export interface FilePolicy {
+export interface FileRole {
   id: number;
   fileId: number;
   roleId: number;
   permission: PermissionType;
 }
 
-export interface FilePolicyResponse {
+export interface FileRoleResponse {
   id: number;
   fileId: number;
   role: Role;
   permission: PermissionType;
 }
 
-export interface FilePolicyCreation {
+export interface FileRoleCreation {
   fileId: number;
   roleId: number;
   permission: PermissionType;

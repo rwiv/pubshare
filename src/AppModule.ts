@@ -8,7 +8,7 @@ import { FileCommentModule } from '@/domain/file/comment/FileCommentModule';
 import { TagModule } from '@/domain/file/tag/TagModule';
 import { RoleModule } from '@/domain/permission/role/RoleModule';
 import { AccountRoleModule } from '@/domain/permission/accountrole/AccountRoleModule';
-import { FilePolicyModule } from '@/domain/permission/filepolicy/FilePolicyModule';
+import { FileRoleModule } from '@/domain/permission/filerole/FileRoleModule';
 import { FileAuthorityModule } from '@/domain/permission/fileauthority/FileAuthorityModule';
 import {PermissionVerifierModule} from "@/domain/permission/verifier/PermissionVerifierModule";
 
@@ -22,7 +22,7 @@ import {PermissionVerifierModule} from "@/domain/permission/verifier/PermissionV
     FileCommentModule,
     TagModule,
     RoleModule,
-    FilePolicyModule,
+    FileRoleModule,
     FileAuthorityModule,
     AccountRoleModule,
     PermissionVerifierModule,

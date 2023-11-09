@@ -28,15 +28,9 @@ export function NavBar({ className, ...props }: HTMLAttributes<HTMLElement>) {
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
-      <Link to="/" className={isCurrent("/")}>
-        Home
-      </Link>
-      <Link to="/accounts" className={isCurrent("/accounts")}>
-        Account
-      </Link>
-      <Link to="/roles" className={isCurrent("/roles")}>
-        Role
-      </Link>
+      <Link to="/" className={isCurrent("/")}>Home</Link>
+      <Link to="/roles" className={isCurrent("/roles")}>Role</Link>
+      <Link to="/accounts" className={isCurrent("/accounts")}>Account</Link>
     </nav>
   )
 }

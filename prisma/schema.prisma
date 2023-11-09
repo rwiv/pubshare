@@ -28,7 +28,7 @@ model File {
 
   fileComments    FileComment[]
   fileTags        FileTag[]
-  filePolicies    FilePolicy[]
+  fileRoles       FileRole[]
   fileAuthorities FileAuthority[]
 }
 
@@ -66,7 +66,7 @@ model Role {
   name String @unique
 
   accountRoles AccountRole[]
-  filePolicies FilePolicy[]
+  fileRoles    FileRole[]
 }
 
 model AccountRole {
@@ -78,7 +78,7 @@ model AccountRole {
   role    Role    @relation(fields: [roleId], references: [id])
 }
 
-model FilePolicy {
+model FileRole {
   id         Int    @id @default(autoincrement())
   fileId     Int
   roleId     Int

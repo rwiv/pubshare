@@ -5,11 +5,11 @@ import {getHeaderConfig} from "@/client/common/clientUtils.ts";
 
 const baseUrl = `${appConstants.host}/api/file-authorities`;
 
-export const faQueryKeys = {
+export const fileAuthorityQueryKeys = {
   fileId: "file-authorities/file-id",
 };
 
-export async function createFilePolicy(creation: FileAuthorityCreation) {
+export async function createFileRole(creation: FileAuthorityCreation) {
   const res = await axios.post<FileAuthority>(`${baseUrl}`, creation, getHeaderConfig());
   return res.data;
 }

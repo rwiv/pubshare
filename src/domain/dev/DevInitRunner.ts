@@ -10,7 +10,7 @@ export class DevInitRunner implements OnApplicationBootstrap {
   constructor(
     private readonly accountService: AccountService,
     private readonly ac: AccountDummyBuilder,
-    private readonly policyService: RoleService,
+    private readonly roleService: RoleService,
     private readonly pl: RoleDummyBuilder,
   ) {}
 
@@ -23,8 +23,8 @@ export class DevInitRunner implements OnApplicationBootstrap {
       await this.ac.acDt1('member', accountTypeValues.MEMBER, true);
     }
 
-    const policies = await this.policyService.findAll();
-    if (policies.length === 0) {
+    const roles = await this.roleService.findAll();
+    if (roles.length === 0) {
       await this.pl.pl(1);
       await this.pl.pl(2);
     }
