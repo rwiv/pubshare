@@ -2,7 +2,7 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ColumnDef, Row} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon, FileTextIcon} from "@radix-ui/react-icons";
-import {DataTable} from "@/components/template/DataTable.tsx";
+import {DataTable} from "@/components/common/DataTable.tsx";
 import {AccountResponse} from "@/client/account/types.ts";
 import {accountQueryKeys, findAllAccounts, deleteAccount, certificate} from "@/client/account/accountClient.ts";
 import {Badge} from "@/components/ui/badge.tsx";

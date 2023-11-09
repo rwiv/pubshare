@@ -3,7 +3,7 @@ import { FileService } from '@/domain/file/file/domain/FileService';
 import { File, FileCreation } from '@/domain/file/file/persistence/types';
 import {
   PermissionType,
-  permissionTypeValues,
+  permissionTypes,
 } from '@/domain/permission/common/types';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class FileDummyBuilder {
 
   fi(
     n: number,
-    memberDefaultPerm: PermissionType = permissionTypeValues.WRITE,
-    guestDefaultPerm: PermissionType = permissionTypeValues.WRITE,
+    memberDefaultPerm: PermissionType = permissionTypes.WRITE,
+    guestDefaultPerm: PermissionType = permissionTypes.WRITE,
   ): Promise<File> {
     return this.fileService.create(
       this.fiC(n, memberDefaultPerm, guestDefaultPerm),

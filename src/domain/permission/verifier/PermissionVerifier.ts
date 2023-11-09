@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { accountTypeValues } from '@/domain/account/persistence/accountType';
+import { accountTypes } from '@/domain/account/persistence/accountType';
 import { FileAuthorityService } from '@/domain/permission/fileauthority/domain/FileAuthorityService';
 import { FileRoleService } from '@/domain/permission/filerole/domain/FileRoleService';
 import { AccountRoleService } from '@/domain/permission/accountrole/domain/AccountRoleService';
@@ -8,7 +8,7 @@ import {
   permToPriority,
   priorityToPerm,
   PermissionType,
-  permissionTypeValues,
+  permissionTypes,
 } from '@/domain/permission/common/types';
 import { filterMap, find } from '@/util/iter';
 import { File } from '@/domain/file/file/persistence/types';
@@ -28,10 +28,10 @@ export class PermissionVerifier {
     const account = await this.accountService.findByUsername(auth.username);
 
     // account is guest
-    if (account.type === accountTypeValues.GUEST) {
+    if (account.type === accountTypes.GUEST) {
       return file.guestDefaultPerm;
-    } else if (auth.type === accountTypeValues.ADMIN) {
-      return permissionTypeValues.WRITE;
+    } else if (auth.type === accountTypes.ADMIN) {
+      return permissionTypes.WRITE;
     }
 
     let perm = await this.checkRole(account, file.id);

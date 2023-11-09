@@ -11,7 +11,7 @@ import { AuthToken } from '@/auth/authentication/types';
 import { File } from '@/domain/file/file/persistence/types';
 import { S3File } from '@/domain/access/client/types';
 import { accessConfig } from '@/domain/access/common/accessConfig';
-import {PermissionType, permissionTypeValues} from '@/domain/permission/common/types';
+import {PermissionType, permissionTypes} from '@/domain/permission/common/types';
 import { AuthorizationException } from '@/auth/authorization/AuthorizationException';
 import {AccessException} from "@/domain/access/common/AccessException";
 
@@ -30,7 +30,7 @@ export class AccessService {
     }
     const s3File = await this.client.head(key);
     const fileResponse = await this.getFileResponse(auth, s3File);
-    if (fileResponse.myPerm === permissionTypeValues.FORBIDDEN) {
+    if (fileResponse.myPerm === permissionTypes.FORBIDDEN) {
       return null;
     }
     return fileResponse;
@@ -41,7 +41,7 @@ export class AccessService {
     const result: FileResponse[] = [];
     for (const s3File of s3Files) {
       const fileResponse = await this.getFileResponse(auth, s3File);
-      if (fileResponse.myPerm !== permissionTypeValues.FORBIDDEN) {
+      if (fileResponse.myPerm !== permissionTypes.FORBIDDEN) {
         result.push(fileResponse);
       }
     }
@@ -108,13 +108,13 @@ export class AccessService {
   }
 
   private isReadable(fileResponse: FileResponse) {
-    return [permissionTypeValues.READ, permissionTypeValues.WRITE].includes(
+    return [permissionTypes.READ, permissionTypes.WRITE].includes(
       fileResponse.myPerm,
     );
   }
 
   private isWritable(fileResponse: FileResponse) {
-    return [permissionTypeValues.WRITE].includes(fileResponse.myPerm);
+    return [permissionTypes.WRITE].includes(fileResponse.myPerm);
   }
 
   async mkdir(auth: AuthToken, req: AccessFileRequest) {

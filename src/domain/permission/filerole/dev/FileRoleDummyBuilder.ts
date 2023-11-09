@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { FileRoleService } from '@/domain/permission/filerole/domain/FileRoleService';
 import {
   PermissionType,
-  permissionTypeValues,
+  permissionTypes,
 } from '@/domain/permission/common/types';
 import { FileRoleCreation } from '@/domain/permission/filerole/domain/types';
 
@@ -13,7 +13,7 @@ export class FileRoleDummyBuilder {
   fp(
     fileId: number,
     roleId: number,
-    permission: PermissionType = permissionTypeValues.WRITE,
+    permission: PermissionType = permissionTypes.WRITE,
   ) {
     const creation: FileRoleCreation = { fileId, roleId, permission };
     return this.fileRoleService.create(creation);

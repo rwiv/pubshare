@@ -1,6 +1,6 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { AccountService } from '@/domain/account/domain/AccountService';
-import { accountTypeValues } from '@/domain/account/persistence/accountType';
+import { accountTypes } from '@/domain/account/persistence/accountType';
 import { AccountDummyBuilder } from '@/domain/account/dev/AccountDummyBuilder';
 import { RoleDummyBuilder } from '@/domain/permission/role/dev/RoleDummyBuilder';
 import { RoleService } from '@/domain/permission/role/domain/RoleService';
@@ -17,10 +17,10 @@ export class DevInitRunner implements OnApplicationBootstrap {
   async onApplicationBootstrap(): Promise<void> {
     const accounts = await this.accountService.findAll();
     if (accounts.length === 0) {
-      await this.ac.acDt2('test1', '1234', accountTypeValues.MEMBER, false);
-      await this.ac.acDt2('test2', '1234', accountTypeValues.MEMBER, false);
-      await this.ac.acDt1('admin', accountTypeValues.ADMIN, true);
-      await this.ac.acDt1('member', accountTypeValues.MEMBER, true);
+      await this.ac.acDt2('test1', '1234', accountTypes.MEMBER, false);
+      await this.ac.acDt2('test2', '1234', accountTypes.MEMBER, false);
+      await this.ac.acDt1('admin', accountTypes.ADMIN, true);
+      await this.ac.acDt1('member', accountTypes.MEMBER, true);
     }
 
     const roles = await this.roleService.findAll();

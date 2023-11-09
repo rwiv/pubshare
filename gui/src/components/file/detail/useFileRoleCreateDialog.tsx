@@ -26,6 +26,7 @@ import {useToast} from "@/components/ui/use-toast.ts";
 import {prettifyCode} from "@/client/common/errorUtil.ts";
 import {PermissionType} from "@/client/access/types.ts";
 import {createFileRole, fileRoleQueryKeys} from "@/client/permission/fileRoleClient.ts";
+import {PermissionTypeSelect} from "@/components/common/PermissionTypeForm.tsx";
 
 interface FileRoleCreationForm {
   fileId: string;
@@ -111,12 +112,7 @@ export function useFileRoleCreateDialog(fileId: number) {
                     <SelectValue placeholder={"Select Permission"} />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value={"FORBIDDEN"}>FORBIDDEN</SelectItem>
-                  <SelectItem value={"KNOWN"}>KNOWN</SelectItem>
-                  <SelectItem value={"READ"}>READ</SelectItem>
-                  <SelectItem value={"WRITE"}>WRITE</SelectItem>
-                </SelectContent>
+                <PermissionTypeSelect />
               </Select>
             </FormItem>
           )}/>

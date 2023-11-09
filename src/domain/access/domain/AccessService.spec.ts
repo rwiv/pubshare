@@ -5,7 +5,7 @@ import { AuthModule } from '@/auth/AuthModule';
 import { AccountDummyBuilder } from '@/domain/account/dev/AccountDummyBuilder';
 import { AccessModule } from '@/domain/access/AccessModule';
 import { AccessService } from '@/domain/access/domain/AccessService';
-import { accountTypeValues } from '@/domain/account/persistence/accountType';
+import { accountTypes } from '@/domain/account/persistence/accountType';
 
 describe('AccessService', () => {
   let accessService: AccessService;
@@ -29,7 +29,7 @@ describe('AccessService', () => {
     const files1 = await accessService.list(auth1, 'hello/');
     console.log(files1);
 
-    const a2 = await ac.ac(2, accountTypeValues.MEMBER);
+    const a2 = await ac.ac(2, accountTypes.MEMBER);
     const auth2 = ac.sc(a2);
     const files2 = await accessService.list(auth2, '');
     console.log(files2);

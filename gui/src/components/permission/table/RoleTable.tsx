@@ -2,7 +2,7 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {ColumnDef, Row} from "@tanstack/react-table";
 import {Button} from "@/components/ui/button.tsx";
 import {Cross1Icon, PlusIcon} from "@radix-ui/react-icons";
-import {DataTable} from "@/components/template/DataTable.tsx";
+import {DataTable} from "@/components/common/DataTable.tsx";
 import {Role} from "@/client/permission/types";
 import {deleteRole, findAllRoles, roleQueryKeys} from "@/client/permission/roleClient.ts";
 import {useRoleCreateDialog} from "@/components/permission/table/useRoleCreateDialog.tsx";

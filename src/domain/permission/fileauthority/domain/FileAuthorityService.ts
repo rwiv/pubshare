@@ -44,7 +44,7 @@ export class FileAuthorityService {
       result.push({
         id: fileAuthority.id,
         fileId: fileAuthority.fileId,
-        account,
+        account: this.accountService.convertResponse(account),
         permission: fileAuthority.permission as PermissionType,
       });
     }

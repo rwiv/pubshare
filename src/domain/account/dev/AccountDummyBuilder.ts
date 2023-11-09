@@ -3,7 +3,7 @@ import { AccountService } from '@/domain/account/domain/AccountService';
 import { Account, AccountCreation } from '@/domain/account/persistence/types';
 import {
   AccountType,
-  accountTypeValues,
+  accountTypes,
 } from '@/domain/account/persistence/accountType';
 import { AuthToken } from '@/auth/authentication/types';
 
@@ -20,7 +20,7 @@ export class AccountDummyBuilder {
 
   acDt1(
     s: string,
-    type: AccountType = accountTypeValues.ADMIN,
+    type: AccountType = accountTypes.ADMIN,
     certified: boolean = true,
   ) {
     return this.accountService.create(this.acC(s, type, certified));
@@ -29,7 +29,7 @@ export class AccountDummyBuilder {
   acDt2(
     keyword: string,
     password: string,
-    type: AccountType = accountTypeValues.ADMIN,
+    type: AccountType = accountTypes.ADMIN,
     certified: boolean = true,
   ) {
     const creation = {
@@ -44,7 +44,7 @@ export class AccountDummyBuilder {
 
   ac(
     n: number,
-    type: AccountType = accountTypeValues.ADMIN,
+    type: AccountType = accountTypes.ADMIN,
     certified: boolean = true,
   ) {
     return this.accountService.create(this.acC(`account${n}`, type, certified));

@@ -18,10 +18,7 @@ import {
   AccountCreation,
   AccountUpdate,
 } from '@/domain/account/persistence/types';
-import {
-  AccountType,
-  accountTypeValues,
-} from '@/domain/account/persistence/accountType';
+import { accountTypes } from '@/domain/account/persistence/accountType';
 import { AuthenticationService } from '@/auth/authentication/AuthenticationService';
 import { LoginRequest, AuthToken } from '@/auth/authentication/types';
 import { AccountResponse } from '@/domain/account/web/types';
@@ -35,15 +32,10 @@ export class AccountController {
     private readonly authService: AuthenticationService,
   ) {}
 
-  private convert(account: Account): AccountResponse {
-    const { id, username, nickname, certified, type } = account;
-    return { id, username, certified, nickname, type: type as AccountType };
-  }
-
   @Post('signup')
   async signup(@Body() creation: AccountCreation): Promise<AccountResponse> {
     const account = await this.accountService.create(creation);
-    return this.convert(account);
+    return this.accountService.convertResponse(account);
   }
 
   @HttpCode(HttpStatus.OK)
@@ -56,29 +48,29 @@ export class AccountController {
   @UseGuards(AuthGuard)
   async getProfile(@Auth() auth: AuthToken) {
     const account = await this.accountService.findByUsername(auth.username);
-    if (auth.type === accountTypeValues.GUEST && account === null) {
+    if (auth.type === accountTypes.GUEST && account === null) {
       const guest = await this.accountService.create({
         username: 'guest',
         password: 'guest',
         nickname: 'guest',
         certified: false,
-        type: accountTypeValues.GUEST,
+        type: accountTypes.GUEST,
       });
-      return this.convert(guest);
+      return this.accountService.convertResponse(guest);
     }
-    return this.convert(account);
+    return this.accountService.convertResponse(account);
   }
 
   @Get()
   async findAll() {
     const accounts = await this.accountService.findAll();
-    return accounts.map((account: Account) => this.convert(account));
+    return accounts.map((account: Account) => this.accountService.convertResponse(account));
   }
 
   @Get(':id')
   async findById(@Param('id', ParseIntPipe) id: number) {
     const account = await this.accountService.findById(id);
-    return this.convert(account);
+    return this.accountService.convertResponse(account);
   }
 
   @Put(':id')
@@ -87,18 +79,18 @@ export class AccountController {
     @Body() update: AccountUpdate,
   ) {
     const account = await this.accountService.update(id, update);
-    return this.convert(account);
+    return this.accountService.convertResponse(account);
   }
 
   @Patch('certificate/:id')
   async certificate(@Param('id', ParseIntPipe) id: number) {
     const account = await this.accountService.certificate(id);
-    return this.convert(account);
+    return this.accountService.convertResponse(account);
   }
 
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     const account = await this.accountService.delete(id);
-    return this.convert(account);
+    return this.accountService.convertResponse(account);
   }
 }

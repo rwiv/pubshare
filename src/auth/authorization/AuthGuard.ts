@@ -4,8 +4,7 @@ import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '@/auth/authorization/public';
 import { jwtConstants } from '@/auth/authentication/jwtConstants';
-import { AuthorizationException } from '@/auth/authorization/AuthorizationException';
-import {defaultGuestAuth} from "@/auth/authentication/defaultGuestObj";
+import { defaultGuestAuth } from '@/auth/authentication/defaultGuestAuth';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

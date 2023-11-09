@@ -7,7 +7,7 @@ interface ValuesType {
   WRITE: PermissionType;
 }
 
-export const permissionTypeValues: ValuesType = {
+export const permissionTypes: ValuesType = {
   FORBIDDEN: 'FORBIDDEN',
   KNOWN: 'KNOWN',
   READ: 'READ',
@@ -16,13 +16,13 @@ export const permissionTypeValues: ValuesType = {
 
 export function permToPriority(type: string): (1 | 2 | 3 | 4) | null {
   switch (type) {
-    case permissionTypeValues.FORBIDDEN:
+    case permissionTypes.FORBIDDEN:
       return 1;
-    case permissionTypeValues.KNOWN:
+    case permissionTypes.KNOWN:
       return 2;
-    case permissionTypeValues.READ:
+    case permissionTypes.READ:
       return 3;
-    case permissionTypeValues.WRITE:
+    case permissionTypes.WRITE:
       return 4;
     default:
       return null;
@@ -32,13 +32,13 @@ export function permToPriority(type: string): (1 | 2 | 3 | 4) | null {
 export function priorityToPerm(priority: number): PermissionType | null {
   switch (priority) {
     case 1:
-      return permissionTypeValues.FORBIDDEN;
+      return permissionTypes.FORBIDDEN;
     case 2:
-      return permissionTypeValues.KNOWN;
+      return permissionTypes.KNOWN;
     case 3:
-      return permissionTypeValues.READ;
+      return permissionTypes.READ;
     case 4:
-      return permissionTypeValues.WRITE;
+      return permissionTypes.WRITE;
     default:
       return null;
   }

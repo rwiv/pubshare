@@ -8,7 +8,7 @@ interface ValueType {
   GUEST: AccountType;
 }
 
-export const accountTypeValues: ValueType = {
+export const accountTypes: ValueType = {
   MEMBER: 'MEMBER',
   ADMIN: 'ADMIN',
   GUEST: 'GUEST',
@@ -16,10 +16,10 @@ export const accountTypeValues: ValueType = {
 
 export function getHierarchicalTypes(type: AccountType) {
   switch (type) {
-    case accountTypeValues.ADMIN:
-      return [accountTypeValues.ADMIN, accountTypeValues.MEMBER];
-    case accountTypeValues.MEMBER:
-      return [accountTypeValues.MEMBER];
+    case accountTypes.ADMIN:
+      return [accountTypes.ADMIN, accountTypes.MEMBER];
+    case accountTypes.MEMBER:
+      return [accountTypes.MEMBER];
     default:
       throw new NotSupportedException('not supported account type');
   }

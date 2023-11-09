@@ -1,5 +1,5 @@
 import { PermissionType } from '@/domain/permission/common/types';
-import { Account } from '@/domain/account/persistence/types';
+import { AccountResponse } from '@/domain/account/web/types';
 
 export interface FileAuthority {
   id: number;
@@ -11,7 +11,7 @@ export interface FileAuthority {
 export interface FileAuthorityResponse {
   id: number;
   fileId: number;
-  account: Account;
+  account: AccountResponse;
   permission: PermissionType;
 }
 

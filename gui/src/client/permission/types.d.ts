@@ -1,5 +1,5 @@
 import {PermissionType} from "@/client/access/types.ts";
-import {Account} from "../../../../src/domain/account/persistence/types";
+import {AccountResponse} from "@/client/account/types.ts";
 
 export interface Role {
   id: number;
@@ -57,7 +57,7 @@ export interface FileAuthority {
 export interface FileAuthorityResponse {
   id: number;
   fileId: number;
-  account: Account;
+  account: AccountResponse;
   permission: PermissionType;
 }
 

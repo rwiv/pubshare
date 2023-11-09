@@ -2,7 +2,7 @@ import { dbInit } from '@/util/dbInit';
 import { Test, TestingModule } from '@nestjs/testing';
 import { FileService } from '@/domain/file/file/domain/FileService';
 import { FileModule } from '@/domain/file/file/FileModule';
-import { permissionTypeValues } from '@/domain/permission/common/types';
+import { permissionTypes } from '@/domain/permission/common/types';
 
 describe('FileService', () => {
   let fileService: FileService;
@@ -20,8 +20,8 @@ describe('FileService', () => {
   it('test', async () => {
     const a1 = await fileService.create({
       path: 'hello/world',
-      memberDefaultPerm: permissionTypeValues.WRITE,
-      guestDefaultPerm: permissionTypeValues.WRITE,
+      memberDefaultPerm: permissionTypes.WRITE,
+      guestDefaultPerm: permissionTypes.WRITE,
     });
     const result = await fileService.findById(a1.id);
     expect(result.path).toBe('hello/world');

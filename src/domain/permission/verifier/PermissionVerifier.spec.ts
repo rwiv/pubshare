@@ -15,8 +15,8 @@ import { FileRoleModule } from '@/domain/permission/filerole/FileRoleModule';
 import { FileAuthorityModule } from '@/domain/permission/fileauthority/FileAuthorityModule';
 import { PermissionVerifier } from '@/domain/permission/verifier/PermissionVerifier';
 import { PermissionVerifierModule } from '@/domain/permission/verifier/PermissionVerifierModule';
-import { accountTypeValues } from '@/domain/account/persistence/accountType';
-import { permissionTypeValues } from '@/domain/permission/common/types';
+import { accountTypes } from '@/domain/account/persistence/accountType';
+import { permissionTypes } from '@/domain/permission/common/types';
 
 describe('PermissionVerifier', () => {
   let ac: AccountDummyBuilder;
@@ -53,11 +53,11 @@ describe('PermissionVerifier', () => {
   });
 
   it('test', async () => {
-    const ac1 = await ac.ac(1, accountTypeValues.MEMBER);
+    const ac1 = await ac.ac(1, accountTypes.MEMBER);
     const fi1 = await fi.fi(
       1,
-      permissionTypeValues.FORBIDDEN,
-      permissionTypeValues.FORBIDDEN,
+      permissionTypes.FORBIDDEN,
+      permissionTypes.FORBIDDEN,
     );
 
     const pl1 = await pl.pl(1);
@@ -68,16 +68,16 @@ describe('PermissionVerifier', () => {
     await ro.ro(ac1.id, pl2.id);
 
     const ret1 = await pv.verify(ac.sc(ac1), fi1);
-    await fp.fp(fi1.id, pl3.id, permissionTypeValues.KNOWN);
-    expect(ret1).toBe(permissionTypeValues.FORBIDDEN);
+    await fp.fp(fi1.id, pl3.id, permissionTypes.KNOWN);
+    expect(ret1).toBe(permissionTypes.FORBIDDEN);
 
-    await fp.fp(fi1.id, pl1.id, permissionTypeValues.KNOWN);
-    await fp.fp(fi1.id, pl2.id, permissionTypeValues.READ);
+    await fp.fp(fi1.id, pl1.id, permissionTypes.KNOWN);
+    await fp.fp(fi1.id, pl2.id, permissionTypes.READ);
     const ret2 = await pv.verify(ac.sc(ac1), fi1);
-    expect(ret2).toBe(permissionTypeValues.READ);
+    expect(ret2).toBe(permissionTypes.READ);
 
-    await fa.fa(fi1.id, ac1.id, permissionTypeValues.WRITE);
+    await fa.fa(fi1.id, ac1.id, permissionTypes.WRITE);
     const ret3 = await pv.verify(ac.sc(ac1), fi1);
-    expect(ret3).toBe(permissionTypeValues.WRITE);
+    expect(ret3).toBe(permissionTypes.WRITE);
   });
 });
