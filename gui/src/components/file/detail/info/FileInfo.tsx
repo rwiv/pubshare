@@ -12,7 +12,7 @@ export function FileInfo({ file, className }: FileInfoProps) {
   return (
     <div className={className}>
       <h4 className="text-lg font-normal">Info</h4>
-      <Table>
+      <Table className="my-1.5">
         <TableBody>
           <AttrRow name="id" value={file.id.toString()} />
           <AttrRow name="type" value={file.isDirectory ? "directory" : "file"} />

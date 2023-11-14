@@ -20,8 +20,8 @@ const item = "my-4 mx-1";
 function DefaultPermission({ file, className }: { file: FileResponse, className?: string }) {
   return (
     <div className={className}>
-      <h4 className="text-lg font-normal">Details</h4>
-      <Table>
+      <h4 className="text-lg font-normal">Default</h4>
+      <Table className="my-1.5">
         <TableBody>
           <AttrRow name="member" value={file.memberDefaultPerm} />
           <AttrRow name="guest" value={file.guestDefaultPerm} />

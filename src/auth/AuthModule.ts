@@ -13,7 +13,8 @@ import { jwtConstants } from '@/auth/authentication/jwtConstants';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      // TODO refresh token 적용 -> expire time 감소
+      signOptions: { expiresIn: '1h' },
     }),
   ],
 })
