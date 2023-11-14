@@ -2,7 +2,7 @@ import {appConstants} from "@/common/appConstants.ts";
 import {AccountRole} from "@/client/permission/types";
 import axios from "axios";
 import {getHeaderConfig} from "@/client/common/clientUtils.ts";
-import {FileComment, FileCommentCreation} from "@/client/file/types";
+import {FileComment, FileCommentCreation, FileCommentResponse} from "@/client/file/types";
 
 const baseUrl = `${appConstants.host}/api/file-comments`;
 
@@ -16,7 +16,7 @@ export async function createFileComment(creation: FileCommentCreation) {
 }
 
 export async function findFileCommentsByFileId(fileId: number) {
-  const res = await axios.get<FileComment[]>(`${baseUrl}/file-id/${fileId}`, getHeaderConfig());
+  const res = await axios.get<FileCommentResponse[]>(`${baseUrl}/file-id/${fileId}`, getHeaderConfig());
   return res.data;
 }
 

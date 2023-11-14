@@ -1,7 +1,16 @@
+import {AccountResponse} from "../../../../src/domain/account/web/types";
+
 export interface FileComment {
   id: number;
   fileId: number;
   createdById: number;
+  content: string;
+}
+
+interface FileCommentResponse {
+  id: number;
+  fileId: number;
+  createdBy: AccountResponse;
   content: string;
 }
 

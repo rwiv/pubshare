@@ -5,13 +5,11 @@ import {useQueryClient} from "@tanstack/react-query";
 import {AccountRoleCreation} from "@/client/permission/types";
 import {SelectItem} from "@/components/ui/select.tsx";
 import {accountRoleQueryKeys, createAccountRole} from "@/client/permission/accountRoleClient.ts";
-import {HttpError} from "@/client/common/HttpError.ts";
-import {ToastAction} from "@/components/ui/toast.tsx";
 import {useToast} from "@/components/ui/use-toast.ts";
-import {prettifyCode} from "@/client/common/errorUtil.ts";
 import {DialogTemplate} from "@/components/common/DialogTemplate.tsx";
 import {SelectFormField} from "@/components/common/form/SelectFormField.tsx";
 import {useRolesAll} from "@/hooks/query/permissionQueries.tsx";
+import {renderToastIfError} from "@/hooks/renderToastIfError.tsx";
 
 interface AccountRoleCreationForm {
   accountId: string;
@@ -45,19 +43,11 @@ export function useAccountRoleCreateDialog(accountId: number) {
       roleId: parseInt(form.roleId),
     }
 
-    try {
+    await renderToastIfError(toast, async () => {
       await createAccountRole(creation);
       await queryClient.invalidateQueries({ queryKey: [accountRoleQueryKeys.accountId, accountId] });
       setOpen(false);
-    } catch (e) {
-      if (e instanceof HttpError) {
-        toast({
-          title: prettifyCode(e.code),
-          description: e.message,
-          action: (<ToastAction altText="Close">Close</ToastAction>),
-        });
-      }
-    }
+    });
   };
 
   const component = (

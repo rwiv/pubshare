@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { FileCommentService } from '@/domain/file/comment/domain/FileCommentService';
 import { FileComment } from '@/domain/file/comment/persistence/types';
-import { FileCommentCreation } from '@/domain/file/comment/domain/types';
+import {FileCommentCreation, FileCommentResponse} from '@/domain/file/comment/domain/types';
 
 @Controller('api/file-comments')
 export class FileCommentController {
@@ -22,7 +22,7 @@ export class FileCommentController {
   @Get('file-id/:fileId')
   findByFileId(
     @Param('fileId', ParseIntPipe) fileId: number,
-  ): Promise<FileComment[]> {
+  ): Promise<FileCommentResponse[]> {
     return this.fileCommentService.findByFileId(fileId);
   }
 

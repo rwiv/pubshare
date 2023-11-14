@@ -31,7 +31,7 @@ export async function login(req: LoginRequest) {
 }
 
 export async function findAllAccounts() {
-  const res = await axios.get(`${baseUrl}`, getHeaderConfig());
+  const res = await axios.get<AccountResponse[]>(`${baseUrl}`, getHeaderConfig());
   return res.data;
 }
 

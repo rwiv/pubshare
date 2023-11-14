@@ -1,4 +1,4 @@
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea.tsx"
 import {useState} from "react";
 import {Button} from "@/components/ui/button.tsx";
 import {FileResponse} from "@/client/access/types.ts";
@@ -17,9 +17,10 @@ import {SmallIconButton} from "@/components/common/SmallIconButton.tsx";
 interface FileCommentListProps {
   file: FileResponse;
   me: AccountResponse;
+  className?: string;
 }
 
-export function FileCommentList({ file, me }: FileCommentListProps) {
+export function FileCommentList({ file, me, className }: FileCommentListProps) {
 
   const queryClient = useQueryClient();
   const [textContent, setTextContent] = useState("");
@@ -44,11 +45,11 @@ export function FileCommentList({ file, me }: FileCommentListProps) {
   }
 
   return (
-    <VStack>
-      <h1>Comments</h1>
+    <VStack className={className}>
+      <h4 className="text-xl font-normal">Comments</h4>
       {fileComments.map(fileComment => (
         <HStack key={fileComment.id}>
-          <h2 className="m-1">{fileComment.content}</h2>
+          <h2 className="m-1">{fileComment.createdBy.nickname}: {fileComment.content}</h2>
           <SmallIconButton onClick={() => onDelete(fileComment.id)}>
             <Cross1Icon className="p-2.5" />
           </SmallIconButton>

@@ -4,16 +4,14 @@ import {useEffect, useState} from "react";
 import {useQueryClient} from "@tanstack/react-query";
 import {FileAuthorityCreation} from "@/client/permission/types";
 import {SelectItem} from "@/components/ui/select.tsx";
-import {HttpError} from "@/client/common/HttpError.ts";
-import {ToastAction} from "@/components/ui/toast.tsx";
 import {useToast} from "@/components/ui/use-toast.ts";
-import {prettifyCode} from "@/client/common/errorUtil.ts";
 import {PermissionType} from "@/client/access/types.ts";
 import {PermissionTypeSelect} from "@/components/common/form/PermissionTypeForm.tsx";
 import {createFileAuthority, fileAuthorityQueryKeys} from "@/client/permission/fileAuthorityClient.ts";
 import {SelectFormField} from "@/components/common/form/SelectFormField.tsx";
 import {DialogTemplate} from "@/components/common/DialogTemplate.tsx";
 import {useAccountsAll} from "@/hooks/query/accountQueries.tsx";
+import {renderToastIfError} from "@/hooks/renderToastIfError.tsx";
 
 interface FileAuthorityCreationForm {
   fileId: string;
@@ -48,19 +46,11 @@ export function useFileAuthorityCreateDialog(fileId: number) {
       permission: form.permission,
     }
 
-    try {
+    await renderToastIfError(toast, async () => {
       await createFileAuthority(creation);
       await queryClient.invalidateQueries({ queryKey: [fileAuthorityQueryKeys.fileId, fileId] });
       setOpen(false);
-    } catch (e) {
-      if (e instanceof HttpError) {
-        toast({
-          title: prettifyCode(e.code),
-          description: e.message,
-          action: (<ToastAction altText="Close">Close</ToastAction>),
-        });
-      }
-    }
+    });
   };
 
   const component = (
