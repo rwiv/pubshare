@@ -3,7 +3,7 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {FileRoleResponse} from "@/client/permission/types";
 import {deleteFileRole, fileRoleQueryKeys, findFileRolesByFileId} from "@/client/permission/fileRoleClient.ts";
 import {FileResponse} from "@/client/access/types.ts";
-import {FileHeader} from "@/components/file/detail/common/FileHeader.tsx";
+import {AddableHeader} from "@/components/file/detail/common/AddableHeader.tsx";
 import {
   DropdownMenu,
   DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/dropdown-menu.tsx";
 import {Badge} from "@/components/ui/badge.tsx";
 
-interface RolesProps {
+interface FileRolesProps {
   file: FileResponse;
   className?: string;
 }
 
-export function Roles({ file, className }: RolesProps) {
+export function FileRoles({ file, className }: FileRolesProps) {
 
   const {setOpen, component} = useFileRoleCreateDialog(file.id);
   const {data: fileRoles} = useQuery<FileRoleResponse[]>({
@@ -27,10 +27,10 @@ export function Roles({ file, className }: RolesProps) {
 
   return (
     <div className={className}>
-      <FileHeader title="Roles" onAdd={() => setOpen(true)} />
+      <AddableHeader title="Roles" onAdd={() => setOpen(true)} />
       <div className="flex flex-wrap my-2">
         {fileRoles.map(fileRole => (
-          <Role key={fileRole.id} fileRole={fileRole} file={file} />
+          <FileRole key={fileRole.id} fileRole={fileRole} file={file} />
         ))}
       </div>
       {component}
@@ -39,13 +39,13 @@ export function Roles({ file, className }: RolesProps) {
 }
 
 
-interface RoleProps {
+interface FileRoleProps {
   fileRole: FileRoleResponse;
   file: FileResponse;
   className?: string;
 }
 
-function Role({ fileRole, file }: RoleProps) {
+function FileRole({ fileRole, file }: FileRoleProps) {
 
   const queryClient = useQueryClient();
 

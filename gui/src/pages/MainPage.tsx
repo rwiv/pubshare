@@ -1,25 +1,24 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useQueryClient} from "@tanstack/react-query";
 import {accountQueryKeys, login} from "@/client/account/accountClient.ts";
 import {useTokenStore} from "@/stores/loginStore.ts";
 import {FileTree} from "@/components/file/tree/FileTree.tsx";
 import {FileTable} from "@/components/file/table/FileTable.tsx";
-import {mq} from "@/util/css/MediaQueryHelper.ts";
-import {AppHeader} from "@/components/layout/AppHeader.tsx";
-import {HStack} from "@/util/css/layoutComponents.ts";
 import {FileDetail} from "@/components/file/detail/FileDetail.tsx";
 import {useAccessStore} from "@/stores/accessStore.ts";
+import {getMediaQuery} from "@/util/getMediaQuery.ts";
+import {MainTemplate} from "@/pages/MainTemplate.tsx";
+import {FixedScrollArea} from "@/components/common/FixedScrollArea.tsx";
 // import viteLogo from '/vite.svg'
 
-const left = mq.m_all(1,1,2,2,3,3);
-const center = mq.m_all(10,10,8, 8,6,6);
-const right = mq.m_all(1,1,2,2,3,3);
+const {left, center, right} = getMediaQuery();
 
 export function MainPage() {
 
   const queryClient = useQueryClient();
   const {setToken} = useTokenStore();
   const {curFile} = useAccessStore();
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     login({
@@ -34,19 +33,20 @@ export function MainPage() {
   }, [queryClient, setToken]);
 
   return (
-    <>
-      <AppHeader />
-      <HStack>
-        <div css={left} className="min-h-screen bg-muted/60">
-          <FileTree className="m-3" />
-        </div>
-        <div css={center} className="min-h-screen">
-          <FileTable className="m-3" />
-        </div>
-        <div css={right} className="min-h-screen">
-          {curFile && <FileDetail className="m-3"  file={curFile}/>}
-        </div>
-      </HStack>
-    </>
+    <MainTemplate height={height} setHeight={setHeight}>
+      <div css={left} className="bg-muted/60">
+        <FileTree className="p-3" />
+      </div>
+      <div css={center}>
+        <FileTable className="p-3" />
+      </div>
+      <div css={right}>
+        <FixedScrollArea maxHeight={height}>
+          {curFile && (
+            <FileDetail className="p-3" file={curFile} />
+          )}
+        </FixedScrollArea>
+      </div>
+    </MainTemplate>
   );
 }

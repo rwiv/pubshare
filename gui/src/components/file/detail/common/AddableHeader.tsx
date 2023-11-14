@@ -8,7 +8,7 @@ interface FileHeaderProps {
   onAdd: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export function FileHeader({ title, onAdd }: FileHeaderProps) {
+export function AddableHeader({ title, onAdd }: FileHeaderProps) {
   return (
     <HStack className="items-center" css={{gap: 4}}>
       <h4 className="text-lg font-normal">{title}</h4>

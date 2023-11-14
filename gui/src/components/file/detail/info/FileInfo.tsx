@@ -14,11 +14,11 @@ export function FileInfo({ file, className }: FileInfoProps) {
       <h4 className="text-lg font-normal">Info</h4>
       <Table className="my-1.5">
         <TableBody>
-          <AttrRow name="id" value={file.id.toString()} />
-          <AttrRow name="type" value={file.isDirectory ? "directory" : "file"} />
-          <AttrRow name="path" value={file.path} />
-          <AttrRow name="size" value={file.size?.toString() ?? ""} />
-          <AttrRow name="last modified" value={isoToPretty(file.lastModified)} />
+          <AttrRow name="id">{file.id.toString()}</AttrRow>
+          <AttrRow name="type">{file.isDirectory ? "directory" : "file"}</AttrRow>
+          <AttrRow name="path">{file.path}</AttrRow>
+          <AttrRow name="size">{file.size?.toString() ?? ""}</AttrRow>
+          <AttrRow name="last modified">{isoToPretty(file.lastModified)}</AttrRow>
         </TableBody>
       </Table>
     </div>

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu.tsx";
 import {Badge} from "@/components/ui/badge.tsx";
 import {FileResponse} from "@/client/access/types.ts";
-import {FileHeader} from "@/components/file/detail/common/FileHeader.tsx";
+import {AddableHeader} from "@/components/file/detail/common/AddableHeader.tsx";
 
 interface FileTagsProps {
   file: FileResponse;
@@ -28,7 +28,7 @@ export function FileTags({ file, className }: FileTagsProps) {
 
   return (
     <div className={className}>
-      <FileHeader title="Tags" onAdd={() => setOpen(true)} />
+      <AddableHeader title="Tags" onAdd={() => setOpen(true)} />
       <div className="flex flex-wrap my-2">
         {fileTags.map(fileTag => (
           <BadgeInfo key={fileTag.id} fileTag={fileTag} file={file} />

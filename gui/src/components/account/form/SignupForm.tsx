@@ -13,6 +13,7 @@ import {Center, VStack} from "@/util/css/layoutComponents.ts";
 import {useNavigate} from "react-router";
 import {AccountCreation} from "@/client/account/types.ts";
 import {signup} from "@/client/account/accountClient.ts";
+import {accountTypes} from "@/common/accountTypes.ts";
 
 export function SignupForm() {
 
@@ -22,7 +23,7 @@ export function SignupForm() {
       password: "",
       nickname: "",
       certified: false,
-      type: "MEMBER",
+      type: accountTypes.MEMBER,
     }
   });
 

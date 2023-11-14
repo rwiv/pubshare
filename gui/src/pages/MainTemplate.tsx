@@ -1,28 +1,37 @@
-import {AppHeader} from "@/components/layout/AppHeader.tsx";
-import {HStack} from '@/util/css/layoutComponents.ts';
-import {ReactNode} from "react";
-import {mq} from "@/util/css/MediaQueryHelper.ts";
+import {AppHeader} from "@/components/layout/header/AppHeader.tsx";
+import React, {ReactNode, useEffect, useRef} from "react";
 
-interface MainTemplateProps {
-  children: ReactNode
+function getHeight(elem: HTMLDivElement | null) {
+  if (elem === null) {
+    return 0;
+  }
+  return Math.max(elem.scrollHeight, elem.offsetHeight, elem.clientHeight);
 }
 
-const left = mq.m_all(1,1,2,2,3,3);
-const center = mq.m_all(10,10,8, 8,6,6);
-const right = mq.m_all(1,1,2,2,3,3);
+interface MainTemplateProps {
+  children: ReactNode;
+  height?: number;
+  setHeight?: React.Dispatch<React.SetStateAction<number>>;
+}
 
-export function MainTemplate({ children }: MainTemplateProps) {
+export function MainTemplate({ children, height, setHeight }: MainTemplateProps) {
 
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (setHeight) {
+      setHeight(window.innerHeight - getHeight(ref.current));
+    }
+  }, [ref, setHeight]);
+  
   return (
-    <>
-      <AppHeader />
-      <HStack>
-        <div css={left}/>
-        <div css={center}>
-          {children}
-        </div>
-        <div css={right}/>
-      </HStack>
-    </>
+    <div className="flex flex-col min-h-screen max-h-screen">
+      <div ref={ref}>
+        <AppHeader />
+      </div>
+      <div className="flex flex-row" css={{minHeight: height}}>
+        {children}
+      </div>
+    </div>
   );
 }

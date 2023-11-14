@@ -9,14 +9,12 @@ import {MainPage} from "@/pages/MainPage.tsx";
 import {LoginPage} from "@/pages/account/LoginPage.tsx";
 import {AccountListPage} from "@/pages/account/AccountListPage.tsx";
 import {RoleListPage} from "@/pages/permission/RoleListPage.tsx";
-import {AccountDetailPage} from "@/pages/account/AccountDetailPage.tsx";
 import {Toaster} from "@/components/ui/toaster.tsx";
 
 const router = createBrowserRouter([
   { path: '/', element: <MainPage /> },
   { path: '/login', element: <LoginPage /> },
   { path: '/accounts', element: <AccountListPage /> },
-  { path: '/accounts/:id', element: <AccountDetailPage /> },
   { path: '/roles', element: <RoleListPage /> },
 ]);
 

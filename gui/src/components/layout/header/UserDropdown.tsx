@@ -1,8 +1,8 @@
 import {
   Avatar,
   AvatarFallback,
-} from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/avatar.tsx"
+import { Button } from "@/components/ui/button.tsx"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu.tsx"
 import {useQueryClient} from "@tanstack/react-query";
 import {AccountResponse} from "@/client/account/types.ts";
 import {accountQueryKeys} from "@/client/account/accountClient.ts";
@@ -24,7 +24,7 @@ interface UserNavProps {
   me: AccountResponse;
 }
 
-export function UserNav({ me }: UserNavProps) {
+export function UserDropdown({ me }: UserNavProps) {
 
   const queryClient = useQueryClient();
   const {setToken} = useTokenStore();
@@ -34,7 +34,7 @@ export function UserNav({ me }: UserNavProps) {
     setToken(null);
     setCurFile(null);
     setCurDirectory(rootFileResponse);
-    await queryClient.setQueryData([accountQueryKeys.me], null);
+    await queryClient.invalidateQueries({ queryKey: [accountQueryKeys.me] });
     await queryClient.invalidateQueries({ queryKey: [accessQueryKeys.list, curDirectory.path] });
   }
 

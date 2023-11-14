@@ -7,7 +7,7 @@ import {
   findFileAuthoritiesByFileId
 } from "@/client/permission/fileAuthorityClient.ts";
 import {FileResponse} from "@/client/access/types.ts";
-import {FileHeader} from "@/components/file/detail/common/FileHeader.tsx";
+import {AddableHeader} from "@/components/file/detail/common/AddableHeader.tsx";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar.tsx";
 import {
   DropdownMenu,
@@ -16,12 +16,12 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu.tsx";
 
-interface AuthoritiesProps {
+interface FileAuthoritiesProps {
   file: FileResponse;
   className?: string;
 }
 
-export function Authorities({ file, className }: AuthoritiesProps) {
+export function FileAuthorities({ file, className }: FileAuthoritiesProps) {
 
   const {setOpen, component} = useFileAuthorityCreateDialog(file.id);
   const {data: fileAuthorities} = useQuery<FileAuthorityResponse[]>({
@@ -32,10 +32,10 @@ export function Authorities({ file, className }: AuthoritiesProps) {
 
   return (
     <div className={className}>
-      <FileHeader title="Users" onAdd={() => setOpen(true)} />
+      <AddableHeader title="Users" onAdd={() => setOpen(true)} />
       <div className="flex flex-wrap my-2">
         {fileAuthorities.map(fileAuthority => (
-          <Authority key={fileAuthority.id} fileAuthority={fileAuthority} file={file} />
+          <FileAuthority key={fileAuthority.id} fileAuthority={fileAuthority} file={file} />
         ))}
       </div>
       {component}
@@ -43,13 +43,13 @@ export function Authorities({ file, className }: AuthoritiesProps) {
   )
 }
 
-interface AuthorityProps {
+interface FileAuthorityProps {
   fileAuthority: FileAuthorityResponse;
   file: FileResponse;
   className?: string;
 }
 
-function Authority({ fileAuthority, file }: AuthorityProps) {
+function FileAuthority({ fileAuthority, file }: FileAuthorityProps) {
 
   const queryClient = useQueryClient();
 
