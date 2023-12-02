@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {useQueryClient} from "@tanstack/react-query";
-import {accountQueryKeys, login} from "@/client/account/accountClient.ts";
 import {useTokenStore} from "@/stores/loginStore.ts";
 import {FileTree} from "@/components/file/tree/FileTree.tsx";
 import {FileTable} from "@/components/file/table/FileTable.tsx";
@@ -21,15 +20,15 @@ export function MainPage() {
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    login({
-      username: "admin",
-      password: "admin",
-    }).then(res=> {
-      setToken(res.accessToken);
-      queryClient.invalidateQueries({
-        queryKey: [accountQueryKeys.me]
-      });
-    });
+    // login({
+    //   username: "admin",
+    //   password: "admin",
+    // }).then(res=> {
+    //   setToken(res.accessToken);
+    //   queryClient.invalidateQueries({
+    //     queryKey: [accountQueryKeys.me]
+    //   });
+    // });
   }, [queryClient, setToken]);
 
   return (

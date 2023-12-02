@@ -52,7 +52,7 @@ function UserNav({ me, isLoading }: UserNavProps) {
     return (
       <div className="ml-auto mr-4 flex items-center space-x-2">
         <Button>
-          <Link to="/signup">Signup</Link>
+          <Link to="/signup">Sign Up</Link>
         </Button>
         <Button>
           <Link to="/login">Login</Link>
