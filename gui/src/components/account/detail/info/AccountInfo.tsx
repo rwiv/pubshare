@@ -42,7 +42,7 @@ function Certified({ account }: { account: AccountResponse }) {
       {account.certified ? (
         <div>certified</div>
       ) : (
-        <Button variant="secondary" onClick={onClick}>certify</Button>
+        <Button onClick={onClick}>certify</Button>
       )}
     </>
   )

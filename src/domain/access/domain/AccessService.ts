@@ -11,9 +11,12 @@ import { AuthToken } from '@/auth/authentication/types';
 import { File } from '@/domain/file/file/persistence/types';
 import { S3File } from '@/domain/access/client/types';
 import { accessConfig } from '@/domain/access/common/accessConfig';
-import {PermissionType, permissionTypes} from '@/domain/permission/common/types';
+import {
+  PermissionType,
+  permissionTypes,
+} from '@/domain/permission/common/types';
 import { AuthorizationException } from '@/auth/authorization/AuthorizationException';
-import {AccessException} from "@/domain/access/common/AccessException";
+import { AccessException } from '@/domain/access/common/AccessException';
 
 @Injectable()
 export class AccessService {
@@ -156,6 +159,12 @@ export class AccessService {
         throw new AccessException('file exists in the folder');
       }
     }
+
+    const fileResponse = await this.head(auth, req.key);
+    if (fileResponse.myPerm !== permissionTypes.WRITE) {
+      throw new AuthorizationException('not have WRITE permission');
+    }
+
     await this.fileService.deleteByPath(req.key);
     return this.client.delete(req.key);
   }

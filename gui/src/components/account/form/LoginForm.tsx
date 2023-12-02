@@ -4,7 +4,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {Center, VStack} from "@/util/css/layoutComponents.ts";
 import {useNavigate} from "react-router";
 import {LoginRequest} from "@/client/account/types.ts";
-import {accountQueryKeys, login} from "@/client/account/accountClient.ts";
+import {accountQueryKeys, getMyDataByToken, login} from "@/client/account/accountClient.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useTokenStore} from "@/stores/loginStore.ts";
 import {InputFormField} from "@/components/common/form/InputFormField.tsx";
@@ -23,10 +23,13 @@ export function LoginForm() {
 
   const onSubmit: SubmitHandler<LoginRequest> = async creation => {
     const res = await login(creation);
-    setToken(res.accessToken);
-    await queryClient.invalidateQueries({
-      queryKey: [accountQueryKeys.me]
-    });
+    const me = await getMyDataByToken(res.accessToken);
+    if (me?.certified) {
+      setToken(res.accessToken);
+      await queryClient.invalidateQueries({
+        queryKey: [accountQueryKeys.me]
+      });
+    }
 
     navigate("/");
   }

@@ -20,6 +20,20 @@ export async function getMyData() {
   });
 }
 
+export async function getMyDataByToken(token: string) {
+  return runCatching(async () => {
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.get<AccountResponse>(
+      `${baseUrl}/me`, headers,
+    );
+    return res.data;
+  });
+}
+
 export async function signup(creation: AccountCreation) {
   const res = await axios.post<AccountResponse>(`${baseUrl}/signup`, creation);
   return res.data;
