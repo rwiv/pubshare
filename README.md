@@ -9,6 +9,10 @@ $ pnpm install
 
 ## Running the app
 
+1. 아래 명령어를 쉘에 입력해서 백엔드 서버 실행
+
 ```bash
 $ pnpm dev:reset
 ```
+
+2. 웹 브라우저에서`http://localhost:3030`으로 접속하면 메인 페이지 진입 가능
